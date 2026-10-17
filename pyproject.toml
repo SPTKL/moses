@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "moses-geo"
+version = "0.1.0"
+description = "Local-first, versioned geospatial ELT"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+  "duckdb>=1.5,<2", "pyarrow>=18,<27", "pyogrio>=0.11,<0.14",
+  "shapely>=2.1,<3", "pyproj>=3.6,<4",
+]
+
+[project.optional-dependencies]
+s3 = ["boto3>=1.36,<2"]
+dev = ["pytest>=8,<10", "build>=1.2", "hatchling>=1.27"]
+
+[project.scripts]
+moses = "moses.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/moses"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: optional integration requiring DuckDB extensions"]

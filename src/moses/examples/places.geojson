@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"001","name":"Broadway example","category":"office"},"geometry":{"type":"Point","coordinates":[-74.010,40.708]}},{"type":"Feature","properties":{"id":"002","name":"Park example","category":"park"},"geometry":{"type":"Point","coordinates":[-74.006,40.713]}}]}
