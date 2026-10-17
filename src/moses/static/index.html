@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Moses · Local data workspace</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="app" hidden>
+    <header class="site-header">
+      <div class="header-left"><strong class="wordmark">Moses</strong><span class="header-divider" aria-hidden="true"></span><button id="catalog-button" class="catalog-button" type="button" aria-expanded="false" aria-controls="catalog-menu">Catalog</button><span class="slash" aria-hidden="true">/</span>
+        <div class="catalog-picker"><button id="dataset-picker" class="picker-button" type="button" aria-expanded="false" aria-controls="catalog-menu"><span id="picked-name">Choose a dataset</span><img src="/assets/icons/chevron-down.svg" alt="" width="16" height="16"></button>
+          <div id="catalog-menu" class="catalog-menu" hidden><div class="catalog-tools"><label for="search">Search datasets</label><div class="search-wrap"><img src="/assets/icons/search.svg" alt="" width="16" height="16"><input id="search" type="search" placeholder="Find a dataset…" autocomplete="off"></div><button id="refresh" class="icon-button" type="button" title="Refresh datasets" aria-label="Refresh datasets"><img src="/assets/icons/refresh-cw.svg" alt="" width="17" height="17"></button></div><div id="dataset-status" class="catalog-status" role="status"></div><nav id="dataset-list" aria-label="Datasets"></nav></div>
+        </div></div>
+      <button id="signout" class="signout" type="button">Sign out</button>
+    </header>
+    <main id="main" class="workspace" tabindex="-1">
+      <section id="content" class="data-column" aria-label="Dataset content"></section>
+      <aside id="inspector" class="inspector" aria-label="Dataset details"></aside>
+    </main>
+  </div>
+  <div id="signin" class="signin-shell">
+    <div class="signin-card"><div class="signin-brand"><strong>Moses</strong><span>Local data workspace</span></div><h1>Open your catalog</h1><p>Browse accepted datasets, inspect exact versions, and download snapshots from this local service.</p>
+      <form id="signin-form"><label for="token">Bearer token</label><input id="token" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="Enter your service token"><p class="field-help">Use the token configured when you started <code>moses serve</code>. It stays in this tab’s memory.</p><p id="signin-error" class="form-error" role="alert" hidden></p><button id="signin-button" class="dark-button" type="submit">Open catalog</button></form>
+    </div>
+  </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -39,6 +40,9 @@ def parser():
     sub = p.add_subparsers(dest="command", required=True)
     init = sub.add_parser("init", help="Create a local warehouse")
     init.add_argument("--default-crs", help="Fallback CRS for geometry without a source CRS")
+    serve = sub.add_parser("serve", help="Serve the local catalog GUI and authenticated read-only API")
+    serve.add_argument("--port", type=int, default=8765)
+    serve.add_argument("--token-env", default="MOSES_TOKEN", help="Environment variable containing the bearer token")
     sub.add_parser("demo", help="Load a tiny bundled synthetic NYC example, offline")
     load = sub.add_parser("load", help="Capture a local vector or tabular file as a versioned table")
     load.add_argument("source")
@@ -111,6 +115,20 @@ def resolve_version(catalog, name, version=None):
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "serve":
+            from .service import create_server
+
+            token = os.environ.get(args.token_env, "")
+            if not token:
+                raise ValueError("Set the bearer token environment variable before starting the service")
+            with create_server(args.warehouse, token, host="127.0.0.1", port=args.port) as server:
+                print(f"Moses catalog: http://127.0.0.1:{server.server_port}/", flush=True)
+                print(f"Moses read-only API: http://127.0.0.1:{server.server_port}/v1", flush=True)
+                try:
+                    server.serve_forever()
+                except KeyboardInterrupt:
+                    pass
+            return 0
         # Inspection must not create a catalog or warehouse as a side effect.
         if args.command == "inspect":
             from .config import resolve_default_crs

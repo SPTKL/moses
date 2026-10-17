@@ -32,6 +32,20 @@ moses --warehouse my-city list
 
 Use an actual unique, non-null identifier in your source. Omit `--key` when none exists; diffs will then count added and removed rows without inferring updates. CSV attributes remain strings to protect identifiers such as `001`; cast them explicitly in SQL when needed.
 
+## Local catalog GUI
+
+Set `MOSES_TOKEN` to a strong random token, then run
+`moses --warehouse my-city serve --port 8765` and open
+`http://127.0.0.1:8765/`. Enter that token to browse accepted datasets in a wide
+table or bounded map, inspect exact versions and feature properties, compare
+releases, and download Parquet snapshots. The token stays in tab memory.
+
+The GUI has a collapsible details panel and a responsive layout. Mapping uses
+known source CRS on display copies, labels omissions, and defaults to a blank
+offline background. An optional OpenStreetMap basemap discloses external tile
+requests. This is a local read-only tool; uploads, SQL and multilayer workspaces
+remain planned. See [local service](docs/local-service.md) for limits and routes.
+
 ## Real NYC Open Data
 
 ```sh
