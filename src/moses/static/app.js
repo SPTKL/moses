@@ -25,6 +25,15 @@ function spinner(label) { const n=el("div","loading"); add(n,el("span","spinner"
 function notice(text, className="notice") { return el("div",className,text); }
 function errorPanel(text,retry) { const n=el("div","inline-error"); add(n,el("span","",text)); if(retry)add(n,button("Retry","outline-button",retry)); return n; }
 function hasOmission(v) { if(!v||typeof v!=="object")return false; if(v.truncated===true)return true; return Object.values(v).some(hasOmission); }
+function geometryLabel(value, name, geometryColumn) {
+  const types={POINT:"Point",MULTIPOINT:"MultiPoint",LINESTRING:"LineString",MULTILINESTRING:"MultiLineString",POLYGON:"Polygon",MULTIPOLYGON:"MultiPolygon",GEOMETRYCOLLECTION:"GeometryCollection"};
+  if(value&&typeof value==="object"&&types[String(value.type||"").toUpperCase()]&&(value.coordinates||value.geometries))return types[value.type.toUpperCase()];
+  const text=typeof value==="string"?value.trim():"";
+  const wkt=text.match(/^(?:SRID=\d+;)?\s*(POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)(?:\s+(?:ZM|Z|M))?(?:\s*\(|\s+EMPTY\b)/i);
+  if(wkt)return types[wkt[1].toUpperCase()];
+  if(geometryColumn&&name===geometryColumn)return "Geometry";
+  return null;
+}
 
 async function api(path,generation=state.generation,blob=false) {
   const c=new AbortController(); state.controllers.add(c);
@@ -114,7 +123,30 @@ async function download() {
   catch(error){if(gen===state.generation){state.busy=null;state.downloadError=errorText(error);downloadState();}}
 }
 
-function table(headers,rows,className="") {const wrap=el("div","table-scroll"),t=el("table",className),head=el("thead"),tr=el("tr");for(const h of headers)add(tr,el("th","",h));add(head,tr);add(t,head);const body=el("tbody");for(const row of rows){const r=el("tr");for(const item of row)add(r,el("td",item?.className||"",item?.text??item??""));add(body,r);}add(t,body);add(wrap,t);return wrap;}
+function table(headers,rows,className="") {
+  const wrap=el("div","table-scroll"),t=el("table",className),head=el("thead"),tr=el("tr");
+  for(const h of headers)add(tr,el("th","",h));
+  add(head,tr);add(t,head);
+  const body=el("tbody");
+  for(const row of rows){
+    const r=el("tr");
+    for(const item of row){
+      const value=String(item?.text??item??""),cell=el("td",item?.className||"");
+      const compact=className==="data-table"&&(item?.geometryLabel||value.length>30||value.includes("\n"));
+      if(compact){
+        const details=el("details","cell-details");
+        const label=item?.geometryLabel||value.slice(0,28)+"…";
+        const full=el("div","cell-full",value);full.tabIndex=0;full.setAttribute("aria-label","Full cell value");
+        add(details,el("summary","cell-summary",label),full);
+        details.setAttribute("aria-label",item?.geometryLabel?`Show ${item.geometryLabel} value`:"Show full cell value");
+        add(cell,details);
+      }else add(cell,el("span","cell-value",value));
+      add(r,cell);
+    }
+    add(body,r);
+  }
+  add(t,body);add(wrap,t);return wrap;
+}
 function versionSelect(selected,handler,label) {const s=el("select");s.setAttribute("aria-label",label);for(const v of sortedVersions()){const o=el("option","",versionLabel(v));o.value=v.version_id;o.title=v.version_id;o.selected=v.version_id===selected;add(s,o);}s.addEventListener("change",()=>handler(s.value));return s;}
 function renderPage() {
   disposeMap();const root=$("content"),focusId=root.contains(document.activeElement)?document.activeElement.id:"";root.replaceChildren();if(focusId)queueMicrotask(()=>{if(document.activeElement===document.body)$(focusId)?.focus();});
@@ -156,7 +188,7 @@ function renderTable(root,v) {
   if(!state.preview){add(root,button("Load preview","outline-button",loadPreview));return;}
   const p=state.preview,rows=p.rows||[];if(!rows.length){add(root,notice("No rows are available to preview."));return;}
   const columns=(v.schema||[]).map(f=>f.name),extra=[...new Set(rows.flatMap(r=>Object.keys(r)))].filter(k=>!columns.includes(k));columns.push(...extra);
-  let omitted=false;const values=rows.map((row,i)=>[{text:String(i+1)},...columns.map(name=>{const value=row[name];if(value===null||value===undefined)return {text:"null",className:"empty-cell"};if(typeof value==="object"&&value.truncated&&value.byte_length!==undefined){omitted=true;return {text:`[cell omitted: ${num(value.byte_length)} bytes]`,className:"empty-cell"};}if(typeof value==="object"){if(value.base64)return {text:`[binary: ${value.base64.length} base64 characters]`,className:"empty-cell"};if(hasOmission(value))omitted=true;return {text:JSON.stringify(value),className:"code"};}return {text:String(value)};})]);
+  let omitted=false;const values=rows.map((row,i)=>[{text:String(i+1)},...columns.map(name=>{const value=row[name];if(value===null||value===undefined)return {text:"null",className:"empty-cell"};if(typeof value==="object"&&value.truncated&&value.byte_length!==undefined){omitted=true;return {text:`[cell omitted: ${num(value.byte_length)} bytes]`,className:"empty-cell"};}const label=geometryLabel(value,name,v.geometry_column);if(typeof value==="object"){if(value.base64)return {text:`[binary: ${value.base64.length} base64 characters]`,className:"empty-cell",geometryLabel:label};if(hasOmission(value))omitted=true;return {text:JSON.stringify(value),className:"code",geometryLabel:label};}return {text:String(value),geometryLabel:label};})]);
   if(omitted)add(root,notice("Some large cells or collection entries were omitted. Download the version for complete values."));add(root,table(["#",...columns],values,"data-table"));
 }
 function renderMap(root) {
@@ -168,8 +200,8 @@ function renderMap(root) {
   const featureLabel=el("label","","Feature"),featureSelect=el("select","feature-select");featureLabel.htmlFor="feature-choice";featureSelect.id="feature-choice";
   add(featureSelect,option("Choose a feature",-1));data.features.forEach((feature,i)=>add(featureSelect,option(featureLabelText(feature,i),i)));
   featureSelect.value=String(state.selectedFeatureIndex);featureSelect.addEventListener("change",()=>{const i=Number(featureSelect.value);if(i>=0)state.mapHandle?.select(i);else{state.mapHandle?.clearSelection();state.selectedFeature=null;state.selectedFeatureIndex=-1;renderInspector();}});
-  add(tools,featureLabel,featureSelect);
-  const baseLabel=el("label","","Basemap"),base=el("select","basemap-select");base.id="basemap-choice";baseLabel.htmlFor=base.id;add(base,option("None (offline)","none"),option("OpenStreetMap (online)","osm"));base.addEventListener("change",()=>state.mapHandle?.basemap(base.value==="osm"));add(tools,baseLabel,base);add(pane,tools);
+  add(tools,add(el("div","map-field"),featureLabel,featureSelect));
+  const baseLabel=el("label","","Basemap"),base=el("select","basemap-select");base.id="basemap-choice";baseLabel.htmlFor=base.id;add(base,option("None (offline)","none"),option("OpenStreetMap (online)","osm"));base.addEventListener("change",()=>state.mapHandle?.basemap(base.value==="osm"));add(tools,add(el("div","map-field"),baseLabel,base));add(pane,tools);
   add(pane,el("div","map-disclosure","Choosing OpenStreetMap sends this page’s origin and viewport tile requests to OpenStreetMap."));
   const area=el("div","map-region"),canvas=el("div","map-canvas");canvas.id="map-canvas";canvas.setAttribute("aria-label",`Map of ${num(data.returned_features)} returned features`);add(area,canvas);
   const controls=el("div","map-controls");for(const [name,title,run] of [["plus","Zoom in",()=>state.mapHandle?.zoomIn()],["minus","Zoom out",()=>state.mapHandle?.zoomOut()]]){const b=button("","",run);b.setAttribute("aria-label",title);b.title=title;add(b,icon(name));add(controls,b);}const fit=button("","fit-button",()=>state.mapHandle?.fit());fit.setAttribute("aria-label","Fit mapped features");add(fit,icon("maximize"),el("span","","Fit features"));add(controls,fit);add(area,controls);add(pane,area);

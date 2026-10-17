@@ -27,8 +27,8 @@ export async function mountMap(container, collection, onSelect) {
   let selected = -1, tiles = null;
   features.forEach((feature, index) => {
     const layer = L.geoJSON(feature, {
-      style: () => ({ color: "#B5521E", weight: 2, fillColor: "#D96B27", fillOpacity: .48 }),
-      pointToLayer: (_feature, latlng) => L.circleMarker(latlng, { radius: 5, color: "#B5521E", weight: 1.5, fillColor: "#D96B27", fillOpacity: .85 })
+      style: () => ({ color: "#294b90", weight: 2, fillColor: "#6d90d2", fillOpacity: .44 }),
+      pointToLayer: (_feature, latlng) => L.circleMarker(latlng, { radius: 5, color: "#294b90", weight: 1.5, fillColor: "#6d90d2", fillOpacity: .85 })
     }).addTo(map);
     layer.on("click", () => select(index));
     layers.push(layer);
@@ -36,14 +36,14 @@ export async function mountMap(container, collection, onSelect) {
   const all = L.featureGroup(layers);
   function fit() { const bounds = all.getBounds(); if (bounds.isValid()) map.fitBounds(bounds.pad(.12), { maxZoom: 16 }); }
   function clearSelection() {
-    if (selected >= 0) layers[selected].setStyle({ color: "#B5521E", weight: 2, fillColor: "#D96B27", fillOpacity: .48 });
+    if (selected >= 0) layers[selected].setStyle({ color: "#294b90", weight: 2, fillColor: "#6d90d2", fillOpacity: .44 });
     selected = -1;
   }
   function select(index) {
     if (index < 0 || index >= features.length) return;
     clearSelection();
     selected = index;
-    layers[index].setStyle({ color: "#1A202C", weight: 3, fillColor: "#D96B27", fillOpacity: .72 });
+    layers[index].setStyle({ color: "#172b53", weight: 3, fillColor: "#3659a5", fillOpacity: .72 });
     layers[index].eachLayer(part => part.bringToFront?.());
     onSelect(index, features[index]);
   }

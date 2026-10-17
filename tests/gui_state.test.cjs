@@ -18,6 +18,23 @@ function client() {
   return { run: source => vm.runInContext(source, context), context, nodes };
 }
 
+test('geometry summaries recognize coordinates without hiding ordinary descriptive text', () => {
+  const app = client();
+  for (const [value, expected] of [
+    ['MULTIPOLYGON (((0 0, 1 0, 0 0)))', 'MultiPolygon'],
+    ['SRID=4326;POINT Z (1 2 3)', 'Point'],
+    ['POLYGON EMPTY', 'Polygon'],
+    [{ type: 'Point', coordinates: [1, 2] }, 'Point'],
+    ['Point of interest', null],
+    ['Polygon count is provisional', null],
+    [{ type: 'Point', description: 'A business label' }, null],
+  ]) {
+    app.context.cellValue = value;
+    assert.equal(app.run("geometryLabel(cellValue, 'description', null)"), expected);
+  }
+  assert.equal(app.run("geometryLabel({base64:'AQ=='}, 'geometry', 'geometry')"), 'Geometry');
+});
+
 for (const interrupted of ['versions', 'preview', 'compare', 'download']) {
   test(`failed refresh releases canceled ${interrupted} and permits retry`, async () => {
     const app = client();

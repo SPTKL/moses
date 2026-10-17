@@ -145,3 +145,40 @@ Python tests with one optional skip. The complete staged GUI snapshot passed
 from this delivery, explaining the difference from the earlier 104-test working
 tree run. All nine client-state tests still pass. Vendored Leaflet CRLF bytes
 were preserved; whitespace validation uses `core.whitespace=cr-at-eol`.
+
+## Catalog theme and alignment refresh (2026-10-17)
+
+The user requested a calmer contemporary theme and better alignment, then asked
+to hide geometry text until a cell is clicked. This supersedes the previous
+charcoal/orange visual target. Scope remains the local read-only #5/#23 catalog.
+
+Design references reviewed: [Atlan asset discovery](https://atlan.com/demos/asset-discovery-search/),
+[DataHub search](https://docs.datahub.com/docs/how/search), and
+[Databricks asset overview](https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer).
+These inform the restrained blue selection states, quiet metadata panel and
+consistent control hierarchy; no unsupported catalog capabilities were added.
+
+The new CSS uses shared neutral/blue tokens, aligned controls, a 320px inspector,
+paired map labels and selectors, and a contained mobile catalog menu. Geometry
+cells show their type until opened; returned text appears in a keyboard-focusable
+140px scroll area. Other long values also disclose without forcing tall rows.
+The real GreenThumb preview previously showed one enormous row caused by an
+offscreen WKT column; collapsed rows now measure approximately 64px.
+
+Browser verification covered 1280px desktop, 1024px laptop, 901px breakpoint and
+390px mobile: search, long dataset names, geometry reveal/collapse, all detail
+tabs, map feature selection/fit, and inspector hide/restore. The mobile menu stays
+between x=12 and x=378 in a 390px viewport, with no document horizontal overflow.
+Mobile map labels remain paired with full-width selectors. No browser warnings
+or errors were recorded. The map remains offline by default.
+
+Evidence in `.moses/`: `catalog-refresh-before.png`,
+`catalog-refresh-laptop.png`, `catalog-refresh-mobile.png`,
+`catalog-refresh-map-mobile.png`, `catalog-refresh-map-desktop.png`, and
+`catalog-refresh-geometry.png`. Screenshots were opened and visually reviewed.
+
+Validation: 25 service/map Python tests and 10 client tests passed, including a
+regression separating real geometry encodings from ordinary descriptive prose.
+JavaScript syntax and diff whitespace checks passed. Astra reviewed the final
+changes with no blockers. No new multi-version browser study or full-city scale
+claim; this refresh is local, uncommitted and unreleased.
