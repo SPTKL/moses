@@ -203,6 +203,9 @@ class Catalog:
         x: str | None = None,
         y: str | None = None,
         crs: str | None = None,
+        infer_types: bool = False,
+        types: dict[str, str] | None = None,
+        format: str | None = None,
         provenance: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Capture source files and publish a release if logical content changed.
@@ -212,6 +215,8 @@ class Catalog:
         release readable. Orphaned immutable files after a failure are harmless.
         """
         from .ingest import read_vector
+        from .config import resolve_default_crs
+        from .recipes import canonical_types, import_recipe, selected_format
 
         self._validate_name(name)
         if key is not None and (not isinstance(key, str) or not key):
@@ -227,6 +232,26 @@ class Catalog:
         if not source.is_file():
             raise ValueError(f"Source is not a regular file: {source}")
         options = {"layer": layer, "x": x, "y": y, "crs": crs}
+        type_choices = canonical_types(types)
+        if type_choices:
+            options["types"] = type_choices
+        chosen, _ = selected_format(source, format)
+        if format is not None:
+            try:
+                inferred, _ = selected_format(source)
+            except ValueError:
+                inferred = None
+            if chosen != inferred:
+                options["format"] = chosen
+        # Keep the legacy options unchanged when no new behavior is requested,
+        # so an existing warehouse does not create releases merely on upgrade.
+        default_crs = resolve_default_crs(self.root)
+        if default_crs is not None:
+            options["default_crs"] = default_crs
+        # Only CSV/TSV readers infer types. Inapplicable flags must not change
+        # the effective recipe or create a release of identical native data.
+        if infer_types and chosen in {"CSV", "TSV"}:
+            options["infer_types"] = True
 
         with self._connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
@@ -241,6 +266,10 @@ class Catalog:
                 # The first read discovers every constituent file; the second
                 # reads exclusively from the captured, immutable copy.
                 _, discovered = read_vector(source, **options)
+                # An unused fallback is not part of the interpretation. Changing
+                # it must not release identical nonspatial/embedded-CRS data.
+                if discovered.get("crs_source") != "default":
+                    options.pop("default_crs", None)
                 source_files = self._source_paths(source, discovered)
                 before = {p: (p.stat().st_size, p.stat().st_mtime_ns) for p in source_files}
                 raw_stage = stage / "raw"
@@ -271,6 +300,7 @@ class Catalog:
                 if not isinstance(table, pa.Table) or not isinstance(meta, dict):
                     raise TypeError("read_vector must return an Arrow Table and metadata dictionary")
                 self._validate_key(table, key)
+                recipe = import_recipe(metadata=meta, options=options)
                 current = conn.execute(
                     "SELECT current_version FROM datasets WHERE name = ?", (name,)
                 ).fetchone()
@@ -336,6 +366,8 @@ class Catalog:
                     "schema": str(table.schema),
                     "geometry_column": meta.get("geometry_column"),
                     "crs": meta.get("crs"),
+                    "crs_source": meta.get("crs_source"),
+                    "warnings": meta.get("warnings", []),
                     "source_sha256": source_sha256,
                     "content_sha256": content_sha256,
                     "key": key,
@@ -345,6 +377,7 @@ class Catalog:
                     "source_files": [str(p) for p in source_files],
                     "raw_files": raw_files,
                     "options": options,
+                    "recipe": recipe,
                     "provenance": provenance,
                     "runtime_versions": _runtime_versions(),
                 }

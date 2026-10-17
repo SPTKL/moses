@@ -1,6 +1,6 @@
-"""Bounded, local vector ingestion for Moses.
+"""Bounded, local vector and tabular ingestion for Moses.
 
-Attributes read from CSV are deliberately kept as strings. This avoids losing
+CSV/TSV attributes default to strings, with conservative inference opt-in. This avoids losing
 identifier formatting (for example leading zeroes) before the caller applies a
 domain-specific schema.
 """
@@ -8,11 +8,14 @@ domain-specific schema.
 from __future__ import annotations
 
 import csv
+from decimal import Decimal, InvalidOperation
 import json
 import math
 from pathlib import Path
 from pathlib import PurePosixPath
+import shutil
 import struct
+import tempfile
 import zipfile
 from typing import Any
 
@@ -22,6 +25,8 @@ import pyarrow.parquet as pq
 import pyogrio
 import shapely
 from pyproj import CRS
+
+from .recipes import apply_types, canonical_types, selected_format
 
 
 _GEO_METADATA_KEY = b"geo"
@@ -117,32 +122,43 @@ def _with_canonical_geometry(
     return table
 
 
-def _read_csv(path: Path, x: str | None, y: str | None, crs: str | None) -> tuple[pa.Table, Any, str | None]:
+def _read_csv(
+    path: Path,
+    x: str | None,
+    y: str | None,
+    *,
+    delimiter: str = ",",
+    infer_types: bool = False,
+    types: dict[str, str] | None = None,
+) -> tuple[pa.Table, Any, str | None]:
     if (x is None) != (y is None):
         raise ValueError("x and y must be supplied together")
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         try:
-            headers = next(csv.reader(stream))
+            headers = next(csv.reader(stream, delimiter=delimiter))
         except StopIteration as exc:
             raise ValueError("CSV source is empty") from exc
+    if any(not name.strip() for name in headers):
+        raise ValueError("tabular source has an empty column name")
     if len(headers) != len(set(headers)):
-        raise ValueError("CSV source has duplicate column names")
+        raise ValueError("tabular source has duplicate column names")
     table = pacsv.read_csv(
         path,
+        parse_options=pacsv.ParseOptions(delimiter=delimiter),
         convert_options=pacsv.ConvertOptions(
             column_types={name: pa.string() for name in headers},
             strings_can_be_null=False,
         ),
     )
+    if infer_types:
+        table = _infer_tabular_types(table, exclude=set(types or {}))
+    table = apply_types(table, types, first_row=2)
     if x is None:
-        if crs is not None:
-            raise ValueError("crs can only be used for a CSV with x and y coordinates")
         return table, None, None
     if x not in table.column_names or y not in table.column_names:
         raise ValueError(f"coordinate columns {x!r} and {y!r} must exist")
     if "geometry" in table.column_names:
         raise ValueError("CSV already has a geometry column")
-    effective_crs = crs or "EPSG:4326"
     coords: list[bytes | None] = []
     for rowno, (raw_x, raw_y) in enumerate(zip(table[x].to_pylist(), table[y].to_pylist()), 2):
         sx = "" if raw_x is None else str(raw_x).strip()
@@ -160,7 +176,72 @@ def _read_csv(path: Path, x: str | None, y: str | None, crs: str | None) -> tupl
             raise ValueError(f"non-finite coordinates on CSV row {rowno}")
         coords.append(shapely.to_wkb(shapely.Point(xx, yy)))
     table = table.append_column("geometry", pa.array(coords, type=pa.binary()))
-    return table, effective_crs, "geometry"
+    return table, None, "geometry"
+
+
+def _infer_tabular_types(table: pa.Table, *, exclude: set[str] | None = None) -> pa.Table:
+    """Infer only unambiguous primitive types from complete string columns.
+
+    Empty cells, leading-zero identifiers, dates, mixed values, and integers
+    outside int64 remain strings. Empty strings therefore remain unchanged.
+    """
+    import re
+
+    bool_values = {"true", "false"}
+    int_pattern = re.compile(r"[+-]?(?:0|[1-9][0-9]*)\Z")
+    float_pattern = re.compile(r"[+-]?(?:(?:[0-9]+\.[0-9]*|\.[0-9]+)(?:[eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\Z")
+    result = table
+    for index, field in enumerate(table.schema):
+        if field.name in (exclude or set()):
+            continue
+        if not pa.types.is_string(field.type):
+            continue
+        values = table.column(index).to_pylist()
+        # Empty strings are meaningful in the default reader. Keep the whole
+        # column as text whenever any occur, rather than turning them into null.
+        if not values or any(value == "" for value in values):
+            continue
+        lowered = [value.casefold() for value in values]
+        if all(value in bool_values for value in lowered):
+            cast_type = pa.bool_()
+            cast_values = [value == "true" for value in lowered]
+        elif all(int_pattern.fullmatch(value) for value in values):
+            # Leading zeroes commonly encode identifiers, including signed
+            # values such as -001. Do not reinterpret them as numbers.
+            try:
+                cast_values = [int(value) for value in values]
+                if any(value < -(2**63) or value > 2**63 - 1 for value in cast_values):
+                    continue
+            except ValueError:
+                continue
+            cast_type = pa.int64()
+        elif all(float_pattern.fullmatch(value) for value in values):
+            # Preserve formatting that could identify a code even when a
+            # decimal point or exponent makes the token numeric-looking.
+            if any(
+                (mantissa := value.lstrip("+-").split("e")[0].split("E")[0]).split(".")[0].startswith("0")
+                and len(mantissa.split(".")[0]) > 1
+                for value in values
+            ):
+                continue
+            try:
+                cast_values = [float(value) for value in values]
+            except ValueError:
+                continue
+            if not all(math.isfinite(value) for value in cast_values):
+                continue
+            try:
+                if any(Decimal(str(parsed)) != Decimal(original) for original, parsed in zip(values, cast_values)):
+                    continue
+            except InvalidOperation:
+                continue
+            cast_type = pa.float64()
+        else:
+            continue
+        # Build from parsed values so a failed conversion never partially
+        # changes the source table.
+        result = result.set_column(index, field.name, pa.array(cast_values, type=cast_type))
+    return result
 
 
 def _source_layers(path: Path) -> list[str]:
@@ -272,11 +353,13 @@ def _validate_geojson(path: Path) -> None:
 def _validate_gpkg(path: Path) -> None:
     try:
         with path.open("rb") as stream:
-            header = stream.read(16)
+            header = stream.read(72)
     except OSError as exc:
         raise ValueError("could not read GeoPackage header") from exc
-    if header != b"SQLite format 3\x00":
+    if not header.startswith(b"SQLite format 3\x00"):
         raise ValueError("GeoPackage source has an invalid SQLite header")
+    if len(header) < 72 or header[68:72] != b"GPKG":
+        raise ValueError("SQLite source is not a GeoPackage")
 
 
 def read_vector(
@@ -286,25 +369,34 @@ def read_vector(
     x: str | None = None,
     y: str | None = None,
     crs: str | None = None,
+    default_crs: str | None = None,
+    infer_types: bool = False,
+    types: dict[str, str] | None = None,
+    format: str | None = None,
 ) -> tuple[pa.Table, dict[str, Any]]:
-    """Read one local vector source into an Arrow table with WKB geometry.
+    """Read a local source into Arrow, with canonical WKB for spatial data.
 
     This function never reprojects or repairs data. ``crs`` assigns a CRS only
-    when the source has none. CSV attributes remain strings to preserve IDs.
+    when the source has none. CSV/TSV attributes remain strings unless
+    ``infer_types`` opts into conservative full-column inference.
     """
     source = Path(path)
     if not source.is_file():
         raise FileNotFoundError(source)
-    ext = source.suffix.lower()
-    accepted_extensions = {".csv", ".parquet", ".geoparquet", ".geojson", ".json", ".gpkg", ".shp", ".zip"}
-    if ext not in accepted_extensions:
-        raise ValueError(f"unsupported vector source extension: {ext or '(none)'}")
-    if ext == ".csv":
+    types = canonical_types(types)
+    _, ext = selected_format(source, format)
+    warnings: list[str] = []
+    declared_geometry_types: list[str] | None = None
+    if ext in {".csv", ".tsv"}:
         if layer is not None:
-            raise ValueError("layer is not applicable to CSV sources")
-        table, src_crs, geom_name = _read_csv(source, x, y, crs)
+            raise ValueError("layer is not applicable to CSV/TSV sources")
+        if (x is None or y is None) and crs is not None:
+            raise ValueError("crs can only be used for CSV/TSV with x and y coordinates")
+        table, src_crs, geom_name = _read_csv(
+            source, x, y, delimiter="\t" if ext == ".tsv" else ",", infer_types=infer_types, types=types
+        )
         files = [str(source.resolve())]
-        fmt = "CSV"
+        fmt = "TSV" if ext == ".tsv" else "CSV"
     elif ext in {".parquet", ".geoparquet"}:
         if layer is not None:
             raise ValueError("layer is not applicable to Parquet sources")
@@ -313,39 +405,44 @@ def read_vector(
         table = pq.read_table(source)
         raw_geo = (table.schema.metadata or {}).get(_GEO_METADATA_KEY)
         if raw_geo is None:
-            raise ValueError("Parquet source has no GeoParquet metadata")
-        try:
-            geo = json.loads(raw_geo)
-            columns = geo["columns"]
-            if len(columns) != 1:
-                raise ValueError("multiple geometry columns are unsupported")
-            geom_name = geo.get("primary_column")
-            if geom_name not in columns or geom_name not in table.column_names:
-                raise ValueError("invalid GeoParquet primary geometry column")
-            if not pa.types.is_binary(table.schema.field(geom_name).type):
-                raise ValueError("GeoParquet WKB geometry column must use binary storage")
-            column_metadata = columns[geom_name]
-            if column_metadata.get("encoding") != "WKB":
-                raise ValueError("only GeoParquet WKB geometry encoding is supported")
-            if column_metadata.get("edges", "planar") != "planar":
-                raise ValueError("only planar GeoParquet edges are supported")
-            if "epoch" in column_metadata:
-                raise ValueError("GeoParquet coordinate epochs are unsupported")
-            declared_geometry_types = column_metadata.get("geometry_types", [])
-            allowed_types = _GEOPARQUET_GEOMETRY_TYPES | {f"{item} Z" for item in _GEOPARQUET_GEOMETRY_TYPES}
-            if not isinstance(declared_geometry_types, list) or not all(item in allowed_types for item in declared_geometry_types):
-                raise ValueError("invalid GeoParquet geometry_types metadata")
-            # GeoParquet's omitted crs member means OGC:CRS84; an explicit
-            # null member means the CRS is unknown.
-            src_crs = columns[geom_name].get("crs", "OGC:CRS84")
-            if src_crs is not None:
-                src_crs = CRS.from_user_input(src_crs)
-        except (KeyError, TypeError, json.JSONDecodeError) as exc:
-            raise ValueError("invalid GeoParquet metadata") from exc
-        fmt, files = "GeoParquet", [str(source.resolve())]
+            if crs is not None:
+                raise ValueError("crs requires a geometry column")
+            geom_name = None
+            src_crs = None
+            fmt, files = "Parquet", [str(source.resolve())]
+        else:
+            try:
+                geo = json.loads(raw_geo)
+                columns = geo["columns"]
+                if len(columns) != 1:
+                    raise ValueError("multiple geometry columns are unsupported")
+                geom_name = geo.get("primary_column")
+                if geom_name not in columns or geom_name not in table.column_names:
+                    raise ValueError("invalid GeoParquet primary geometry column")
+                if not pa.types.is_binary(table.schema.field(geom_name).type):
+                    raise ValueError("GeoParquet WKB geometry column must use binary storage")
+                column_metadata = columns[geom_name]
+                if column_metadata.get("encoding") != "WKB":
+                    raise ValueError("only GeoParquet WKB geometry encoding is supported")
+                if column_metadata.get("edges", "planar") != "planar":
+                    raise ValueError("only planar GeoParquet edges are supported")
+                if "epoch" in column_metadata:
+                    raise ValueError("GeoParquet coordinate epochs are unsupported")
+                declared_geometry_types = column_metadata.get("geometry_types", [])
+                allowed_types = _GEOPARQUET_GEOMETRY_TYPES | {f"{item} Z" for item in _GEOPARQUET_GEOMETRY_TYPES}
+                if not isinstance(declared_geometry_types, list) or not all(item in allowed_types for item in declared_geometry_types):
+                    raise ValueError("invalid GeoParquet geometry_types metadata")
+                # GeoParquet's omitted crs member means OGC:CRS84; an explicit
+                # null member means the CRS is unknown.
+                src_crs = columns[geom_name].get("crs", "OGC:CRS84")
+                if src_crs is not None:
+                    src_crs = CRS.from_user_input(src_crs)
+            except (KeyError, TypeError, json.JSONDecodeError) as exc:
+                raise ValueError("invalid GeoParquet metadata") from exc
+            fmt, files = "GeoParquet", [str(source.resolve())]
     else:
         if x is not None or y is not None:
-            raise ValueError("x and y are only supported for CSV sources")
+            raise ValueError("x and y are only supported for CSV/TSV sources")
         if ext == ".zip":
             _validate_shapefile_zip(source)
         elif ext == ".shp":
@@ -358,19 +455,34 @@ def read_vector(
             _validate_gpkg(source)
         elif ext in {".geojson", ".json"}:
             _validate_geojson(source)
-        layers = _source_layers(source)
-        if layer is None:
-            if len(layers) != 1:
-                raise ValueError(f"source has {len(layers)} layers; specify layer explicitly")
-            selected = layers[0]
-        else:
-            if layer not in layers:
-                raise ValueError(f"layer {layer!r} not found; available layers: {layers}")
-            selected = layer
+        # GDAL may dispatch by suffix even after our signature validation.
+        # Give an explicitly selected vector reader a local, correctly named
+        # copy so the allowlisted choice governs both layer discovery and read.
+        reader_source = source
+        reader_copy = None
+        if source.suffix.lower() not in {ext, ".json" if ext == ".geojson" else ext}:
+            if ext == ".shp":
+                raise ValueError("explicit Shapefile reader requires a .shp source with its sidecars")
+            reader_copy = tempfile.TemporaryDirectory(prefix="moses-reader-")
+            reader_source = Path(reader_copy.name) / f"source{ext}"
+            shutil.copy2(source, reader_source)
         try:
-            metadata, table = pyogrio.read_arrow(source, layer=selected)
-        except Exception as exc:
-            raise ValueError(f"could not read vector source {source}") from exc
+            layers = _source_layers(reader_source)
+            if layer is None:
+                if len(layers) != 1:
+                    raise ValueError(f"source has {len(layers)} layers; specify layer explicitly")
+                selected = layers[0]
+            else:
+                if layer not in layers:
+                    raise ValueError(f"layer {layer!r} not found; available layers: {layers}")
+                selected = layer
+            try:
+                metadata, table = pyogrio.read_arrow(reader_source, layer=selected)
+            except Exception as exc:
+                raise ValueError(f"could not read vector source {source}") from exc
+        finally:
+            if reader_copy is not None:
+                reader_copy.cleanup()
         geom_name = metadata.get("geometry_name") or None
         # Some OGR drivers (notably ESRI Shapefile) report an empty geometry
         # name even though read_arrow exposes the WKB field as wkb_geometry.
@@ -388,32 +500,50 @@ def read_vector(
         if len([field for field in table.schema if field.name not in set(metadata.get("fields", [])) and pa.types.is_binary(field.type)]) > 1:
             raise ValueError("multiple geometry columns are unsupported")
         src_crs = metadata.get("crs")
-        if source.suffix.lower() == ".zip":
+        if ext == ".zip":
             fmt, files = "Shapefile", [str(source.resolve())]
-        elif source.suffix.lower() == ".shp":
+        elif ext == ".shp":
             fmt, files = "Shapefile", _shapefile_sources(source)
-        elif source.suffix.lower() == ".gpkg":
+        elif ext == ".gpkg":
             fmt, files = "GeoPackage", [str(source.resolve())]
-        elif source.suffix.lower() in {".geojson", ".json"}:
+        elif ext in {".geojson", ".json"}:
             fmt, files = "GeoJSON", [str(source.resolve())]
         else:
             fmt, files = (source.suffix.lstrip(".").upper() or "Vector"), [str(source.resolve())]
+    if geom_name is not None and geom_name in types:
+        raise ValueError("geometry cannot receive a primitive type override")
+    if ext not in {".csv", ".tsv"}:
+        table = apply_types(table, types, first_row=1)
+    if geom_name is None and crs is not None:
+        raise ValueError("crs requires a geometry column")
+    crs_source: str | None = "source" if src_crs is not None else ("unknown" if geom_name is not None else None)
     if src_crs is not None and crs is not None:
         if not CRS.from_user_input(src_crs).equals(CRS.from_user_input(crs)):
             raise ValueError("supplied crs conflicts with the source CRS")
     elif src_crs is None and crs is not None:
         src_crs = crs
+        crs_source = "explicit"
+    elif src_crs is None and geom_name is not None and default_crs is not None:
+        src_crs = default_crs
+        crs_source = "default"
+        warnings.append("Assigned default CRS because the source has no CRS")
+    elif src_crs is None and ext in {".csv", ".tsv"} and geom_name is not None:
+        src_crs = "EPSG:4326"
+        crs_source = "legacy_csv_default"
+        warnings.append("CSV/TSV coordinates have no CRS; using the legacy EPSG:4326 fallback")
     if geom_name is not None:
         table = _with_canonical_geometry(
             table,
             geom_name,
             src_crs,
-            declared_geometry_types if ext in {".parquet", ".geoparquet"} else None,
+            declared_geometry_types if ext in {".parquet", ".geoparquet"} and geom_name is not None else None,
         )
     provenance = {
         "format": fmt,
-        "layer": layer if layer is not None else (selected if ext not in {".csv", ".parquet", ".geoparquet"} else None),
+        "layer": layer if layer is not None else (selected if ext not in {".csv", ".tsv", ".parquet", ".geoparquet"} else None),
         "crs": CRS.from_user_input(src_crs).to_string() if src_crs is not None else None,
+        "crs_source": crs_source,
+        "warnings": warnings,
         "geometry_column": "geometry" if geom_name is not None else None,
         "source_files": files,
     }

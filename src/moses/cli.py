@@ -18,14 +18,29 @@ def _json(value):
     return str(value)
 
 
+def _type_overrides(values):
+    from .recipes import canonical_types
+
+    choices = {}
+    for item in values:
+        field, separator, kind = item.partition("=")
+        if not separator or not field or not kind:
+            raise ValueError("--type must use FIELD=TYPE")
+        if field in choices:
+            raise ValueError(f"duplicate --type for field {field!r}")
+        choices[field] = kind
+    return canonical_types(choices)
+
+
 def parser():
     p = argparse.ArgumentParser(prog="moses", description="Local-first, versioned geospatial ELT")
     p.add_argument("--warehouse", "-w", default=".moses", help="Warehouse directory (default: .moses)")
     p.add_argument("--version", action="version", version="moses 0.1.0")
     sub = p.add_subparsers(dest="command", required=True)
-    sub.add_parser("init", help="Create a local warehouse")
+    init = sub.add_parser("init", help="Create a local warehouse")
+    init.add_argument("--default-crs", help="Fallback CRS for geometry without a source CRS")
     sub.add_parser("demo", help="Load a tiny bundled synthetic NYC example, offline")
-    load = sub.add_parser("load", help="Capture a local vector file as a versioned table")
+    load = sub.add_parser("load", help="Capture a local vector or tabular file as a versioned table")
     load.add_argument("source")
     load.add_argument("--name", required=True)
     load.add_argument("--key")
@@ -33,6 +48,20 @@ def parser():
     load.add_argument("--x")
     load.add_argument("--y")
     load.add_argument("--crs")
+    load.add_argument("--infer-types", action="store_true", help="Conservatively infer CSV/TSV types using all rows")
+    load.add_argument("--type", dest="types", action="append", default=[], metavar="FIELD=TYPE",
+                      help="Override one column with string, bool, int64, or float64; repeatable")
+    load.add_argument("--format", help="Explicit supported reader: CSV, TSV, Parquet, GeoJSON, GeoPackage, Shapefile")
+    inspect = sub.add_parser("inspect", help="Inspect a local file without publishing a version (full-file read)")
+    inspect.add_argument("source")
+    inspect.add_argument("--layer")
+    inspect.add_argument("--x")
+    inspect.add_argument("--y")
+    inspect.add_argument("--crs")
+    inspect.add_argument("--infer-types", action="store_true")
+    inspect.add_argument("--type", dest="types", action="append", default=[], metavar="FIELD=TYPE")
+    inspect.add_argument("--format")
+    inspect.add_argument("--preview-rows", type=int, default=10)
     sub.add_parser("list", help="List current datasets")
     history = sub.add_parser("history", help="List accepted dataset versions")
     history.add_argument("name")
@@ -82,15 +111,32 @@ def resolve_version(catalog, name, version=None):
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        # Inspection must not create a catalog or warehouse as a side effect.
+        if args.command == "inspect":
+            from .config import resolve_default_crs
+            from .inspection import inspect_source
+            result = inspect_source(
+                args.source, layer=args.layer, x=args.x, y=args.y, crs=args.crs,
+                default_crs=resolve_default_crs(args.warehouse),
+                infer_types=args.infer_types, preview_rows=args.preview_rows,
+                types=_type_overrides(args.types), format=args.format,
+            )
+            print(json.dumps(result, indent=2, default=_json, allow_nan=False))
+            return 0
+        if args.command == "init" and args.default_crs is not None:
+            from .config import set_default_crs
+            set_default_crs(args.warehouse, args.default_crs)
         catalog = Catalog(args.warehouse)
         match args.command:
             case "init":
-                result = {"warehouse": str(Path(args.warehouse).resolve())}
+                from .config import resolve_default_crs
+                result = {"warehouse": str(Path(args.warehouse).resolve()),
+                          "default_crs": resolve_default_crs(args.warehouse)}
             case "demo":
                 fixture = files("moses").joinpath("examples/places.geojson")
                 result = catalog.ingest(str(fixture), name="places", key="id", provenance={"description": "Synthetic NYC example; not official city data"})
             case "load":
-                result = catalog.ingest(args.source, name=args.name, key=args.key, layer=args.layer, x=args.x, y=args.y, crs=args.crs)
+                result = catalog.ingest(args.source, name=args.name, key=args.key, layer=args.layer, x=args.x, y=args.y, crs=args.crs, infer_types=args.infer_types, types=_type_overrides(args.types), format=args.format)
             case "list":
                 result = catalog.datasets()
             case "history":
