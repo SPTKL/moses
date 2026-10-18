@@ -1,0 +1,12 @@
+moses_pluto:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: __DATABASE_PATH__
+      schema: moses_stage
+      threads: 1
+      settings:
+        enable_external_access: false
+        autoinstall_known_extensions: false
+        autoload_known_extensions: false

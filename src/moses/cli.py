@@ -38,6 +38,8 @@ def parser():
     p.add_argument("--warehouse", "-w", default=".moses", help="Warehouse directory (default: .moses)")
     p.add_argument("--version", action="version", version="moses 0.1.0")
     sub = p.add_subparsers(dest="command", required=True)
+    from .pluto.cli import add_parser as add_pluto_parser
+    add_pluto_parser(sub)
     init = sub.add_parser("init", help="Create a local warehouse")
     init.add_argument("--default-crs", help="Fallback CRS for geometry without a source CRS")
     serve = sub.add_parser("serve", help="Serve the local catalog GUI and authenticated read-only API")
@@ -115,6 +117,9 @@ def resolve_version(catalog, name, version=None):
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "pluto":
+            from .pluto.cli import execute
+            return execute(args)
         if args.command == "serve":
             from .service import create_server
 

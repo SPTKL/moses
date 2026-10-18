@@ -46,6 +46,27 @@ offline background. An optional OpenStreetMap basemap discloses external tile
 requests. This is a local read-only tool; uploads, SQL and multilayer workspaces
 remain planned. See [local service](docs/local-service.md) for limits and routes.
 
+## PLUTO candidate build
+
+The [PLUTO case study](examples/pluto/README.md) exercises bounded real NYCPlanning sources through inspection, versioned ingestion, SQL, lock/replay and export. Its [results](docs/pluto-integration-results.md), [38-input source inventory](docs/pluto-source-inventory.md), and [delivery plan](docs/pluto-delivery-plan.md) distinguish tested samples from the remaining work to reproduce a complete PLUTO build.
+
+The [full PLUTO candidate build](docs/pluto-full-build.md) runs the pinned 26v2
+transformation through dbt-duckdb, including allocation, CAMA, geometry, zoning,
+corrections, exports and QA. Its [readable SQL project](src/moses/pluto/dbt_full/README.md)
+consolidates 405 operation models into 38 business models. Ordered local CTEs
+retain process dependencies; shared macros remove repeated source cleanup,
+correction rules and QA calculations.
+`moses pluto build` prepares locked sources, generates a distinct candidate and
+records comparison evidence. Install `.[pluto]` for the dbt runner. Historical
+normalized-input and Geosupport runtime parity remain unproven. The earlier
+[two-stage guide](docs/pluto-dbt-rebuild.md) retains acquisition and stage evidence.
+
+`moses pluto fetch-production` captures the published release metadata, archived
+sources and exact-commit seeds, then normalizes and ingests them with resumable
+reports. The 26v2 run locked 38 source datasets and 11 seeds; 32 sources are
+explicitly provisional raw reconstructions. The full PTS stage passed on
+1,167,836 rows. See the rebuild guide for readiness gaps and replay commands.
+
 ## Real NYC Open Data
 
 ```sh

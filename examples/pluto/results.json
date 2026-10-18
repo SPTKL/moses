@@ -1,0 +1,1289 @@
+{
+  "started_at": "2026-10-17T16:03:29.039754+00:00",
+  "case_study": "bounded-real-pluto-inputs",
+  "full_build": false,
+  "mode": "live_capture",
+  "limit_per_remote_source": 100,
+  "data_engineering_commit": "5b849eebf4afbe282f30944cfbedd918bc51ad81",
+  "moses_commit": "8ca72bf2106545c98ef9531a5fafa678650c5f76",
+  "work_directory": ".moses/pluto-case-study/run-jd2z5req",
+  "moses_source_sha256": {
+    "src/moses/__init__.py": "e861cef4cb30fefe94038e6fc7e14bc3d0800599a758d46e545076041735fa71",
+    "src/moses/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/moses/catalog.py": "dd73c32b604be02fe608d7fd919d7f7b39b01a9433957cc115a31a43ffbb84d1",
+    "src/moses/cli.py": "bce4983d553d49b1e168af06ad9d92ce0ba491c1637549c3d3dff8d29da4188b",
+    "src/moses/config.py": "f3b19450fd2b0f1ab03f7a9382e463d01b16ac9186ae0983a226ccdbbea6c78e",
+    "src/moses/destinations/__init__.py": "91bcba24d2fe6059eb6974f1129722be988978d893496db110a87b3c578c9237",
+    "src/moses/destinations/ducklake.py": "e905b3c420d8c0ae90a6c2a36a5823adbfbcfc0babc351ea1e14fd067c3c60bc",
+    "src/moses/destinations/s3.py": "30b7043a2cb146f410bd6e33d8bc96aa154615716366b91e40160851cd93629c",
+    "src/moses/ingest.py": "718e6a50dce837694a1b21c43f98f0dea6dd68287811a56e3c19921f6c351a14",
+    "src/moses/inspection.py": "bcf2396cc5357d34d9599105593bc8b38eac48aeeeaa9eaef56e62aab2cd9374",
+    "src/moses/sources.py": "efd950ea27d32954305b0bdf9110284e63a09f4869495a6d12853eb8cee4424b"
+  },
+  "scope": "Source normalization and local version lifecycle only. No recipe transformation, PostGIS, dbt, Geosupport, Axway, or full-city scale validation.",
+  "datasets": [
+    {
+      "name": "pluto_public_sample",
+      "dataset_id": "64uk-42ks",
+      "format": "csv",
+      "key": "bbl",
+      "recipe_evidence": "ingest_templates/dcp_pluto.yml",
+      "scope": "Alternate live public PLUTO distribution; not the versioned DCP ZIP required by the production previous_pluto input.",
+      "provenance": {
+        "source": "Socrata CSV (case-study adapter)",
+        "dataset_id": "64uk-42ks",
+        "url": "https://data.cityofnewyork.us/resource/64uk-42ks.csv?%24limit=100&%24order=%3Aid",
+        "query": {
+          "$limit": 100,
+          "$order": ":id"
+        },
+        "retrieved_at": "2026-10-17T16:03:29.391233+00:00",
+        "content_type": "text/csv; charset=UTF-8",
+        "snapshot_atomic": false,
+        "capture_sha256": "e8e6d4bcd89c2495d55fc1d74c55015b7a8a785892f6a2460ff6b344a4a437ba",
+        "recipe_evidence": "ingest_templates/dcp_pluto.yml",
+        "scope": "Alternate live public PLUTO distribution; not the versioned DCP ZIP required by the production previous_pluto input."
+      },
+      "status": "passed",
+      "inspection": {
+        "format": "CSV",
+        "detection": {
+          "method": "filename_suffix",
+          "suffix": ".csv",
+          "supported_suffixes": [
+            ".csv",
+            ".tsv",
+            ".parquet",
+            ".geoparquet",
+            ".geojson",
+            ".json",
+            ".gpkg",
+            ".shp",
+            ".zip"
+          ]
+        },
+        "row_count": 100,
+        "schema": [
+          {
+            "name": "borough",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "block",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lot",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "cd",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "ct2010",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "cb2010",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "schooldist",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "council",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zipcode",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "firecomp",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "policeprct",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "healtharea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "sanitboro",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "sanitsub",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "address",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zonedist1",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zonedist2",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zonedist3",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zonedist4",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "overlay1",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "overlay2",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "spdist1",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "spdist2",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "spdist3",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "ltdheight",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "splitzone",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bldgclass",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "landuse",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "easements",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "ownertype",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "ownername",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lotarea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bldgarea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "comarea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "resarea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "officearea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "retailarea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "garagearea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "strgearea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "factryarea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "otherarea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "areasource",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "numbldgs",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "numfloors",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "unitsres",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "unitstotal",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lotfront",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lotdepth",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bldgfront",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bldgdepth",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "ext",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "proxcode",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "irrlotcode",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lottype",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bsmtcode",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "assessland",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "assesstot",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "exempttot",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "yearbuilt",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "yearalter1",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "yearalter2",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "histdist",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "landmark",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "builtfar",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "residfar",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "commfar",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "facilfar",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "affresfar",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "mnffar",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "borocode",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bbl",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "condono",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "tract2010",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "xcoord",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "ycoord",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "latitude",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "longitude",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zonemap",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zmcode",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "sanborn",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "taxmap",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "edesignum",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "appbbl",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "appdate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "plutomapid",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "version",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "sanitdistrict",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "healthcenterdistrict",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "firm07_flag",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "pfirm15_flag",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "dcpedited",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "notes",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bct2020",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bctcb2020",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "mih_opt1",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "mih_opt2",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "mih_opt3",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "mih_opt4",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "transitzone",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "geom",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "basempdate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "dcasdate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "edesigdate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "landmkdate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "masdate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "polidate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "rpaddate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zoningdate",
+            "type": "string",
+            "nullable": true
+          }
+        ],
+        "preview": [],
+        "crs": null,
+        "crs_source": null,
+        "geometry_column": null,
+        "coordinate_candidates": [
+          {
+            "x": "longitude",
+            "y": "latitude"
+          }
+        ],
+        "layer": null,
+        "warnings": [
+          "Coordinate field candidates are suggestions only; Moses does not select a coordinate pair automatically."
+        ],
+        "scan": "full_file"
+      },
+      "version": "20261017T160329411283Z-27afa4dc",
+      "capture_sha256": "e8e6d4bcd89c2495d55fc1d74c55015b7a8a785892f6a2460ff6b344a4a437ba",
+      "source_sha256": "de60100acc92b9f2f223deabe3ea35755de2eb77262f4df0b3f6570b85958020",
+      "content_sha256": "bba886a61449b0f4136e64e879cacc5d124c814312572d4da9d7674af5d03e8a",
+      "runtime_versions": {
+        "pyarrow": "26.0.0",
+        "sqlite": "3.53.1",
+        "duckdb": "1.5.6",
+        "pyogrio": "0.13.0",
+        "shapely": "2.2.0",
+        "pyproj": "3.8.0"
+      },
+      "repeat_unchanged": true,
+      "observations": 2,
+      "query_row_count": 100,
+      "export_verified": true,
+      "export_sha256": "8ea5493ab778db13b03844cbcbc28cc7038e4fdff491b5fcc311faf49d0e3528",
+      "export_version": "20261017T160329411283Z-27afa4dc"
+    },
+    {
+      "name": "lpc_landmarks",
+      "dataset_id": "ncre-qhxs",
+      "format": "geojson",
+      "key": null,
+      "recipe_evidence": "ingest_templates/lpc_landmarks.yml",
+      "scope": "Exact public endpoint from recipe template; bounded capture without production rename/date-coercion steps. BBL is not a unique landmark key.",
+      "provenance": {
+        "source": "Socrata",
+        "domain": "data.cityofnewyork.us",
+        "dataset_id": "ncre-qhxs",
+        "url": "https://data.cityofnewyork.us/resource/ncre-qhxs.geojson",
+        "query": {
+          "$order": ":id",
+          "$limit": 100,
+          "paging": "offset"
+        },
+        "request_urls": [
+          "https://data.cityofnewyork.us/resource/ncre-qhxs.geojson?%24limit=100&%24offset=0&%24order=%3Aid"
+        ],
+        "record_count": 100,
+        "retrieved_at": "2026-10-17T16:03:30.876621+00:00",
+        "destination": ".moses/pluto-case-study/run-jd2z5req/captures/lpc_landmarks.geojson",
+        "snapshot_atomic": false,
+        "file_write_atomic": true,
+        "capture_sha256": "426557777758909d6b28be06bb305acc298ddec1325f728a4e1721225d3d912b",
+        "recipe_evidence": "ingest_templates/lpc_landmarks.yml",
+        "scope": "Exact public endpoint from recipe template; bounded capture without production rename/date-coercion steps. BBL is not a unique landmark key."
+      },
+      "status": "passed",
+      "inspection": {
+        "format": "GeoJSON",
+        "detection": {
+          "method": "filename_suffix",
+          "suffix": ".geojson",
+          "supported_suffixes": [
+            ".csv",
+            ".tsv",
+            ".parquet",
+            ".geoparquet",
+            ".geojson",
+            ".json",
+            ".gpkg",
+            ".shp",
+            ".zip"
+          ]
+        },
+        "row_count": 100,
+        "schema": [
+          {
+            "name": "pluto_addr",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bct2020",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "last_actio",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "latitude",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "caldate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "cd",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "boundaries",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "vacant_lot",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "public_hea",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bbl",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "council",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "desig_addr",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "count_bldg",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "longitude",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "desdate",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bin_number",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "block",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lm_type",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "hist_distr",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "other_hear",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lot",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lp_number",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "nta2020",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "non_bldg",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "most_curre",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "boroughid",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lm_name",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "secnd_bldg",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "geometry",
+            "type": "binary",
+            "nullable": true
+          }
+        ],
+        "preview": [],
+        "crs": "EPSG:4326",
+        "crs_source": "source",
+        "geometry_column": "geometry",
+        "coordinate_candidates": [
+          {
+            "x": "longitude",
+            "y": "latitude"
+          }
+        ],
+        "layer": "lpc_landmarks",
+        "warnings": [
+          "Coordinate field candidates are suggestions only; Moses does not select a coordinate pair automatically."
+        ],
+        "scan": "full_file"
+      },
+      "version": "20261017T160330902050Z-4736fd4c",
+      "capture_sha256": "426557777758909d6b28be06bb305acc298ddec1325f728a4e1721225d3d912b",
+      "source_sha256": "47c2e64d1e08dd5f50430211ce28e924cc71ee02304579f8f996cfc3c47c2e68",
+      "content_sha256": "df19a2b495a96a979521ff21c8b745ca770cdd7d7c6c5665fda1c6aec832c5bb",
+      "runtime_versions": {
+        "pyarrow": "26.0.0",
+        "sqlite": "3.53.1",
+        "duckdb": "1.5.6",
+        "pyogrio": "0.13.0",
+        "shapely": "2.2.0",
+        "pyproj": "3.8.0"
+      },
+      "repeat_unchanged": true,
+      "observations": 2,
+      "query_row_count": 100,
+      "export_verified": true,
+      "export_sha256": "5956a07273b38cf3d4fb68c7c44822a587954de29348ff8d9d376ead61ebd232",
+      "export_version": "20261017T160330902050Z-4736fd4c"
+    },
+    {
+      "name": "dpr_greenthumb",
+      "dataset_id": "p78i-pat6",
+      "format": "csv",
+      "key": null,
+      "recipe_evidence": "ingest_templates/dpr_greenthumb.yml",
+      "scope": "Same public dataset as recipe; CSV attribute representation only, not the recipe GeoJSON/geometry transformation.",
+      "provenance": {
+        "source": "Socrata CSV (case-study adapter)",
+        "dataset_id": "p78i-pat6",
+        "url": "https://data.cityofnewyork.us/resource/p78i-pat6.csv?%24limit=100&%24order=%3Aid",
+        "query": {
+          "$limit": 100,
+          "$order": ":id"
+        },
+        "retrieved_at": "2026-10-17T16:03:32.648842+00:00",
+        "content_type": "text/csv; charset=UTF-8",
+        "snapshot_atomic": false,
+        "capture_sha256": "b0e789c28e0be6a83a2b8bcf787f0fb302c9b338d12372334db64c2ce157f4d6",
+        "recipe_evidence": "ingest_templates/dpr_greenthumb.yml",
+        "scope": "Same public dataset as recipe; CSV attribute representation only, not the recipe GeoJSON/geometry transformation."
+      },
+      "status": "passed",
+      "inspection": {
+        "format": "CSV",
+        "detection": {
+          "method": "filename_suffix",
+          "suffix": ".csv",
+          "supported_suffixes": [
+            ".csv",
+            ".tsv",
+            ".parquet",
+            ".geoparquet",
+            ".geojson",
+            ".json",
+            ".gpkg",
+            ".shp",
+            ".zip"
+          ]
+        },
+        "row_count": 100,
+        "schema": [
+          {
+            "name": "assemblydist",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "address",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "borough",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "communityboard",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "congressionaldist",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "coundist",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "gardenname",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "juris",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "multipolygon",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "openhrsf",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "openhrsm",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "openhrssa",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "openhrssu",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "openhrsth",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "openhrstu",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "openhrsw",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "parksid",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "policeprecinct",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "statesenatedist",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "zipcode",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "bbl",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "nta",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "censustract",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lat",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "lon",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "crossstreets",
+            "type": "string",
+            "nullable": true
+          }
+        ],
+        "preview": [],
+        "crs": null,
+        "crs_source": null,
+        "geometry_column": null,
+        "coordinate_candidates": [
+          {
+            "x": "lon",
+            "y": "lat"
+          }
+        ],
+        "layer": null,
+        "warnings": [
+          "Coordinate field candidates are suggestions only; Moses does not select a coordinate pair automatically."
+        ],
+        "scan": "full_file"
+      },
+      "version": "20261017T160332653787Z-48e9f502",
+      "capture_sha256": "b0e789c28e0be6a83a2b8bcf787f0fb302c9b338d12372334db64c2ce157f4d6",
+      "source_sha256": "0a276807644d6f0644fe3a313f6118da28f8cd6874d651ca5be867f98e7284dc",
+      "content_sha256": "d39206200e2db5b982bd6db77ca22a0e3882771e5866dfc80afdbe1479b2ae77",
+      "runtime_versions": {
+        "pyarrow": "26.0.0",
+        "sqlite": "3.53.1",
+        "duckdb": "1.5.6",
+        "pyogrio": "0.13.0",
+        "shapely": "2.2.0",
+        "pyproj": "3.8.0"
+      },
+      "repeat_unchanged": true,
+      "observations": 2,
+      "query_row_count": 100,
+      "export_verified": true,
+      "export_sha256": "f2d90212a732e2c3a18c68b6d90749721ef1a1e518919b4f36f8fbe0f0f1f5b3",
+      "export_version": "20261017T160332653787Z-48e9f502"
+    },
+    {
+      "name": "pluto_input_landuse_bldgclass",
+      "format": "csv",
+      "key": "bldgclass",
+      "recipe_evidence": "products/pluto/seeds/_seeds.yml",
+      "scope": "Complete real repository lookup seed; not sampled.",
+      "provenance": {
+        "source": "NYCPlanning/data-engineering repository seed",
+        "repository_path": "products/pluto/seeds/pluto_input_landuse_bldgclass.csv",
+        "repository_commit": "5b849eebf4afbe282f30944cfbedd918bc51ad81",
+        "captured_at": "2026-10-17T16:03:32.673637+00:00",
+        "capture_sha256": "53c146b1c31390c6b9a6550708ded8e676513d9d92c2f483a60407ad39cc8e95",
+        "recipe_evidence": "products/pluto/seeds/_seeds.yml",
+        "scope": "Complete real repository lookup seed; not sampled."
+      },
+      "status": "passed",
+      "inspection": {
+        "format": "CSV",
+        "detection": {
+          "method": "filename_suffix",
+          "suffix": ".csv",
+          "supported_suffixes": [
+            ".csv",
+            ".tsv",
+            ".parquet",
+            ".geoparquet",
+            ".geojson",
+            ".json",
+            ".gpkg",
+            ".shp",
+            ".zip"
+          ]
+        },
+        "row_count": 221,
+        "schema": [
+          {
+            "name": "bldgclass",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "landuse",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "landusevalue",
+            "type": "string",
+            "nullable": true
+          }
+        ],
+        "preview": [],
+        "crs": null,
+        "crs_source": null,
+        "geometry_column": null,
+        "coordinate_candidates": [],
+        "layer": null,
+        "warnings": [],
+        "scan": "full_file"
+      },
+      "version": "20261017T160332676026Z-f8138086",
+      "capture_sha256": "53c146b1c31390c6b9a6550708ded8e676513d9d92c2f483a60407ad39cc8e95",
+      "source_sha256": "a3a0f8e96d60fd97b79ab39aea7b0db2ed487c057d4751d154a2316f93fd951b",
+      "content_sha256": "c9a7a63524552b69e7be6ba04d44dfe0e60c3d1292fe39fdd175ee8032cd1be3",
+      "runtime_versions": {
+        "pyarrow": "26.0.0",
+        "sqlite": "3.53.1",
+        "duckdb": "1.5.6",
+        "pyogrio": "0.13.0",
+        "shapely": "2.2.0",
+        "pyproj": "3.8.0"
+      },
+      "repeat_unchanged": true,
+      "observations": 2,
+      "query_row_count": 221,
+      "export_verified": true,
+      "export_sha256": "196463100c4775a383a4408a6503324c20f1da7d658b130576cdabb41d832b4e",
+      "export_version": "20261017T160332676026Z-f8138086"
+    }
+  ],
+  "failures": [],
+  "lock_replay": {
+    "status": "passed",
+    "versions": {
+      "dpr_greenthumb": "20261017T160332653787Z-48e9f502",
+      "lpc_landmarks": "20261017T160330902050Z-4736fd4c",
+      "pluto_input_landuse_bldgclass": "20261017T160332676026Z-f8138086",
+      "pluto_public_sample": "20261017T160329411283Z-27afa4dc"
+    },
+    "sql": "SELECT p.bldgclass, s.landuse AS seed_landuse, count(*) AS sampled_parcels\n                 FROM pluto_public_sample p LEFT JOIN pluto_input_landuse_bldgclass s\n                 ON p.bldgclass = s.bldgclass GROUP BY p.bldgclass, s.landuse\n                 ORDER BY p.bldgclass, s.landuse",
+    "result": [
+      {
+        "bldgclass": "A0",
+        "seed_landuse": "01",
+        "sampled_parcels": 25
+      },
+      {
+        "bldgclass": "A1",
+        "seed_landuse": "01",
+        "sampled_parcels": 32
+      },
+      {
+        "bldgclass": "A2",
+        "seed_landuse": "01",
+        "sampled_parcels": 9
+      },
+      {
+        "bldgclass": "A5",
+        "seed_landuse": "01",
+        "sampled_parcels": 17
+      },
+      {
+        "bldgclass": "A9",
+        "seed_landuse": "01",
+        "sampled_parcels": 1
+      },
+      {
+        "bldgclass": "B1",
+        "seed_landuse": "01",
+        "sampled_parcels": 5
+      },
+      {
+        "bldgclass": "B2",
+        "seed_landuse": "01",
+        "sampled_parcels": 4
+      },
+      {
+        "bldgclass": "K4",
+        "seed_landuse": "04",
+        "sampled_parcels": 3
+      },
+      {
+        "bldgclass": "O1",
+        "seed_landuse": "05",
+        "sampled_parcels": 1
+      },
+      {
+        "bldgclass": "S1",
+        "seed_landuse": "04",
+        "sampled_parcels": 1
+      },
+      {
+        "bldgclass": "S3",
+        "seed_landuse": "04",
+        "sampled_parcels": 1
+      },
+      {
+        "bldgclass": "S9",
+        "seed_landuse": "04",
+        "sampled_parcels": 1
+      }
+    ],
+    "same_result": true,
+    "limitation": "Replays retained snapshots in the same warehouse; upstream changes and a cross-engine/full-build replay were not tested."
+  },
+  "seed_identifier_check": {
+    "landuse_arrow_type": "string",
+    "leading_zero_codes_preserved": true
+  },
+  "evidence_queries": {
+    "pluto_publisher_versions": {
+      "sql": "SELECT version, count(*) AS rows FROM pluto_public_sample GROUP BY version ORDER BY version",
+      "result": [
+        {
+          "version": "26v2",
+          "rows": 100
+        }
+      ]
+    },
+    "unmatched_building_classes": {
+      "sql": "SELECT count(*) AS rows FROM pluto_public_sample p LEFT JOIN pluto_input_landuse_bldgclass s ON p.bldgclass = s.bldgclass WHERE s.bldgclass IS NULL",
+      "result": [
+        {
+          "rows": 0
+        }
+      ]
+    },
+    "landmark_key_cardinality": {
+      "sql": "SELECT count(*) AS rows, count(DISTINCT bbl) AS distinct_bbl FROM lpc_landmarks",
+      "result": [
+        {
+          "rows": 100,
+          "distinct_bbl": 99
+        }
+      ]
+    },
+    "blank_pluto_bbl": {
+      "sql": "SELECT count(*) AS rows FROM pluto_public_sample WHERE bbl = '' OR bbl IS NULL",
+      "result": [
+        {
+          "rows": 0
+        }
+      ]
+    }
+  },
+  "finished_at": "2026-10-17T16:03:32.761831+00:00",
+  "status": "passed",
+  "publication_path_policy": "Absolute workspace paths replaced with Moses repository-relative paths; ../data-engineering identifies the read-only sibling source checkout. Original local evidence is retained outside Git."
+}

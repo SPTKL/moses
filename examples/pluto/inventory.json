@@ -1,0 +1,3500 @@
+{
+  "schema_version": 1,
+  "inventory_date": "2026-10-17",
+  "source_repository": "NYCPlanning/data-engineering",
+  "source_commit": "5b849eebf4afbe282f30944cfbedd918bc51ad81",
+  "evidence_scope": "Static repository analysis; not a claim that endpoints, credentials, or full PLUTO reproduction were tested. Local data-engineering checkout was clean when inspected.",
+  "dataset_count": 38,
+  "source_type_counts": {
+    "file_download": 15,
+    "edm.publishing.gis": 11,
+    "socrata": 6,
+    "arcgis_feature_server": 2,
+    "s3": 1,
+    "axway": 3
+  },
+  "recipe": {
+    "major": {
+      "name": "Pluto Major",
+      "version_strategy": "bump_latest_release",
+      "version_type": "major",
+      "product": "db-pluto",
+      "inputs": {
+        "missing_versions_strategy": "find_latest",
+        "datasets": [
+          {
+            "name": "dcp_councildistricts_wi"
+          },
+          {
+            "name": "dcp_cb2010_wi"
+          },
+          {
+            "name": "dcp_cb2020_wi"
+          },
+          {
+            "name": "dcp_cdboundaries_wi"
+          },
+          {
+            "name": "dcp_colp"
+          },
+          {
+            "name": "dcp_commercialoverlay"
+          },
+          {
+            "name": "dcp_ct2010_wi"
+          },
+          {
+            "name": "dcp_ct2020_wi"
+          },
+          {
+            "name": "dcp_developments"
+          },
+          {
+            "name": "dcp_edesignation"
+          },
+          {
+            "name": "dcp_firecompanies"
+          },
+          {
+            "name": "dcp_gis_mandatory_inclusionary_housing"
+          },
+          {
+            "name": "dcp_transit_zones"
+          },
+          {
+            "name": "dcp_healthareas"
+          },
+          {
+            "name": "dcp_healthcenters"
+          },
+          {
+            "name": "dcp_limitedheight"
+          },
+          {
+            "name": "dcp_pluto",
+            "version_env_var": "VERSION_PREV",
+            "import_as": "previous_pluto"
+          },
+          {
+            "name": "dcp_pfirms"
+          },
+          {
+            "name": "dcp_policeprecincts"
+          },
+          {
+            "name": "dcp_school_districts"
+          },
+          {
+            "name": "dcp_specialpurpose"
+          },
+          {
+            "name": "dcp_specialpurposesubdistricts"
+          },
+          {
+            "name": "dcp_zoningdistricts"
+          },
+          {
+            "name": "dcp_zoningmapamendments"
+          },
+          {
+            "name": "dcp_zoningmapindex"
+          },
+          {
+            "name": "dof_condo"
+          },
+          {
+            "name": "dof_dtm"
+          },
+          {
+            "name": "dof_shoreline"
+          },
+          {
+            "name": "doitt_zipcodeboundaries",
+            "file_type": "parquet"
+          },
+          {
+            "name": "dpr_greenthumb"
+          },
+          {
+            "name": "dsny_frequencies"
+          },
+          {
+            "name": "fema_firms2007_100yr",
+            "file_type": "parquet"
+          },
+          {
+            "name": "lpc_historic_districts"
+          },
+          {
+            "name": "lpc_landmarks"
+          },
+          {
+            "name": "pluto_input_cama_dof"
+          },
+          {
+            "name": "pluto_input_geocodes"
+          },
+          {
+            "name": "pluto_input_numbldgs"
+          },
+          {
+            "name": "pluto_pts"
+          }
+        ]
+      },
+      "stage_config": {
+        "builds.build": {
+          "commands": [
+            {
+              "name": "setup",
+              "run": "bash pluto_build/00_setup.sh",
+              "command_type": "shell"
+            },
+            {
+              "name": "dbt_staging",
+              "run": "bash pluto_build/01a_dbt_staging.sh",
+              "command_type": "shell"
+            },
+            {
+              "name": "build",
+              "run": "bash pluto_build/02_build.sh",
+              "command_type": "shell"
+            },
+            {
+              "name": "corrections",
+              "run": "bash pluto_build/03_corrections.sh",
+              "command_type": "shell"
+            },
+            {
+              "name": "archive",
+              "run": "bash pluto_build/04_archive.sh",
+              "command_type": "shell"
+            },
+            {
+              "name": "qaqc",
+              "run": "bash pluto_build/05_qaqc.sh",
+              "command_type": "shell"
+            },
+            {
+              "name": "custom_qaqc",
+              "run": "bash pluto_build/07_custom_qaqc.sh",
+              "command_type": "shell"
+            }
+          ]
+        }
+      }
+    },
+    "minor": {
+      "name": "Pluto Minor",
+      "base_recipe": "recipe.yml",
+      "version_type": "minor",
+      "version_strategy": "bump_latest_release",
+      "product": "db-pluto",
+      "inputs": {
+        "missing_versions_strategy": "copy_latest_release",
+        "datasets": [
+          {
+            "name": "dcp_edesignation",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_commercialoverlay",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_limitedheight",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_zoningdistricts",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_specialpurpose",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_specialpurposesubdistricts",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_zoningmapamendments",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_zoningmapindex",
+            "version": "latest"
+          },
+          {
+            "name": "dcp_pluto",
+            "version_env_var": "VERSION_PREV",
+            "import_as": "previous_pluto"
+          },
+          {
+            "name": "dcp_developments",
+            "version": "latest"
+          }
+        ]
+      }
+    },
+    "resolved_build_artifact_preference": [
+      "pg_dump",
+      "parquet",
+      "csv"
+    ],
+    "explicit_parquet_inputs": [
+      "doitt_zipcodeboundaries",
+      "fema_firms2007_100yr"
+    ]
+  },
+  "datasets": [
+    {
+      "name": "dcp_councildistricts_wi",
+      "build_import_name": "dcp_councildistricts_wi",
+      "recipe_entry": {
+        "name": "dcp_councildistricts_wi"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/city-council/nyccwi_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/city-council/nyccwi_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nyccwi_{{ version }}/nyccwi.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "coundist",
+          "data_type": "integer"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_councildistricts_wi.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_councildistricts_wi.yml"
+      }
+    },
+    {
+      "name": "dcp_cb2010_wi",
+      "build_import_name": "dcp_cb2010_wi",
+      "recipe_entry": {
+        "name": "dcp_cb2010_wi"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-blocks/nycb2010wi_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-blocks/nycb2010wi_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nycb2010wi_{{ version }}/nycb2010wi.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "cb2010",
+          "data_type": "text"
+        },
+        {
+          "id": "borocode",
+          "data_type": "text"
+        },
+        {
+          "id": "boroname",
+          "data_type": "text"
+        },
+        {
+          "id": "ct2010",
+          "data_type": "text"
+        },
+        {
+          "id": "bctcb2010",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_cb2010_wi.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_cb2010_wi.yml"
+      }
+    },
+    {
+      "name": "dcp_cb2020_wi",
+      "build_import_name": "dcp_cb2020_wi",
+      "recipe_entry": {
+        "name": "dcp_cb2020_wi"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-blocks/nycb2020wi_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-blocks/nycb2020wi_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nycb2020wi_{{ version }}/nycb2020wi.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "cb2020",
+          "data_type": "text"
+        },
+        {
+          "id": "borocode",
+          "data_type": "text"
+        },
+        {
+          "id": "boroname",
+          "data_type": "text"
+        },
+        {
+          "id": "ct2020",
+          "data_type": "text"
+        },
+        {
+          "id": "bctcb2020",
+          "data_type": "text"
+        },
+        {
+          "id": "geoid",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_cb2020_wi.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_cb2020_wi.yml"
+      }
+    },
+    {
+      "name": "dcp_cdboundaries_wi",
+      "build_import_name": "dcp_cdboundaries_wi",
+      "recipe_entry": {
+        "name": "dcp_cdboundaries_wi"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/community-districts/nycdwi_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/community-districts/nycdwi_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nycdwi_{{ version }}/nycdwi.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "borocd",
+          "data_type": "integer"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_cdboundaries_wi.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_cdboundaries_wi.yml"
+      }
+    },
+    {
+      "name": "dcp_colp",
+      "build_import_name": "dcp_colp",
+      "recipe_entry": {
+        "name": "dcp_colp"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/city-owned-leased-properties/colp_{{ version }}_csv.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/city-owned-leased-properties/colp_{{ version }}_csv.zip"
+      },
+      "file_format": {
+        "type": "csv",
+        "unzipped_filename": "colp_{{ version }}.csv",
+        "geometry": {
+          "geom_column": "GEOM",
+          "crs": "EPSG:2263",
+          "format": "wkb"
+        },
+        "dtype": {
+          "USECODE": "str"
+        }
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "lower": true
+          }
+        },
+        {
+          "name": "coerce_column_types",
+          "args": {
+            "column_types": {
+              "bbl": "string",
+              "mapbbl": "string",
+              "expandcat": "string",
+              "cd": "string",
+              "category": "string",
+              "borough": "string",
+              "block": "string",
+              "lot": "string"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "uid",
+          "data_type": "text"
+        },
+        {
+          "id": "borough",
+          "data_type": "text"
+        },
+        {
+          "id": "block",
+          "data_type": "text"
+        },
+        {
+          "id": "lot",
+          "data_type": "text"
+        },
+        {
+          "id": "bbl",
+          "data_type": "text"
+        },
+        {
+          "id": "mapbbl",
+          "data_type": "text"
+        },
+        {
+          "id": "cd",
+          "data_type": "text"
+        },
+        {
+          "id": "hnum",
+          "data_type": "text"
+        },
+        {
+          "id": "sname",
+          "data_type": "text"
+        },
+        {
+          "id": "address",
+          "data_type": "text"
+        },
+        {
+          "id": "parcelname",
+          "data_type": "text"
+        },
+        {
+          "id": "agency",
+          "data_type": "text"
+        },
+        {
+          "id": "usecode",
+          "data_type": "text"
+        },
+        {
+          "id": "usetype",
+          "data_type": "text"
+        },
+        {
+          "id": "ownership",
+          "data_type": "text"
+        },
+        {
+          "id": "category",
+          "data_type": "text"
+        },
+        {
+          "id": "expandcat",
+          "data_type": "text"
+        },
+        {
+          "id": "excatdesc",
+          "data_type": "text"
+        },
+        {
+          "id": "leased",
+          "data_type": "text"
+        },
+        {
+          "id": "finalcom",
+          "data_type": "text"
+        },
+        {
+          "id": "agreement",
+          "data_type": "text"
+        },
+        {
+          "id": "xcoord",
+          "data_type": "integer"
+        },
+        {
+          "id": "ycoord",
+          "data_type": "integer"
+        },
+        {
+          "id": "latitude",
+          "data_type": "decimal"
+        },
+        {
+          "id": "longitude",
+          "data_type": "decimal"
+        },
+        {
+          "id": "dcpedited",
+          "data_type": "text"
+        },
+        {
+          "id": "geom",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_colp.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_colp.yml"
+      }
+    },
+    {
+      "name": "dcp_commercialoverlay",
+      "build_import_name": "dcp_commercialoverlay",
+      "recipe_entry": {
+        "name": "dcp_commercialoverlay"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_commercial_overlays/{version}/dcp_commercial_overlays.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_commercial_overlays"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "overlay",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_commercialoverlay.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_commercialoverlay.yml"
+      }
+    },
+    {
+      "name": "dcp_ct2010_wi",
+      "build_import_name": "dcp_ct2010_wi",
+      "recipe_entry": {
+        "name": "dcp_ct2010_wi"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-tracts/nyct2010wi_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-tracts/nyct2010wi_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nyct2010wi_{{ version }}/nyct2010wi.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "ctlabel",
+          "data_type": "text"
+        },
+        {
+          "id": "borocode",
+          "data_type": "text"
+        },
+        {
+          "id": "boroname",
+          "data_type": "text"
+        },
+        {
+          "id": "ct2010",
+          "data_type": "text"
+        },
+        {
+          "id": "boroct2010",
+          "data_type": "text"
+        },
+        {
+          "id": "cdeligibil",
+          "data_type": "text"
+        },
+        {
+          "id": "ntacode",
+          "data_type": "text"
+        },
+        {
+          "id": "ntaname",
+          "data_type": "text"
+        },
+        {
+          "id": "puma",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_ct2010_wi.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_ct2010_wi.yml"
+      }
+    },
+    {
+      "name": "dcp_ct2020_wi",
+      "build_import_name": "dcp_ct2020_wi",
+      "recipe_entry": {
+        "name": "dcp_ct2020_wi"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-tracts/nyct2020wi_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/census-tracts/nyct2020wi_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nyct2020wi_{{ version }}/nyct2020wi.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "ctlabel",
+          "data_type": "text"
+        },
+        {
+          "id": "borocode",
+          "data_type": "text"
+        },
+        {
+          "id": "boroname",
+          "data_type": "text"
+        },
+        {
+          "id": "ct2020",
+          "data_type": "text"
+        },
+        {
+          "id": "boroct2020",
+          "data_type": "text"
+        },
+        {
+          "id": "cdeligibil",
+          "data_type": "text"
+        },
+        {
+          "id": "ntaname",
+          "data_type": "text"
+        },
+        {
+          "id": "nta2020",
+          "data_type": "text"
+        },
+        {
+          "id": "cdta2020",
+          "data_type": "text"
+        },
+        {
+          "id": "cdtaname",
+          "data_type": "text"
+        },
+        {
+          "id": "geoid",
+          "data_type": "text"
+        },
+        {
+          "id": "puma",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_ct2020_wi.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_ct2020_wi.yml"
+      }
+    },
+    {
+      "name": "dcp_developments",
+      "build_import_name": "dcp_developments",
+      "recipe_entry": {
+        "name": "dcp_developments"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://nyc3.digitaloceanspaces.com/edm-publishing/db-developments/publish/{{ version }}/devdb.csv",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://nyc3.digitaloceanspaces.com/edm-publishing/db-developments/publish/{{ version }}/devdb.csv"
+      },
+      "file_format": {
+        "type": "csv",
+        "geometry": {
+          "geom_column": {
+            "x": "longitude",
+            "y": "latitude"
+          },
+          "crs": "EPSG:4326"
+        }
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "coerce_column_types",
+          "args": {
+            "column_types": {
+              "bbl": "string",
+              "date_filed": "date",
+              "date_statusd": "date",
+              "date_statusp": "date",
+              "date_permittd": "date",
+              "date_statusr": "date",
+              "date_statusx": "date",
+              "date_lastupdt": "date",
+              "date_complete": "date"
+            },
+            "errors": "coerce"
+          }
+        }
+      ],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_developments.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_developments.yml"
+      }
+    },
+    {
+      "name": "dcp_edesignation",
+      "build_import_name": "dcp_edesignation",
+      "recipe_entry": {
+        "name": "dcp_edesignation"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_e_designations/{version}/dcp_e_designations.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_e_designations"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "enumber",
+          "data_type": "text"
+        },
+        {
+          "id": "ceqr_num",
+          "data_type": "text"
+        },
+        {
+          "id": "ulurp_num",
+          "data_type": "text"
+        },
+        {
+          "id": "borocode",
+          "data_type": "integer"
+        },
+        {
+          "id": "taxblock",
+          "data_type": "integer"
+        },
+        {
+          "id": "taxlot",
+          "data_type": "integer"
+        },
+        {
+          "id": "zoning_map",
+          "data_type": "text"
+        },
+        {
+          "id": "descriptio",
+          "data_type": "text"
+        },
+        {
+          "id": "bbl",
+          "data_type": "integer"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_edesignation.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_edesignation.yml"
+      }
+    },
+    {
+      "name": "dcp_firecompanies",
+      "build_import_name": "dcp_firecompanies",
+      "recipe_entry": {
+        "name": "dcp_firecompanies"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/fire-companies/nyfc_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/fire-companies/nyfc_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nyfc_{{ version }}/nyfc.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "firecotype",
+          "data_type": "text"
+        },
+        {
+          "id": "fireconum",
+          "data_type": "integer"
+        },
+        {
+          "id": "firebn",
+          "data_type": "integer"
+        },
+        {
+          "id": "firediv",
+          "data_type": "integer"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_firecompanies.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_firecompanies.yml"
+      }
+    },
+    {
+      "name": "dcp_gis_mandatory_inclusionary_housing",
+      "build_import_name": "dcp_gis_mandatory_inclusionary_housing",
+      "recipe_entry": {
+        "name": "dcp_gis_mandatory_inclusionary_housing"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_mandatory_inclusionary_housing/{version}/dcp_mandatory_inclusionary_housing.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_mandatory_inclusionary_housing"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry",
+              "projectnam": "project_name",
+              "dateadopte": "date_adopted",
+              "zr_ulurpno": "zr_ulurp_no"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "boro",
+          "data_type": "text"
+        },
+        {
+          "id": "status",
+          "data_type": "text"
+        },
+        {
+          "id": "project_name",
+          "data_type": "text"
+        },
+        {
+          "id": "date_adopted",
+          "data_type": "date"
+        },
+        {
+          "id": "zr_ulurp_no",
+          "data_type": "text"
+        },
+        {
+          "id": "zr_map",
+          "data_type": "text"
+        },
+        {
+          "id": "cd",
+          "data_type": "text"
+        },
+        {
+          "id": "mih_option",
+          "data_type": "text"
+        },
+        {
+          "id": "project_id",
+          "data_type": "text"
+        },
+        {
+          "id": "zoning_map",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_gis_mandatory_inclusionary_housing.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_gis_mandatory_inclusionary_housing.yml"
+      }
+    },
+    {
+      "name": "dcp_transit_zones",
+      "build_import_name": "dcp_transit_zones",
+      "recipe_entry": {
+        "name": "dcp_transit_zones"
+      },
+      "source_type": "socrata",
+      "access": "Public Socrata API; completeness and throttling checks required",
+      "endpoint_or_locator": "https://data.cityofnewyork.us/resource/6ztr-wgff.geojson",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "socrata",
+        "org": "nyc",
+        "uid": "6ztr-wgff",
+        "format": "geojson"
+      },
+      "file_format": {
+        "type": "geojson"
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry",
+              "transtzone": "transit_zone"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "transit_zone",
+          "data_type": "text"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_transit_zones.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_transit_zones.yml"
+      }
+    },
+    {
+      "name": "dcp_healthareas",
+      "build_import_name": "dcp_healthareas",
+      "recipe_entry": {
+        "name": "dcp_healthareas"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/health-area/nyha_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/health-area/nyha_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nyha_{{ version }}/nyha.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "borocode",
+          "data_type": "integer"
+        },
+        {
+          "id": "boroname",
+          "data_type": "text"
+        },
+        {
+          "id": "healtharea",
+          "data_type": "integer"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_healthareas.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_healthareas.yml"
+      }
+    },
+    {
+      "name": "dcp_healthcenters",
+      "build_import_name": "dcp_healthcenters",
+      "recipe_entry": {
+        "name": "dcp_healthcenters"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/health-center/nyhc_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/health-center/nyhc_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nyhc_{{ version }}/nyhc.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "borocode",
+          "data_type": "integer"
+        },
+        {
+          "id": "boroname",
+          "data_type": "text"
+        },
+        {
+          "id": "hcentdist",
+          "data_type": "integer"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_healthcenters.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_healthcenters.yml"
+      }
+    },
+    {
+      "name": "dcp_limitedheight",
+      "build_import_name": "dcp_limitedheight",
+      "recipe_entry": {
+        "name": "dcp_limitedheight"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_limited_height_districts/{version}/dcp_limited_height_districts.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_limited_height_districts"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "lhname",
+          "data_type": "text"
+        },
+        {
+          "id": "lhlbl",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_limitedheight.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_limitedheight.yml"
+      }
+    },
+    {
+      "name": "dcp_pluto",
+      "build_import_name": "previous_pluto",
+      "recipe_entry": {
+        "name": "dcp_pluto",
+        "version_env_var": "VERSION_PREV",
+        "import_as": "previous_pluto"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/pluto/nyc_pluto_{{ version | replace(\".\",\"_\") }}_csv.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/pluto/nyc_pluto_{{ version | replace(\".\",\"_\") }}_csv.zip"
+      },
+      "file_format": {
+        "type": "csv",
+        "unzipped_filename": "pluto_{{ version | replace(\".\",\"_\") }}.csv",
+        "dtype": "str",
+        "geometry": {
+          "crs": "EPSG:4326",
+          "geom_column": {
+            "x": "longitude",
+            "y": "latitude"
+          }
+        }
+      },
+      "target_crs": null,
+      "processing_steps": [],
+      "declared_columns": [],
+      "major_version_policy": "VERSION_PREV",
+      "minor_version_policy": "VERSION_PREV",
+      "evidence": {
+        "template": "ingest_templates/dcp_pluto.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_pluto.yml"
+      }
+    },
+    {
+      "name": "dcp_pfirms",
+      "build_import_name": "dcp_pfirms",
+      "recipe_entry": {
+        "name": "dcp_pfirms"
+      },
+      "source_type": "arcgis_feature_server",
+      "access": "Public ArcGIS FeatureServer; resolve layer and validate complete pagination",
+      "endpoint_or_locator": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/ArcGIS/rest/services/S_FLD_HAZ_AR/FeatureServer (layer name: S_FLD_HAZ_AR; resolve layer ID)",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "arcgis_feature_server",
+        "server": "dcp",
+        "dataset": "S_FLD_HAZ_AR",
+        "layer_name": "S_FLD_HAZ_AR",
+        "crs": "EPSG:2263"
+      },
+      "file_format": {
+        "type": "geojson"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_pfirms.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_pfirms.yml"
+      }
+    },
+    {
+      "name": "dcp_policeprecincts",
+      "build_import_name": "dcp_policeprecincts",
+      "recipe_entry": {
+        "name": "dcp_policeprecincts"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/police-precincts/nypp_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/police-precincts/nypp_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nypp_{{ version }}/nypp.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "precinct",
+          "data_type": "integer"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_policeprecincts.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_policeprecincts.yml"
+      }
+    },
+    {
+      "name": "dcp_school_districts",
+      "build_import_name": "dcp_school_districts",
+      "recipe_entry": {
+        "name": "dcp_school_districts"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/school/nysd_{{ version }}.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/school/nysd_{{ version }}.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "nysd_{{ version }}/nysd.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "schooldist",
+          "data_type": "integer"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dcp_school_districts.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_school_districts.yml"
+      }
+    },
+    {
+      "name": "dcp_specialpurpose",
+      "build_import_name": "dcp_specialpurpose",
+      "recipe_entry": {
+        "name": "dcp_specialpurpose"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_special_purpose_districts/{version}/dcp_special_purpose_districts.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_special_purpose_districts"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "sdname",
+          "data_type": "text"
+        },
+        {
+          "id": "sdlbl",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_specialpurpose.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_specialpurpose.yml"
+      }
+    },
+    {
+      "name": "dcp_specialpurposesubdistricts",
+      "build_import_name": "dcp_specialpurposesubdistricts",
+      "recipe_entry": {
+        "name": "dcp_specialpurposesubdistricts"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_special_purpose_subdistricts/{version}/dcp_special_purpose_subdistricts.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_special_purpose_subdistricts"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "spname",
+          "data_type": "text"
+        },
+        {
+          "id": "splbl",
+          "data_type": "text"
+        },
+        {
+          "id": "subdist",
+          "data_type": "text"
+        },
+        {
+          "id": "sub_area_n",
+          "data_type": "text"
+        },
+        {
+          "id": "subdist_lb",
+          "data_type": "text"
+        },
+        {
+          "id": "subarea_lb",
+          "data_type": "text"
+        },
+        {
+          "id": "subarea_ot",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_specialpurposesubdistricts.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_specialpurposesubdistricts.yml"
+      }
+    },
+    {
+      "name": "dcp_zoningdistricts",
+      "build_import_name": "dcp_zoningdistricts",
+      "recipe_entry": {
+        "name": "dcp_zoningdistricts"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_zoning_districts/{version}/dcp_zoning_districts.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_zoning_districts"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "zonedist",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_zoningdistricts.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_zoningdistricts.yml"
+      }
+    },
+    {
+      "name": "dcp_zoningmapamendments",
+      "build_import_name": "dcp_zoningmapamendments",
+      "recipe_entry": {
+        "name": "dcp_zoningmapamendments"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dcp_zoning_map_amendments/{version}/dcp_zoning_map_amendments.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dcp_zoning_map_amendments"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "coerce_column_types",
+          "args": {
+            "column_types": {
+              "effective": "date"
+            },
+            "errors": "coerce"
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "effective",
+          "data_type": "date"
+        },
+        {
+          "id": "status",
+          "data_type": "text"
+        },
+        {
+          "id": "ulurpno",
+          "data_type": "text"
+        },
+        {
+          "id": "lucats",
+          "data_type": "text"
+        },
+        {
+          "id": "project_na",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_zoningmapamendments.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_zoningmapamendments.yml"
+      }
+    },
+    {
+      "name": "dcp_zoningmapindex",
+      "build_import_name": "dcp_zoningmapindex",
+      "recipe_entry": {
+        "name": "dcp_zoningmapindex"
+      },
+      "source_type": "file_download",
+      "access": "Public HTTP; exact version URL must be resolved and verified",
+      "endpoint_or_locator": "https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyczoningmapindex_shp_201907.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "file_download",
+        "url": "https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyczoningmapindex_shp_201907.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "section",
+          "data_type": "text"
+        },
+        {
+          "id": "zoning_map",
+          "data_type": "text"
+        },
+        {
+          "id": "quartersec",
+          "data_type": "text"
+        },
+        {
+          "id": "westmap",
+          "data_type": "text"
+        },
+        {
+          "id": "eastmap",
+          "data_type": "text"
+        },
+        {
+          "id": "northmap",
+          "data_type": "text"
+        },
+        {
+          "id": "southmap",
+          "data_type": "text"
+        },
+        {
+          "id": "northwestm",
+          "data_type": "text"
+        },
+        {
+          "id": "northeastm",
+          "data_type": "text"
+        },
+        {
+          "id": "southwestm",
+          "data_type": "text"
+        },
+        {
+          "id": "southeastm",
+          "data_type": "text"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "resolve latest at planning time",
+      "evidence": {
+        "template": "ingest_templates/dcp_zoningmapindex.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dcp_zoningmapindex.yml"
+      }
+    },
+    {
+      "name": "dof_condo",
+      "build_import_name": "dof_condo",
+      "recipe_entry": {
+        "name": "dof_condo"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dof_dtm_condo/{version}/dof_dtm_condo.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dof_dtm_condo"
+      },
+      "file_format": {
+        "type": "csv"
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "coerce_column_types",
+          "args": {
+            "column_types": {
+              "condo_base_boro": "string",
+              "condo_base_block": "string",
+              "condo_base_lot": "string",
+              "condo_base_bbl": "string",
+              "condo_base_bbl_key": "string",
+              "condo_key": "string",
+              "condo_number": "string",
+              "condo_billing_bbl": "string",
+              "cinc_condo_parent": "string",
+              "cinc_unit_parent": "string",
+              "cinc_gen": "string",
+              "created_date": "date",
+              "last_edited_date": "date"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "condo_base_boro",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_base_block",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_base_lot",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_base_bbl",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_base_bbl_key",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_key",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_number",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_name",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_billing_bbl",
+          "data_type": "text"
+        },
+        {
+          "id": "cinc_parent_flag",
+          "data_type": "text"
+        },
+        {
+          "id": "cinc_condo_parent",
+          "data_type": "text"
+        },
+        {
+          "id": "cinc_unit_parent",
+          "data_type": "text"
+        },
+        {
+          "id": "cinc_gen",
+          "data_type": "text"
+        },
+        {
+          "id": "created_user",
+          "data_type": "text"
+        },
+        {
+          "id": "created_date",
+          "data_type": "date"
+        },
+        {
+          "id": "last_edited_user",
+          "data_type": "text"
+        },
+        {
+          "id": "last_edited_date",
+          "data_type": "date"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dof_condo.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dof_condo.yml"
+      }
+    },
+    {
+      "name": "dof_dtm",
+      "build_import_name": "dof_dtm",
+      "recipe_entry": {
+        "name": "dof_dtm"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dof_dtm_tax_lot_polygon/{version}/dof_dtm_tax_lot_polygon.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dof_dtm_tax_lot_polygon"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "coerce_column_types",
+          "args": {
+            "column_types": {
+              "created_da": "date",
+              "last_edi_1": "date"
+            },
+            "errors": "coerce"
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "boro",
+          "data_type": "text"
+        },
+        {
+          "id": "block",
+          "data_type": "integer"
+        },
+        {
+          "id": "lot",
+          "data_type": "integer"
+        },
+        {
+          "id": "bbl",
+          "data_type": "text"
+        },
+        {
+          "id": "condo_flag",
+          "data_type": "text"
+        },
+        {
+          "id": "reuc_flag",
+          "data_type": "text"
+        },
+        {
+          "id": "air_lot_fl",
+          "data_type": "text"
+        },
+        {
+          "id": "sub_lot_fl",
+          "data_type": "text"
+        },
+        {
+          "id": "easement_f",
+          "data_type": "text"
+        },
+        {
+          "id": "lot_note",
+          "data_type": "text"
+        },
+        {
+          "id": "effective_",
+          "data_type": "text"
+        },
+        {
+          "id": "bill_bbl_f",
+          "data_type": "integer"
+        },
+        {
+          "id": "nycmap_bld",
+          "data_type": "integer"
+        },
+        {
+          "id": "conversion",
+          "data_type": "integer"
+        },
+        {
+          "id": "value_refl",
+          "data_type": "integer"
+        },
+        {
+          "id": "created_us",
+          "data_type": "text"
+        },
+        {
+          "id": "created_da",
+          "data_type": "date"
+        },
+        {
+          "id": "last_edite",
+          "data_type": "text"
+        },
+        {
+          "id": "last_edi_1",
+          "data_type": "date"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dof_dtm.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dof_dtm.yml"
+      }
+    },
+    {
+      "name": "dof_shoreline",
+      "build_import_name": "dof_shoreline",
+      "recipe_entry": {
+        "name": "dof_shoreline"
+      },
+      "source_type": "edm.publishing.gis",
+      "access": "EDM publishing object storage; approved access/capture required",
+      "endpoint_or_locator": "edm-publishing/datasets/dof_dtm_shoreline_polygon/{version}/dof_dtm_shoreline_polygon.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "edm.publishing.gis",
+        "name": "dof_dtm_shoreline_polygon"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "replace": {
+              " ": "_"
+            },
+            "lower": true
+          }
+        },
+        {
+          "name": "coerce_column_types",
+          "args": {
+            "column_types": {
+              "created_da": "date",
+              "last_mod_1": "date"
+            },
+            "errors": "coerce"
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "multi"
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "created_by",
+          "data_type": "text"
+        },
+        {
+          "id": "created_da",
+          "data_type": "date"
+        },
+        {
+          "id": "last_modif",
+          "data_type": "text"
+        },
+        {
+          "id": "last_mod_1",
+          "data_type": "date"
+        },
+        {
+          "id": "shape_leng",
+          "data_type": "decimal"
+        },
+        {
+          "id": "shape_area",
+          "data_type": "decimal"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dof_shoreline.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dof_shoreline.yml"
+      }
+    },
+    {
+      "name": "doitt_zipcodeboundaries",
+      "build_import_name": "doitt_zipcodeboundaries",
+      "recipe_entry": {
+        "name": "doitt_zipcodeboundaries",
+        "file_type": "parquet"
+      },
+      "source_type": "s3",
+      "access": "Staged EDM recipe inbox; approved access/capture required",
+      "endpoint_or_locator": "s3://edm-recipes/inbox/doitt_zipcodeboundaries/{{ version }}/ZIP_CODE_040114.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "s3",
+        "bucket": "edm-recipes",
+        "key": "inbox/doitt_zipcodeboundaries/{{ version }}/ZIP_CODE_040114.zip"
+      },
+      "file_format": {
+        "type": "shapefile",
+        "unzipped_filename": "ZIP_CODE_040114.shp",
+        "crs": "EPSG:2263"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "lower": true
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        }
+      ],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/doitt_zipcodeboundaries.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/doitt_zipcodeboundaries.yml"
+      }
+    },
+    {
+      "name": "dpr_greenthumb",
+      "build_import_name": "dpr_greenthumb",
+      "recipe_entry": {
+        "name": "dpr_greenthumb"
+      },
+      "source_type": "socrata",
+      "access": "Public Socrata API; completeness and throttling checks required",
+      "endpoint_or_locator": "https://data.cityofnewyork.us/resource/p78i-pat6.geojson",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "socrata",
+        "org": "nyc",
+        "uid": "p78i-pat6",
+        "format": "geojson"
+      },
+      "file_format": {
+        "type": "geojson"
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "bbl",
+          "data_type": "text"
+        },
+        {
+          "id": "gardenname",
+          "data_type": "text"
+        },
+        {
+          "id": "borough",
+          "data_type": "text"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dpr_greenthumb.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dpr_greenthumb.yml"
+      }
+    },
+    {
+      "name": "dsny_frequencies",
+      "build_import_name": "dsny_frequencies",
+      "recipe_entry": {
+        "name": "dsny_frequencies"
+      },
+      "source_type": "socrata",
+      "access": "Public Socrata API; completeness and throttling checks required",
+      "endpoint_or_locator": "https://data.cityofnewyork.us/resource/rv63-53db.geojson",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "socrata",
+        "org": "nyc",
+        "uid": "rv63-53db",
+        "format": "geojson"
+      },
+      "file_format": {
+        "type": "geojson"
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "schedulecode",
+          "data_type": "text"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/dsny_frequencies.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/dsny_frequencies.yml"
+      }
+    },
+    {
+      "name": "fema_firms2007_100yr",
+      "build_import_name": "fema_firms2007_100yr",
+      "recipe_entry": {
+        "name": "fema_firms2007_100yr",
+        "file_type": "parquet"
+      },
+      "source_type": "arcgis_feature_server",
+      "access": "Public ArcGIS FeatureServer; resolve layer and validate complete pagination",
+      "endpoint_or_locator": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/ArcGIS/rest/services/2007_Effective_FIRMs/FeatureServer (layer name: 2007_Effective_FIRMs; resolve layer ID)",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "arcgis_feature_server",
+        "server": "dcp",
+        "dataset": "2007_Effective_FIRMs",
+        "layer_name": "2007_Effective_FIRMs",
+        "crs": "EPSG:2263"
+      },
+      "file_format": {
+        "type": "geojson"
+      },
+      "target_crs": "EPSG:4326",
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "lower": true
+          }
+        }
+      ],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/fema_firms2007_100yr.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/fema_firms2007_100yr.yml"
+      }
+    },
+    {
+      "name": "lpc_historic_districts",
+      "build_import_name": "lpc_historic_districts",
+      "recipe_entry": {
+        "name": "lpc_historic_districts"
+      },
+      "source_type": "socrata",
+      "access": "Public Socrata API; completeness and throttling checks required",
+      "endpoint_or_locator": "https://data.cityofnewyork.us/resource/gpmc-yuvp.geojson",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "socrata",
+        "org": "nyc",
+        "uid": "gpmc-yuvp",
+        "format": "geojson"
+      },
+      "file_format": {
+        "type": "geojson"
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "bbl",
+          "data_type": "text"
+        },
+        {
+          "id": "hist_dist",
+          "data_type": "text"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/lpc_historic_districts.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/lpc_historic_districts.yml"
+      }
+    },
+    {
+      "name": "lpc_landmarks",
+      "build_import_name": "lpc_landmarks",
+      "recipe_entry": {
+        "name": "lpc_landmarks"
+      },
+      "source_type": "socrata",
+      "access": "Public Socrata API; completeness and throttling checks required",
+      "endpoint_or_locator": "https://data.cityofnewyork.us/resource/ncre-qhxs.geojson",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "socrata",
+        "org": "nyc",
+        "uid": "ncre-qhxs",
+        "format": "geojson"
+      },
+      "file_format": {
+        "type": "geojson"
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "geom": "wkb_geometry"
+            }
+          }
+        },
+        {
+          "name": "coerce_column_types",
+          "args": {
+            "column_types": {
+              "caldate": "date",
+              "desdate": "date"
+            },
+            "errors": "coerce"
+          }
+        },
+        {
+          "name": "pd_series_func",
+          "args": {
+            "column_name": "desig_addr",
+            "function_name": "str.replace",
+            "pat": "\r\n",
+            "repl": "\n",
+            "regex": true
+          }
+        }
+      ],
+      "declared_columns": [
+        {
+          "id": "last_actio",
+          "data_type": "text"
+        },
+        {
+          "id": "bbl",
+          "data_type": "text"
+        },
+        {
+          "id": "status",
+          "data_type": "text"
+        },
+        {
+          "id": "lm_type",
+          "data_type": "text"
+        },
+        {
+          "id": "most_curre",
+          "data_type": "text"
+        },
+        {
+          "id": "boroughid",
+          "data_type": "text"
+        },
+        {
+          "id": "lm_name",
+          "data_type": "text"
+        },
+        {
+          "id": "wkb_geometry",
+          "data_type": "geometry"
+        }
+      ],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/lpc_landmarks.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/lpc_landmarks.yml"
+      }
+    },
+    {
+      "name": "pluto_input_cama_dof",
+      "build_import_name": "pluto_input_cama_dof",
+      "recipe_entry": {
+        "name": "pluto_input_cama_dof"
+      },
+      "source_type": "axway",
+      "access": "Credentialed Axway/SFTP source; approved local capture required",
+      "endpoint_or_locator": "FromDOF (ptsaxway@finance.nyc.gov)/CAMA.zip",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "axway",
+        "key": "FromDOF (ptsaxway@finance.nyc.gov)/CAMA.zip"
+      },
+      "file_format": {
+        "type": "csv",
+        "delimiter": "|",
+        "quoting": 3,
+        "dtype": "str",
+        "names": [
+          "bbl",
+          "parcelcard",
+          "bldgnum",
+          "bldgclass",
+          "primaryusecode",
+          "developmentname",
+          "streettype",
+          "lottype",
+          "residarea",
+          "officearea",
+          "retailarea",
+          "garagearea",
+          "storagearea",
+          "factoryarea",
+          "otherarea",
+          "grossarea",
+          "ownerarea",
+          "grossvolume",
+          "commercialarea",
+          "proxcode",
+          "bsmnt_type",
+          "bsmntgradient",
+          "bsmntarea",
+          "firstfloorarea",
+          "secondfloorarea",
+          "upperfloorarea",
+          "partresfloorarea",
+          "unfinishedfloorarea",
+          "finishedfloorarea",
+          "nonresidfloorarea",
+          "residconstrtype",
+          "commercialconstrtype",
+          "condomainconstrtype",
+          "condounitsconstrtype"
+        ]
+      },
+      "target_crs": null,
+      "processing_steps": [],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/pluto_input_cama_dof.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/pluto_input_cama_dof.yml"
+      }
+    },
+    {
+      "name": "pluto_input_geocodes",
+      "build_import_name": "pluto_input_geocodes",
+      "recipe_entry": {
+        "name": "pluto_input_geocodes"
+      },
+      "source_type": "axway",
+      "access": "Credentialed Axway/SFTP source; approved local capture required",
+      "endpoint_or_locator": "FromDOF (ptsaxway@finance.nyc.gov)/PTS_Propmast.gz",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "axway",
+        "key": "FromDOF (ptsaxway@finance.nyc.gov)/PTS_Propmast.gz"
+      },
+      "file_format": {
+        "type": "csv",
+        "delimiter": "\t",
+        "names": [
+          "boro",
+          "block",
+          "lot"
+        ],
+        "usecols": [
+          1,
+          2,
+          3
+        ],
+        "dtype": "str"
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "deduplicate"
+        },
+        {
+          "name": "geocode_bbl"
+        },
+        {
+          "name": "clean_column_names",
+          "args": {
+            "lower": true
+          }
+        },
+        {
+          "name": "convert_to_geometry",
+          "args": {
+            "geom_column": {
+              "x": "latitude",
+              "y": "longitude"
+            }
+          }
+        }
+      ],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/pluto_input_geocodes.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/pluto_input_geocodes.yml"
+      }
+    },
+    {
+      "name": "pluto_input_numbldgs",
+      "build_import_name": "pluto_input_numbldgs",
+      "recipe_entry": {
+        "name": "pluto_input_numbldgs"
+      },
+      "source_type": "socrata",
+      "access": "Public Socrata API; completeness and throttling checks required",
+      "endpoint_or_locator": "https://data.cityofnewyork.us/resource/5zhs-2jue.csv",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "socrata",
+        "org": "nyc",
+        "uid": "5zhs-2jue",
+        "format": "csv"
+      },
+      "file_format": {
+        "type": "csv",
+        "usecols": [
+          "BIN"
+        ]
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "clean_column_names",
+          "args": {
+            "lower": true
+          }
+        },
+        {
+          "name": "geocode_bin"
+        },
+        {
+          "name": "groupby",
+          "args": {
+            "by": "bbl",
+            "agg": "size"
+          }
+        },
+        {
+          "name": "rename_columns",
+          "args": {
+            "map": {
+              "size": "count"
+            }
+          }
+        }
+      ],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/pluto_input_numbldgs.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/pluto_input_numbldgs.yml"
+      }
+    },
+    {
+      "name": "pluto_pts",
+      "build_import_name": "pluto_pts",
+      "recipe_entry": {
+        "name": "pluto_pts"
+      },
+      "source_type": "axway",
+      "access": "Credentialed Axway/SFTP source; approved local capture required",
+      "endpoint_or_locator": "FromDOF (ptsaxway@finance.nyc.gov)/PTS_Propmast.gz",
+      "endpoint_verified_live": false,
+      "source_config": {
+        "type": "axway",
+        "key": "FromDOF (ptsaxway@finance.nyc.gov)/PTS_Propmast.gz"
+      },
+      "file_format": {
+        "type": "csv",
+        "delimiter": "\t",
+        "dtype": "str",
+        "names": [
+          "parid",
+          "boro",
+          "block",
+          "lot",
+          "ease",
+          "subident_reuc",
+          "rectype",
+          "av_year4",
+          "ident",
+          "subident",
+          "roll_section",
+          "secvol",
+          "pymktland",
+          "pymkttot",
+          "pyactland",
+          "pyacttot",
+          "pyactextot",
+          "pytrnland",
+          "pytrntot",
+          "pytrnextot",
+          "pytxbtot",
+          "pytxbextot",
+          "pytaxclass",
+          "tenmktland",
+          "tenmkttot",
+          "tenactland",
+          "tenacttot",
+          "tenactextot",
+          "tentrnland",
+          "tentrntot",
+          "tentrnextot",
+          "tentxbtot",
+          "tentxbextot",
+          "tentaxclass",
+          "cbnmktland",
+          "cbnmkttot",
+          "cbnactland",
+          "cbnacttot",
+          "cbnactextot",
+          "cbntrnland",
+          "cbntrntot",
+          "cbntrnextot",
+          "cbntxbtot",
+          "cbntxbextot",
+          "cbntaxclass",
+          "finmktland",
+          "finmkttot",
+          "finactland",
+          "finacttot",
+          "finactextot",
+          "fintrnland",
+          "fintrntot",
+          "fintrnextot",
+          "fintxbtot",
+          "fintxbextot",
+          "fintaxclass",
+          "curmktland",
+          "curmkttot",
+          "curactland",
+          "curacttot",
+          "curactextot",
+          "curtrnland",
+          "curtrntot",
+          "curtrnextot",
+          "curtxbtot",
+          "curtxbextot",
+          "curtaxclass",
+          "period",
+          "newdrop",
+          "noav",
+          "valref",
+          "bldg_class",
+          "av_owner",
+          "zoning",
+          "housenum_lo",
+          "housenum_hi",
+          "street_name",
+          "zip_code",
+          "geosupport_rc",
+          "stcode",
+          "lot_frt",
+          "lot_dep",
+          "lot_irreg",
+          "bld_frt",
+          "bld_dep",
+          "bld_ext",
+          "bld_story",
+          "corner",
+          "land_area",
+          "num_bldgs",
+          "yrbuilt",
+          "yrbuilt_range",
+          "yrbuilt_flag",
+          "yralt1",
+          "yralt1_range",
+          "yralt2",
+          "yralt2_range",
+          "coop_apts",
+          "units",
+          "reuc_ref",
+          "aptno",
+          "coop_num",
+          "cpb_boro",
+          "cpb_dist",
+          "appt_date",
+          "appt_boro",
+          "appt_block",
+          "appt_lot",
+          "appt_ease",
+          "condo_number",
+          "condo_sfx1",
+          "condo_sfx2",
+          "condo_sfx3",
+          "uaf_land",
+          "uaf_bldg",
+          "protest_1",
+          "protest_2",
+          "protest_old",
+          "attorney_group1",
+          "attorney_group2",
+          "attorney_group_old",
+          "gross_sqft",
+          "hotel_area_gross",
+          "office_area_gross",
+          "residential_area_gross",
+          "retail_area_gross",
+          "loft_area_gross",
+          "factory_area_gross",
+          "warehouse_area_gross",
+          "storage_area_gross",
+          "garage_area",
+          "other_area_gross",
+          "reuc_description",
+          "extractdt",
+          "pytaxflag",
+          "tentaxflag",
+          "cbntaxflag",
+          "fintaxflag",
+          "curtaxflag"
+        ]
+      },
+      "target_crs": null,
+      "processing_steps": [
+        {
+          "name": "filter_columns",
+          "args": {
+            "columns": [
+              "boro",
+              "block",
+              "lot",
+              "street_name",
+              "housenum_lo",
+              "housenum_hi",
+              "aptno",
+              "zip_code",
+              "bldg_class",
+              "ease",
+              "av_owner",
+              "land_area",
+              "gross_sqft",
+              "residential_area_gross",
+              "office_area_gross",
+              "retail_area_gross",
+              "garage_area",
+              "storage_area_gross",
+              "factory_area_gross",
+              "other_area_gross",
+              "num_bldgs",
+              "bld_story",
+              "coop_apts",
+              "units",
+              "lot_frt",
+              "lot_dep",
+              "bld_frt",
+              "bld_dep",
+              "bld_ext",
+              "lot_irreg",
+              "curactland",
+              "curacttot",
+              "curactextot",
+              "yrbuilt",
+              "yralt1",
+              "yralt2",
+              "condo_number",
+              "appt_boro",
+              "appt_block",
+              "appt_lot",
+              "appt_ease",
+              "appt_date",
+              "parid"
+            ]
+          }
+        },
+        {
+          "name": "strip_columns"
+        },
+        {
+          "name": "pd_series_func",
+          "args": {
+            "function_name": "str.replace",
+            "column_name": "av_owner",
+            "pat": "\"",
+            "repl": ""
+          }
+        }
+      ],
+      "declared_columns": [],
+      "major_version_policy": "resolve latest at planning time",
+      "minor_version_policy": "copy version from latest published PLUTO source manifest",
+      "evidence": {
+        "template": "ingest_templates/pluto_pts.yml",
+        "recipe": "products/pluto/recipe.yml",
+        "template_url": "https://github.com/NYCPlanning/data-engineering/blob/5b849eebf4afbe282f30944cfbedd918bc51ad81/ingest_templates/pluto_pts.yml"
+      }
+    }
+  ],
+  "local_seeds": [
+    {
+      "name": "dcp_transit_zone_ranks",
+      "path": "products/pluto/seeds/dcp_transit_zone_ranks.csv",
+      "rows": 5,
+      "columns": [
+        "tz_name",
+        "tz_rank"
+      ]
+    },
+    {
+      "name": "dcp_zoning_maxfar",
+      "path": "products/pluto/seeds/dcp_zoning_maxfar.csv",
+      "rows": 221,
+      "columns": [
+        "zonedist",
+        "contextual",
+        "zoningdistricttype",
+        "resdisteq",
+        "residfar",
+        "affresfar",
+        "facilfar",
+        "commfar",
+        "mnffar",
+        "verified"
+      ]
+    },
+    {
+      "name": "ignored_bbls_for_unit_count_test",
+      "path": "products/pluto/seeds/ignored_bbls_for_unit_count_test.csv",
+      "rows": 80,
+      "columns": [
+        "bbl",
+        "pluto_version",
+        "units_res",
+        "comment"
+      ]
+    },
+    {
+      "name": "lookup_bldgclass",
+      "path": "products/pluto/seeds/lookup_bldgclass.csv",
+      "rows": 250,
+      "columns": [
+        "CodedValue",
+        "CodeDescrip"
+      ]
+    },
+    {
+      "name": "lookup_lottype",
+      "path": "products/pluto/seeds/lookup_lottype.csv",
+      "rows": 10,
+      "columns": [
+        "lottype",
+        "lottypevalue"
+      ]
+    },
+    {
+      "name": "pluto_input_bsmtcode",
+      "path": "products/pluto/seeds/pluto_input_bsmtcode.csv",
+      "rows": 9,
+      "columns": [
+        "bsmnt_type",
+        "bsmntgradient",
+        "bsmtcode",
+        "bsmnt_typevalue",
+        " bsmntgradientvalue",
+        " bsmtcodevalue"
+      ]
+    },
+    {
+      "name": "pluto_input_condo_bldgclass",
+      "path": "products/pluto/seeds/pluto_input_condo_bldgclass.csv",
+      "rows": 26,
+      "columns": [
+        "Code",
+        "Description",
+        "Type",
+        "DCP created",
+        "Logic for codes created by DCP"
+      ]
+    },
+    {
+      "name": "pluto_input_condolot_descriptiveattributes",
+      "path": "products/pluto/seeds/pluto_input_condolot_descriptiveattributes.csv",
+      "rows": 8340,
+      "columns": [
+        "CondNO",
+        "Boro",
+        "PARID",
+        "BC",
+        "TC",
+        "LandSize",
+        "Story",
+        "YearBuilt"
+      ]
+    },
+    {
+      "name": "pluto_input_landuse_bldgclass",
+      "path": "products/pluto/seeds/pluto_input_landuse_bldgclass.csv",
+      "rows": 221,
+      "columns": [
+        "bldgclass",
+        "landuse",
+        "landusevalue"
+      ]
+    },
+    {
+      "name": "pluto_input_research",
+      "path": "products/pluto/seeds/pluto_input_research.csv",
+      "rows": 27534,
+      "columns": [
+        "bbl",
+        "field",
+        "old_value",
+        "new_value",
+        "Type",
+        "reason",
+        "version"
+      ]
+    },
+    {
+      "name": "zoning_district_class_descriptions",
+      "path": "products/pluto/seeds/zoning_district_class_descriptions.csv",
+      "rows": 21,
+      "columns": [
+        "M1",
+        "M1 districts are designated for areas with light industries."
+      ]
+    }
+  ]
+}

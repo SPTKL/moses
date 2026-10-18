@@ -1,0 +1,1215 @@
+{
+  "schema_version": 1,
+  "target_release": "26v2",
+  "source_commit": "5b849eebf4afbe282f30944cfbedd918bc51ad81",
+  "scope": "Reference call-site inventory, not an executable full build DAG. Setup, inline shell SQL, dynamic QA calls and exports also require migration.",
+  "full_build_implemented": false,
+  "stages": [
+    {
+      "sequence": 1,
+      "stage": "preprocessing",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 6,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/preprocessing.sql",
+      "source_sha256": "d34aef7ba1c96741351dd2a70ce31aa0ad7caf43599e058a276b23f557ad4e93",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 2,
+      "stage": "create_pts",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 7,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/create_pts.sql",
+      "source_sha256": "d7370df9faae26319b0fb10dd934f198a0da137159b8e3520a1863e4c47d5bf5",
+      "status": "ported_dbt_model",
+      "model": "src/moses/pluto/dbt/models/create_pts.sql",
+      "spatial_sql": false,
+      "verification": "synthetic PostgreSQL stage comparison"
+    },
+    {
+      "sequence": 3,
+      "stage": "create_rpad_geo",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 8,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/create_rpad_geo.sql",
+      "source_sha256": "6e5cb50ccec07c5ffc7e36181ceefd62375233e76cef8c81810a9aa6f02a7c61",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 4,
+      "stage": "zerovacantlots",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 11,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zerovacantlots.sql",
+      "source_sha256": "34165ae528b092b69a052570fdf251089acba4a5daae7d273436aa0265cabb54",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 5,
+      "stage": "lotarea",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 12,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/lotarea.sql",
+      "source_sha256": "62582e66be342a803dec06c459c5125df3c3d7ff65dfaa69bd9b0297351e67ab",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 6,
+      "stage": "primebbl",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 13,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/primebbl.sql",
+      "source_sha256": "08d0c27026b9b6257827bbf15d3dbab343f91de9c498e3a5b7bc2d4969f2dd49",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 7,
+      "stage": "apdate",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 14,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/apdate.sql",
+      "source_sha256": "5aaa2bfc2335ef0a63a936fa53d80fef7389474986faa320fccd6bf140fe6384",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 8,
+      "stage": "create_allocated",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 17,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/create_allocated.sql",
+      "source_sha256": "b977d0fabb1268e03eab01854590cb67e411b849597ff5ee2a00299d1b3b6d71",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 9,
+      "stage": "yearbuiltalt",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 18,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/yearbuiltalt.sql",
+      "source_sha256": "57a73b5af9dec6162a2a7d82f6313ca88c30861389dd2387e2942bfdc1a18ea6",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 10,
+      "stage": "create",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 21,
+      "arguments": "-v VERSION=${VERSION}",
+      "source": "products/pluto/pluto_build/sql/create.sql",
+      "source_sha256": "23d18f5213e5b4f2b1d69b9ea11770f8db9e9e7bc56a8d8e542cba9dbec3199d",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 11,
+      "stage": "bbl",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 22,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/bbl.sql",
+      "source_sha256": "233a62ad73ffe1b46aa5b4fdadda59f0d6521949ce42a693292b404510535475",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 12,
+      "stage": "allocated",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 25,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/allocated.sql",
+      "source_sha256": "96115964a1d0738b36454ff8a6633e6ef3d729f9f89c8e8013c2f1cd29fcedf0",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 13,
+      "stage": "geocodes",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 28,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/geocodes.sql",
+      "source_sha256": "1cde414630eee6cc5aeeb43072684ec4961bd94b2a14f08ef31a6e7e6fe9b275",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 14,
+      "stage": "landuse",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 31,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/landuse.sql",
+      "source_sha256": "0208fdcf15a8b2f6a6ea8c7e1e0dd45608a23da408574e83cbda3adf665916fc",
+      "status": "ported_dbt_model",
+      "model": "src/moses/pluto/dbt/models/landuse.sql",
+      "spatial_sql": false,
+      "verification": "synthetic PostgreSQL stage comparison"
+    },
+    {
+      "sequence": 15,
+      "stage": "create_cama_primebbl",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 32,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/create_cama_primebbl.sql",
+      "source_sha256": "59d8349d0faee6828fcecb9c3b7014982491228da59875645a42e0a1dd18e156",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 16,
+      "stage": "cama_bsmttype",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 34,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_bsmttype.sql",
+      "source_sha256": "74778410cdb5790646f8d65bfaf94fe2e54af23fb7073bfc911eaae9457ba65d",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 17,
+      "stage": "cama_lottype",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 35,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_lottype.sql",
+      "source_sha256": "a3554d39741216effa3f18010fc89a90b3b258e2e105a521a1cd69df60498c8c",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 18,
+      "stage": "cama_proxcode",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 36,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_proxcode.sql",
+      "source_sha256": "23afdcc0ecd21bbbd197b194a518195aac45d5d3cc9812f366fbcc920a15e8b7",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 19,
+      "stage": "cama_bldgarea_1",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 37,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_bldgarea_1.sql",
+      "source_sha256": "388d146cad5c7cd0b9b456946138d22e0390532e64b63bbd890c6a32259a38db",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 20,
+      "stage": "cama_bldgarea_2",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 38,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_bldgarea_2.sql",
+      "source_sha256": "44e361cbbd1b88c8f9a87aec56ef4961d476e5ceba5a78da892c4dd62f11301b",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 21,
+      "stage": "cama_bldgarea_3",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 39,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_bldgarea_3.sql",
+      "source_sha256": "7369b3804335f3e422703f8a1fcfe29518acfd4bf8f4d7408e88c54ad8133818",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 22,
+      "stage": "cama_bldgarea_4",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 40,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_bldgarea_4.sql",
+      "source_sha256": "d6ae3c0caaf4d37e408adf3341688910732b60eca516a077bdd48d20438f4391",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 23,
+      "stage": "cama_easements",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 41,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/cama_easements.sql",
+      "source_sha256": "4355ba9f0fc70e2c49fd1a19bb9036b9c4af0d4ef89f35bbe59c4a8805f732e6",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 24,
+      "stage": "edesignation",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 44,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/edesignation.sql",
+      "source_sha256": "b7f69d34b66ca8e3e1d9c9a63160586262481ef425dcb68e21d977556151beaa",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 25,
+      "stage": "ownertype",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 45,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/ownertype.sql",
+      "source_sha256": "d2f635303dcad76e581eb1917d3fc9d242ad05ca94df810c4a70cb50aeadb119",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 26,
+      "stage": "address",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 48,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/address.sql",
+      "source_sha256": "bd2cea7df4fc8f7caa78af11009232a3631a60c0780e1b4115b8a0bbd5ce83ec",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 27,
+      "stage": "dedupecondotable",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 51,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/dedupecondotable.sql",
+      "source_sha256": "47ddbf84c4d5eaa4e8e3d22e877eaaad4a398387f047719b2cf3916bb369659f",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 28,
+      "stage": "dtmmergepolygons",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 52,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/dtmmergepolygons.sql",
+      "source_sha256": "517651308da104f47a14cef80b48b5e59efe8ff1341f66f133039438a558da42",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 29,
+      "stage": "plutogeoms",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 53,
+      "arguments": "-v build_schema=${BUILD_ENGINE_SCHEMA}",
+      "source": "products/pluto/pluto_build/sql/plutogeoms.sql",
+      "source_sha256": "4fe835462c45fd72d29e42519c2be8cbd764b0cda4ae840b26da0040af2cc385",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 30,
+      "stage": "dtmgeoms",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 56,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/dtmgeoms.sql",
+      "source_sha256": "54d7e02bf53ef9fbb10bce3f4a4351e36bfcfbb48819204f3fdfae514fecd05c",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 31,
+      "stage": "spatialindex",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 59,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/spatialindex.sql",
+      "source_sha256": "448073c3fca8802769222d1727f42ea624669f08fec74c947eda3ea3298cec22",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 32,
+      "stage": "zoning_create_priority",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 63,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_create_priority.sql",
+      "source_sha256": "eb64055d35ad84494fa2703751e96cac057574b031802b18228cf2ae9c1cf21a",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 33,
+      "stage": "zoning_zoningdistrict",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 64,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_zoningdistrict.sql",
+      "source_sha256": "eb8c3618f508bc7c4af9996b515eacfd9da6bc745fdf6501bc32f0a25a8a8108",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 34,
+      "stage": "zoning_commercialoverlay",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 65,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_commercialoverlay.sql",
+      "source_sha256": "2188696cf0b9931197c61cac9d793e3d039604a26c0f7ca7b3a2e430790183ae",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 35,
+      "stage": "zoning_specialdistrict",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 66,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_specialdistrict.sql",
+      "source_sha256": "67cb93fd8154d3a3b8b17212ef4b64f0545c6f2e6d48e530d655e8058bff7e8e",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 36,
+      "stage": "zoning_limitedheight",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 67,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_limitedheight.sql",
+      "source_sha256": "9b66e0db577d07fb502f563d587f03a6cc5e3d6d1e1bf9b7471da3c3648e9264",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 37,
+      "stage": "zoning_zonemap",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 68,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_zonemap.sql",
+      "source_sha256": "bc07d225aeb2c650c80dd588d248851dd7c2d219262478949a9157ddd6b3718b",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 38,
+      "stage": "zoning_parks",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 69,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_parks.sql",
+      "source_sha256": "d727981f585ff0656aaaa120d2e6226b180294a931a0621bda6e77da1356dfda",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 39,
+      "stage": "zoning_splitzone",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 70,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/zoning_splitzone.sql",
+      "source_sha256": "6389f09f082605f49264789ab895e8fdfb27fca3d720ed8e415078ba8cc675e0",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 40,
+      "stage": "apply_dbt_enrichments",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 78,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/apply_dbt_enrichments.sql",
+      "source_sha256": "f1ed80796fc4b6685824d3828b0958606dd30e56c35496ec8f5343fa7c9cad45",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 41,
+      "stage": "bldgclass",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 82,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/bldgclass.sql",
+      "source_sha256": "bc014b5ccc38256dea0bc6dc2d7de14f1e1904d7b4c9d8b4d1d8c4ee916e23bb",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 42,
+      "stage": "landuse",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 83,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/landuse.sql",
+      "source_sha256": "0208fdcf15a8b2f6a6ea8c7e1e0dd45608a23da408574e83cbda3adf665916fc",
+      "status": "ported_dbt_model",
+      "model": "src/moses/pluto/dbt/models/landuse.sql",
+      "spatial_sql": false,
+      "verification": "synthetic PostgreSQL stage comparison"
+    },
+    {
+      "sequence": 43,
+      "stage": "update_empty_coord",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 87,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/update_empty_coord.sql",
+      "source_sha256": "470d64afe627d75f27f455a128fb3c25b8ed5b425e399686d1f6b99e70b69d9d",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 44,
+      "stage": "flood_flag",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 88,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/flood_flag.sql",
+      "source_sha256": "922dc6826767011c8f05b217f72d18542394e1eaee70f2d63b75e447304f66a2",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 45,
+      "stage": "spatialjoins",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 92,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/spatialjoins.sql",
+      "source_sha256": "9ec29f3d455f5ffe6ad2dd5195d09f4e1602cf5b3ebc23b7f1141a2686cf7587",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 46,
+      "stage": "numericfields_geomfields",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 94,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/numericfields_geomfields.sql",
+      "source_sha256": "fd2f01cfad327e31db0cb81a7236ac91d56c4bb16f658ab48f97b0eb5bd65dc2",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 47,
+      "stage": "sanitboro",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 95,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/sanitboro.sql",
+      "source_sha256": "571ae4bd4f782f439f2e3da1996097a1740212f50d3166c5668c9cbeb9ac221e",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 48,
+      "stage": "plutomapid",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 99,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/plutomapid.sql",
+      "source_sha256": "cd47816fffdb03be60d77d8a4d2ac71038b791ebaeac80062c8002316ee548bd",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 49,
+      "stage": "plutomapid_1",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 102,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/plutomapid_1.sql",
+      "source_sha256": "8af8f5fe8cf77daf95eb4f883780b417e29e2fcaad8e021e0cdb0336cebb62a5",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 50,
+      "stage": "plutomapid_2",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 103,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/plutomapid_2.sql",
+      "source_sha256": "b97c34fcf11b49f404d3c90be55127a6c09d46ee92583c5278c19d5d83acf24a",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 51,
+      "stage": "shorelineclip",
+      "script": "products/pluto/pluto_build/02_build.sh",
+      "line": 104,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/shorelineclip.sql",
+      "source_sha256": "c091c700b625f9f52f257b05f2492265d1d9ed22f80dcbb46a1bb3865ded4731",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 52,
+      "stage": "corr_create",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 5,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/corr_create.sql",
+      "source_sha256": "77130b17dc7f67bdd0b1fbaee46f56747b2fd04c949e54c8b9c7206306eb7410",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 53,
+      "stage": "corr_lotarea",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 8,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/corr_lotarea.sql",
+      "source_sha256": "324a664d261d8bb16afa34fa4146c1a847d7333c43b99fa96022c425d8adc5a5",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 54,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 9,
+      "arguments": "-v FIELD=yearbuilt",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 55,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 10,
+      "arguments": "-v FIELD=ownername",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 56,
+      "stage": "corr_ownername_punctuation",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 11,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/corr_ownername_punctuation.sql",
+      "source_sha256": "fcd01d93c07401cc4817029936fcdba2a9566372cc61acfe4b2bd908643d1298",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 57,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 12,
+      "arguments": "-v FIELD=cd",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 58,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 13,
+      "arguments": "-v FIELD=numfloors",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 59,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 14,
+      "arguments": "-v FIELD=numbldgs",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 60,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 15,
+      "arguments": "-v FIELD=unitsres",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 61,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 16,
+      "arguments": "-v FIELD=unitstotal",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 62,
+      "stage": "corr_inwoodrezoning",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 17,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/corr_inwoodrezoning.sql",
+      "source_sha256": "b8185a33109422ae89b34843a220776f514a5d9e5728fea270ff8db86da81d9d",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": true,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 63,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 18,
+      "arguments": "-v FIELD=bct2020",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 64,
+      "stage": "corr_template",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 19,
+      "arguments": "-v FIELD=address",
+      "source": "products/pluto/pluto_build/sql/corr_template.sql",
+      "source_sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 65,
+      "stage": "remove_unitlots",
+      "script": "products/pluto/pluto_build/03_corrections.sh",
+      "line": 20,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/remove_unitlots.sql",
+      "source_sha256": "817f5dac62e5ad3826d47f196f5c0de9e100d2299e2a2ee7e6b75ecd1b151d38",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 66,
+      "stage": "export",
+      "script": "products/pluto/pluto_build/04_archive.sh",
+      "line": 6,
+      "arguments": "",
+      "source": "products/pluto/pluto_build/sql/export.sql",
+      "source_sha256": "da53ada74cef924274787fe4523cfd17908892fffbb43b4b13c38c685ed4db90",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 67,
+      "stage": "qaqc_bbl_diffs",
+      "script": "products/pluto/pluto_build/05_qaqc.sh",
+      "line": 14,
+      "arguments": "-v VERSION=${VERSION} -v VERSION_PREV=${VERSION_PREV}",
+      "source": "products/pluto/pluto_build/sql/qaqc_bbl_diffs.sql",
+      "source_sha256": "a1ad093fefe8c9e9619b5236a0a3e8802ffd790e0124b33a29eda9b4e766f3fb",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    },
+    {
+      "sequence": 68,
+      "stage": "qaqc_expected",
+      "script": "products/pluto/pluto_build/05_qaqc.sh",
+      "line": 18,
+      "arguments": "-v VERSION=${VERSION}",
+      "source": "products/pluto/pluto_build/sql/qaqc_expected.sql",
+      "source_sha256": "9a6b641d8e7dd5f303a09b93e788e0c974a67654fa4f279569d374f3ad743f5a",
+      "status": "not_ported",
+      "model": null,
+      "spatial_sql": false,
+      "verification": "requires same-input reference stage comparison"
+    }
+  ],
+  "upstream_dbt_models": [
+    {
+      "source": "products/pluto/models/intermediate/miharea/int_mih__cleaned.sql",
+      "status": "not_ported",
+      "source_sha256": "227e7c6888fb0bbb30d0eee8b5318d4cd3eec1d96fe9c4aa8467a857a6668fe2"
+    },
+    {
+      "source": "products/pluto/models/intermediate/miharea/int_mih__lot_overlap.sql",
+      "status": "not_ported",
+      "source_sha256": "8de05c3524c73a8bd2dc59749788411d7365998419f62d75e1cc0118aaa5ab5e"
+    },
+    {
+      "source": "products/pluto/models/intermediate/miharea/int_pluto__miharea.sql",
+      "status": "not_ported",
+      "source_sha256": "ebd8b81ef461053cefa16fa3a9feaf888213cdbee9147809e3b80cef50eaea21"
+    },
+    {
+      "source": "products/pluto/models/intermediate/simple/int_pluto__condono.sql",
+      "status": "not_ported",
+      "source_sha256": "d43d4285394b434cda0e765b0ea2bb422b498de817b04bdfc04928593f429082"
+    },
+    {
+      "source": "products/pluto/models/intermediate/simple/int_pluto__far.sql",
+      "status": "not_ported",
+      "source_sha256": "193274586b8851698f2189f287349588bf50b576bdd968ff1d7ff1d1ce170700"
+    },
+    {
+      "source": "products/pluto/models/intermediate/simple/int_pluto__irrlotcode.sql",
+      "status": "not_ported",
+      "source_sha256": "bdae38c1682e836fedb75baec02f1a1e6ffd90c6e213b8e8bef5576b57dc4a1e"
+    },
+    {
+      "source": "products/pluto/models/intermediate/simple/int_pluto__latlong.sql",
+      "status": "not_ported",
+      "source_sha256": "bd3f8c786f4693583f0dd4ca11146c7b8d9d8abaa55a8d1920c03346042069bf"
+    },
+    {
+      "source": "products/pluto/models/intermediate/simple/int_pluto__lpc.sql",
+      "status": "not_ported",
+      "source_sha256": "c897fb8070e3d004d8a570d98e9450be86fe7fe17a156330dd4725dee58499ea"
+    },
+    {
+      "source": "products/pluto/models/intermediate/simple/int_pluto__numericfields.sql",
+      "status": "not_ported",
+      "source_sha256": "6b6d55f1c248345f757738d680b5ccf503a3bec5b54e5acedea7702701021ae9"
+    },
+    {
+      "source": "products/pluto/models/intermediate/transitzone/int_pluto__transitzone.sql",
+      "status": "not_ported",
+      "source_sha256": "9b2b41010b866c1e78eca0fd004eb8d2ff67408fe31439e62209d48b53495899"
+    },
+    {
+      "source": "products/pluto/models/intermediate/transitzone/int_tz__atomic_geoms.sql",
+      "status": "not_ported",
+      "source_sha256": "c4176ac8d80e2455ba783f29382b1e12010d333e46c11d889c44d3944c164291"
+    },
+    {
+      "source": "products/pluto/models/intermediate/transitzone/int_tz__bbl_to_tz_ranked.sql",
+      "status": "not_ported",
+      "source_sha256": "c215916114d246c9f674bccddf489a39ba56ee2744f6d9527cc6323b409a3614"
+    },
+    {
+      "source": "products/pluto/models/intermediate/transitzone/int_tz__block_to_tz_ranked.sql",
+      "status": "not_ported",
+      "source_sha256": "4b8be705348a7dec7ec7f9e5b20aa01fd551bac3e71e60873cd8bc9c8f0cab42"
+    },
+    {
+      "source": "products/pluto/models/intermediate/transitzone/int_tz__tax_blocks.sql",
+      "status": "not_ported",
+      "source_sha256": "27ac9e422c83b5b0ce9ace39ccbbaf04f68eac823b15f286c2bad177e2bb6b20"
+    },
+    {
+      "source": "products/pluto/models/intermediate/transitzone/int_tz__union_coverage.sql",
+      "status": "not_ported",
+      "source_sha256": "f322bf880a86c4d42c8c9c8ad6c7b393cd7d95beb049c95115ee1ed611abd28c"
+    },
+    {
+      "source": "products/pluto/models/product/pluto_enriched.sql",
+      "status": "not_ported",
+      "source_sha256": "966f5dc8770cb319275e6cd2fd0d3f53cf4b85bb84309360eda59ee8752d65dd"
+    },
+    {
+      "source": "products/pluto/models/qaqc/intermediate/qaqc_int__active_condo_bbl_unitsres_corrections.sql",
+      "status": "not_ported",
+      "source_sha256": "10eebd4e605fa54552943fa04882d0e1cb99f597cc310798bfe70bc5ccddafa4"
+    },
+    {
+      "source": "products/pluto/models/qaqc/intermediate/qaqc_int__devdb_bbl_units_summary.sql",
+      "status": "not_ported",
+      "source_sha256": "bd2e80a6f4b5e59c6c11d1184d4a0704e317a7aa2f829ae3eb629471682072c8"
+    },
+    {
+      "source": "products/pluto/models/qaqc/intermediate/qaqc_int__mihareas_questionable_assignments.sql",
+      "status": "not_ported",
+      "source_sha256": "c6cafbcab589385bb77212ca9690fa75a71b17edc433e2ac0b15d9c732cabe11"
+    },
+    {
+      "source": "products/pluto/models/qaqc/intermediate/qaqc_int__transit_zones_questionable_assignments.sql",
+      "status": "not_ported",
+      "source_sha256": "3f7b3304703f972add080e847a2d5f7e03eccf6b8b45bab8746cd4d3bba61e0b"
+    },
+    {
+      "source": "products/pluto/models/qaqc/reports/qa__pluto_changes_detail.sql",
+      "status": "not_ported",
+      "source_sha256": "c941cc097efcef5e75ea0c1ff7f2f3c572d511377d5063112cfe591d25373d3e"
+    },
+    {
+      "source": "products/pluto/models/qaqc/reports/qa__pluto_version_comparison.sql",
+      "status": "not_ported",
+      "source_sha256": "a04285084c964332679d8d3f207ac228cc82be725c090e64dd3595a44a39247e"
+    },
+    {
+      "source": "products/pluto/models/qaqc/reports/qaqc_reports__dof_incorrect_condo_res_units.sql",
+      "status": "not_ported",
+      "source_sha256": "34dc63e3121ceb7e7ecdecc59a8d1adcd8f161bb9b7c9ac936713ad42686c91c"
+    },
+    {
+      "source": "products/pluto/models/qaqc/reports/qaqc_reports__dof_pts_incorrect_condo_res_units.sql",
+      "status": "not_ported",
+      "source_sha256": "681ff3d886df35890a0d1b2a587beedfc400d9d73c924fa455be8d6f1a69f0a4"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_cb2010_wi.sql",
+      "status": "not_ported",
+      "source_sha256": "005f467e9799dbf76978b8203b200fd398b82e1e06e6176b3eea0d8ef92caa90"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_cb2020_wi.sql",
+      "status": "not_ported",
+      "source_sha256": "cbb7e67cd94cfc2efac94064afe2e13ed48a32a649864b5e8b3ae32423305ac7"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_cdboundaries_wi.sql",
+      "status": "not_ported",
+      "source_sha256": "7023b4885ae261957aa62e1da02c850494bc8943313c2ff19149df45b220a762"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_colp.sql",
+      "status": "not_ported",
+      "source_sha256": "516852b73d46fef67e61fd91c0bc899eba27751bee76c86684622d680abf7221"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_commercialoverlay.sql",
+      "status": "not_ported",
+      "source_sha256": "80b3704ccbe3e1bf8ccf680fbfcf01aebc039df34ec07b0c8c05acc9dac5f96d"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_councildistricts_wi.sql",
+      "status": "not_ported",
+      "source_sha256": "23686586365ee4336eeac09f9baeb1866f0f48045e1704b57db635afafdf2b25"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_ct2010_wi.sql",
+      "status": "not_ported",
+      "source_sha256": "3e5124cc66172069f97d70f863ccabb3c2ab3faf5a9c68edbc0871c121eca59b"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_ct2020_wi.sql",
+      "status": "not_ported",
+      "source_sha256": "6b5f8dc40cb7dc5d07efdb94a26e08c83480da5521356da7ffdb296fc1bb6552"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_developments.sql",
+      "status": "not_ported",
+      "source_sha256": "43556b5a44b68f01656552216b3c3cb0b8f7931f7d33eb3eef67447c0e137002"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_edesignation.sql",
+      "status": "not_ported",
+      "source_sha256": "59b1d152abbb1cd41684a84e257269e0cc34712f9d0e4b8e6d22f466e1cad7c3"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_firecompanies.sql",
+      "status": "not_ported",
+      "source_sha256": "32889044f848a25893bee7ebed4fdf4f88108015075461b9b9fae3e5787e51cc"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_gis_mandatory_inclusionary_housing.sql",
+      "status": "not_ported",
+      "source_sha256": "4cf3ac451ad62e88b3158c9fa790b56fe1be8cc78905e533af7acd2ea199abc3"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_healthareas.sql",
+      "status": "not_ported",
+      "source_sha256": "c99f41600d99cc473e7d298e5227e808fe8e29a50154ec11be5fbbbacedd0187"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_healthcenters.sql",
+      "status": "not_ported",
+      "source_sha256": "d99fb204777ccaa1b477b8df606fae850b794ea762418d287bc35701de368448"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_limitedheight.sql",
+      "status": "not_ported",
+      "source_sha256": "aa6fb49e1daa42b38af2f94b89a5b3caa3105834372d877d84c53c4e896c7bbb"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_mappluto.sql",
+      "status": "not_ported",
+      "source_sha256": "61ee956d2b041392f70641584feb9f68457e867070b366795bff4c6803fd84a5"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_pfirms.sql",
+      "status": "not_ported",
+      "source_sha256": "2e49b672749846cd9a0014fd0f2a45f7231f4306d4fbb7870c66e77af2881579"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_policeprecincts.sql",
+      "status": "not_ported",
+      "source_sha256": "4bfd9710a4f09203f8394edd885960e7f49b7248959406c47a768d9aec442d9b"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_school_districts.sql",
+      "status": "not_ported",
+      "source_sha256": "91303a9e57f8f2009280c63c59d1672413161f0878d449a6a733f3affa2a9992"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_specialpurpose.sql",
+      "status": "not_ported",
+      "source_sha256": "f59c82b7c8ee3f99ffbe0df4b86669bf47ff745aec72a86ffd237aadbaa59c7e"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_specialpurposesubdistricts.sql",
+      "status": "not_ported",
+      "source_sha256": "9d2911c3204a9701b4b3ce626c88115fb2ccc345a4f3782aefa4c2993b07d814"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_transit_zones.sql",
+      "status": "not_ported",
+      "source_sha256": "f1a9107c23e86e7ef4859ff6577fc852066533e869223aea4089452ecea81f97"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_zoningdistricts.sql",
+      "status": "not_ported",
+      "source_sha256": "135452a07d950481cc4f83f1487706415a12d4ce3c4e48d1a0fd07f4e5fa6d5e"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_zoningmapamendments.sql",
+      "status": "not_ported",
+      "source_sha256": "09c1d05690f8149621a37688f8e951e17f1ad646b878350065791485d3dc6c07"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dcp_zoningmapindex.sql",
+      "status": "not_ported",
+      "source_sha256": "54be68dc0380ca963db44f371d4599d77e968fb734dbddbbe5b59e7e4289141d"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dof_condo.sql",
+      "status": "not_ported",
+      "source_sha256": "66232d0c2167d2cff6f99ca6689904289231e9bf4b599d7de1edac77296a9d18"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dof_dtm.sql",
+      "status": "not_ported",
+      "source_sha256": "dd8a497486055f4e59ee8f8db719855236863bc52a8f494e9b381188dd012a05"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dof_shoreline.sql",
+      "status": "not_ported",
+      "source_sha256": "093f4a0dfa50ac661e12ceca9214166baac84abc8221fe526b2e38284a94ddc8"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__doitt_zipcodeboundaries.sql",
+      "status": "not_ported",
+      "source_sha256": "0de026e642b78b22f95e072886b2ad04a6f7d3a0f867baf26cb4bf82cd049141"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dpr_greenthumb.sql",
+      "status": "not_ported",
+      "source_sha256": "21c305953b88cc3e6b0c55e8fa48de2d1036bece9e241dcf931350670d050d75"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__dsny_frequencies.sql",
+      "status": "not_ported",
+      "source_sha256": "01a0f79d050e77b69f3091f9e0c6d5b226aae9707d26fd136188391e4dd041e7"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__fema_firms2007_100yr.sql",
+      "status": "not_ported",
+      "source_sha256": "03f3bc59f943a674b8262d5a28d0157d002d2d4c8e36aaf443df39e42c67c238"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__lpc_historic_districts.sql",
+      "status": "not_ported",
+      "source_sha256": "cdb4466325f6392d07f8487bc1c47d4e49d899c32bd1765898af70fe8e9b70a7"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__lpc_landmarks.sql",
+      "status": "not_ported",
+      "source_sha256": "eb6813087158a295a302cd7e0398ecf7d5085a2d1950032deced2ef6fde22b06"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__pluto_input_cama_dof.sql",
+      "status": "not_ported",
+      "source_sha256": "326874537a48f95f2f631d4b74b7a7496689d40d33c63ff09285db5afef1d5ef"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__pluto_input_geocodes.sql",
+      "status": "not_ported",
+      "source_sha256": "cd5f38304977e7a9eaae95285e7fb9aaeb1bf78b996178eb8a5450dc5f8c3ccd"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__pluto_input_numbldgs.sql",
+      "status": "not_ported",
+      "source_sha256": "1f4fea66743ffa5229d006344c3f2a14f9cdbbe86b099e16432c9f1bbd9ad098"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__pluto_input_research.sql",
+      "status": "not_ported",
+      "source_sha256": "87349f4219eca9f37b2322b48a71a02c8683581ca78d039a88406306403be82b"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__pluto_pts.sql",
+      "status": "not_ported",
+      "source_sha256": "77d2bdd07941d4c38ebd0232f1107550c5b66460f8f1b97aebc57b3a16124909"
+    },
+    {
+      "source": "products/pluto/models/staging/stg__previous_pluto.sql",
+      "status": "not_ported",
+      "source_sha256": "cf4caf6be9ee03f2c1be0614a62858b899455b8fcd70a6403e51f0b623691ba4"
+    }
+  ]
+}

@@ -1,0 +1,2846 @@
+{
+  "executed_release": "26v2m2",
+  "executed_project": ".moses/pluto-build/26v2m2/dbt",
+  "models": 405,
+  "token_equal": 405,
+  "idempotent": 405,
+  "format_changed": 194,
+  "models_verified": [
+    {
+      "model": "__m_0000_stg__dcp_cb2010_wi",
+      "token_sha256": "a7f20d92c2b99e11eabbe2fa8181cf0c2998672cb563225acb4da11bf18c278b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0001_stg__dcp_cb2020_wi",
+      "token_sha256": "504315f7c90b864bad0edaa805ec09f423b957b0a54edb3f763714a9d9141ad3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0002_stg__dcp_cdboundaries_wi",
+      "token_sha256": "8462cd5438c1a6a7c2a24dbb9aa330babe27e2a70b1f33493faab29db91964a8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0003_stg__dcp_colp",
+      "token_sha256": "f77c60993d12d6155c81db14692d6cade1e2d1a83fe3226627060f16b71b0526",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0004_stg__dcp_commercialoverlay",
+      "token_sha256": "4dbff00e1e402864bc9ce47d3fc745fac2bb2797f0b4c367a3c4c39d606abfa4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0005_stg__dcp_councildistricts_wi",
+      "token_sha256": "75d65145beb63189b845a0a1ff73eb8149042417a6b9401bd7feb304c64af908",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0006_stg__dcp_ct2010_wi",
+      "token_sha256": "13a3d09b13b2b9bbd24d0ea7663efc51b1cd135076a8888928a5676fdafea8f3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0007_stg__dcp_ct2020_wi",
+      "token_sha256": "ae71a91b074cbb7efa08ae117070a1f2a30e7c42b2729fea5103849c9c54bbfb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0008_stg__dcp_developments",
+      "token_sha256": "3b0bf80ae08fe6ea20c1c122d93cf6fa6c2d63a4dd6c19c36676424df31d2b0c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0009_stg__dcp_edesignation",
+      "token_sha256": "c7ed38dceaecc32aa5cdaba5a9210eb9c8212e625b4485ec0ec03535b792b36c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0010_stg__dcp_firecompanies",
+      "token_sha256": "9aa20adf6196f332a1c838e9080125becacca1b5ce498e2f12cc307f33dbfecb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0011_stg__dcp_gis_mandatory_inclusionary_housing",
+      "token_sha256": "529eee70acb95c251bf579dac97bcd097acbe94b7647b3645604060e6191a5c0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0012_stg__dcp_healthareas",
+      "token_sha256": "e0b4329d058a0fab079700c5ce06a33c83578f92820db7cfb255026aa23de830",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0013_stg__dcp_healthcenters",
+      "token_sha256": "c37601d4d4d5f9151de92e9a81019443794198f87cee8fe75ec4446cf0ec541a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0014_stg__dcp_limitedheight",
+      "token_sha256": "30728df7a71f171b2c5ffa42f2f80ed63c5e24603ccb8a369703b9e4ee0b05c9",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0015_stg__dcp_mappluto",
+      "token_sha256": "f5ad49c4e8f9a8f34672aad7607ca07edc2cd93b4cd64ba0bb49737a23e2dba8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0016_stg__dcp_policeprecincts",
+      "token_sha256": "074e8fa18f49285575f54b82485d520d574c651badb51cf3dc107db093e5811e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0017_stg__dcp_school_districts",
+      "token_sha256": "38a3642151d39a7de2dc15b1e8f4d40ce55802820f04afd9af6a17a3dce7ab65",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0018_stg__dcp_specialpurpose",
+      "token_sha256": "ca183634b7d1f5207eb6032e48ab08d7e90f9d0721fd2d8c6ffd055337d68a90",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0019_stg__dcp_specialpurposesubdistricts",
+      "token_sha256": "fa378c8371eb750a921ddaef7498566bcb032334e7fbb7ce50dcda6dd6e4dec3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0020_stg__dcp_transit_zones",
+      "token_sha256": "8a9eefa58064d22f83d1c7d25267f01d5d2fc729a011d3a250760fbf7c460832",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0021_stg__dcp_zoningdistricts",
+      "token_sha256": "f8a779b5201df23f3183a65501ea94ac6a28cef4170f19611831a78f67b585fd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0022_stg__dcp_zoningmapamendments",
+      "token_sha256": "7a3d0da01e89e33bc2c90c6f4cec8e301475aa16e94e571c3eb549a14f0339d9",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0023_stg__dcp_zoningmapindex",
+      "token_sha256": "85b98b032022ffb87361e8ac021e62146bed10012fffb2961a171b03507f3167",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0024_stg__dof_condo",
+      "token_sha256": "5b2726a72e0de36be7ca68387d00ef6f3fad8d67320a5ad9b1ebda498bc6ee8c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0025_stg__dof_dtm",
+      "token_sha256": "58bd135aa0351f1bc7ed5f904ec6df6ff0d828da96c6b96d563e786879945151",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0026_stg__dof_shoreline",
+      "token_sha256": "ac2032365cb8537b88f984548245649cf55aa4e2b05cb2c1422bdc336f28c4b5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0027_stg__doitt_zipcodeboundaries",
+      "token_sha256": "d95df74e3d6e2f3090e7b73b7161ae18fd86e260dc5b6eff99ecfddc6943f760",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0028_stg__dpr_greenthumb",
+      "token_sha256": "fdd06b3e35e47cb246280472778940d64bcc5ccb49961c4b64184f76cdf67ddb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0029_stg__dsny_frequencies",
+      "token_sha256": "10dd25d56d50f905ae9fe6790475f2ff224945cfc6ef1c5b64558e450da7c918",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0030_stg__fema_firms2007_100yr",
+      "token_sha256": "3382dcde7f3935ecb6af366930c21ead94aa383b9c4340c445c4a7ae7fc46d73",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0031_stg__fema_pfirms2015_100yr",
+      "token_sha256": "2831b540db5a82d408d76e27dff7b4157c14f27d7f82684de3a27f0856a09fc4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0032_stg__lpc_historic_districts",
+      "token_sha256": "2b1c5cae2f0f54f1c402bc27df3a17197c219f7eb89203c8149355cfafa64102",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0033_stg__lpc_landmarks",
+      "token_sha256": "4f94a12e8d5ce9f1c108ee72fb7f7c7c6d5822732eed45fc9944099971d4ad43",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0034_stg__pluto_input_cama_dof",
+      "token_sha256": "429449cc4a2aa52b4f89a37352f0a851d5645c5b7c2cb5edb5010bf47661449c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0035_stg__pluto_input_geocodes",
+      "token_sha256": "6259eca92b4b306430991988b3c9397596ef3ce7ae4d9decc267e8277bfbbae5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0036_stg__pluto_input_numbldgs",
+      "token_sha256": "2556fd5776cfa9e0852b71ff9435c6f232dc0b260b201be80e0a863ac43f12b4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0037_stg__pluto_input_research",
+      "token_sha256": "71df1640106a90c9070d72156bc6f60647b06977eb53668bd8e65aad6ecea43a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0038_stg__pluto_pts",
+      "token_sha256": "aa33513e58854dc4b50ca27a075a8ea346b8255cbef8757f4572e9bd1ffe2c64",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0039_stg__previous_pluto",
+      "token_sha256": "f5ad49c4e8f9a8f34672aad7607ca07edc2cd93b4cd64ba0bb49737a23e2dba8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0040_create_pts__dof_pts_propmaster",
+      "token_sha256": "7a61eff981bb6726dbc812547ce20660ef34e1466d3175d2fb5ee85d21205458",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0041_create_rpad_geo__stg__pluto_input_geocodes",
+      "token_sha256": "b4596ea0694bffebb082aedb50fd259400d6049664159e965ea0264b33758e61",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0042_create_rpad_geo__stg__pluto_input_geocodes",
+      "token_sha256": "99076ee43bcdb825429a52d3fbd0143ee5d3345cf916df58e91a6c5df96fcc1f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0043_create_rpad_geo__stg__pluto_input_geocodes",
+      "token_sha256": "90324301ae6b2cc352055f62df6c9c5b1d7c4190f1cf7c178eaeebf7fa8e80ea",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0044_create_rpad_geo__stg__pluto_input_geocodes",
+      "token_sha256": "4fc06ea03a6e49e1a533930fe7840a1c6c4276adfed3873f6cbf3f183dbd8844",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0045_create_rpad_geo__pluto_rpad_geo",
+      "token_sha256": "cf8ca6febbbe7a21567c58473b01d3dd472f2f9ac7f7dceea9cd07d383fd5d26",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0046_create_rpad_geo__pluto_rpad_geo",
+      "token_sha256": "72aa86a65c1861e660c56166fa50399d5586ee765d02885acfafb134a53275a1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0047_create_rpad_geo__pluto_rpad_geo",
+      "token_sha256": "7c3c59597db4771b573d875fde7ad9a89433105ee55e4d4768f5a92ff588518b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0048_create_rpad_geo__pluto_rpad_geo",
+      "token_sha256": "32db53444b17c052fa8a3f2190e777a9a80772309f8163f265e4088badff96e7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0049_create_rpad_geo__pluto_rpad_geo",
+      "token_sha256": "2a7bb14dd55bd0bffd49b10d5506d82d62baead6218d22206267baa6ad661567",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0050_zerovacantlots__pluto_rpad_geo",
+      "token_sha256": "3534c0707a39678b28cce44b10e31970897574310800a64f845a0ca1fb39221d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0051_lotarea__pluto_rpad_geo",
+      "token_sha256": "88fa4b589c65dd877302ca458e5d74c95c9a0264bf161d3012bf86794374af37",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0052_primebbl__pluto_rpad_geo",
+      "token_sha256": "c0890c8d019b3273848e31088712021925bffbafaa9735599919236b7c543fff",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0053_primebbl__dof_pts_propmaster",
+      "token_sha256": "3a23d3a77f7fe51d707c81200dd7d7532dc86c92d2e982435ef8d2bb636e8862",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0054_primebbl__pluto_rpad_geo",
+      "token_sha256": "e1115ac90134c2f2150f9bce9516c7e4f02f45bb46deecb3db48e3fc36b9b383",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0055_primebbl__pluto_rpad_geo",
+      "token_sha256": "35b372b1e1f511652c9bf6eba05bf63f3e7ed76cedb9715dcb6cd95169b6b005",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0056_primebbl__dof_pts_propmaster",
+      "token_sha256": "32f814d3896c1c2bb3621706f6d5541fd7e86c2b04361fbed5a483d66913de46",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0057_primebbl__dof_pts_propmaster",
+      "token_sha256": "126fc5b39c34de3bcf7d65ad242101ee880723d81a07b420615d739104db0bf0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0058_apdate__pluto_rpad_geo",
+      "token_sha256": "4b71862fc879dbbbaa1be121632154a2796a91a2676d031b8e6a443144381fc1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0059_create_allocated__pluto_allocated",
+      "token_sha256": "50b3091ff03cedaa56a9e8f33c3cc5e626437a2e926e3a1eacbcf8df20d8814b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0060_create_allocated__pluto_allocated",
+      "token_sha256": "68447577590b382a2dd9e1fdb3548c521d4d64eae7a587c9b06ac333ebc11f14",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0061_create_allocated__pluto_allocated",
+      "token_sha256": "5c76379897d1727c1ec9a65019b0f0ac05b68fd6f3948ffd01b0711c94bc0512",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0062_create_allocated__pluto_allocated",
+      "token_sha256": "d9c6c1e9f094da97c9cd8b450ba2fa344160e92c14587e8afdde51cc0889f5ed",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0063_create_allocated__pluto_allocated",
+      "token_sha256": "befe776b70997a23aa12df0b7cca2922c8e2be3754c2e0a24c564982d94ebfaf",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0064_create_allocated__pluto_allocated",
+      "token_sha256": "ddc5439ff255f56992da6c5b5fe31395464479c57e7efdd58049fcb5e97cc4cd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0065_create_allocated__pluto_allocated",
+      "token_sha256": "3523e02636c8f6cde64dd76a8a4ae64b9c4d76c865d3facb0753bf223d045caf",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0066_create_allocated__pluto_allocated",
+      "token_sha256": "b9270a13b69df85ec9fd9bbe71fbe86f03263eeb95ce2273b034f57dd6a54ac9",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0067_create_allocated__pluto_allocated",
+      "token_sha256": "1095282cd0e0f808b6f09c7bf7f688038dadbe929fdcbe1bc8e48fac5ebd181f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0068_yearbuiltalt__pluto_allocated",
+      "token_sha256": "be7182f4de79aba7c2fd0812a89d20f2bfcca16de1adbd5ebb735629409c6cae",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0069_yearbuiltalt__pluto_allocated",
+      "token_sha256": "933b65cb4998c8ad39192fb26d8a09577de27998aad2f8c679c488d3cc5b4ddf",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0070_yearbuiltalt__pluto_allocated",
+      "token_sha256": "617b84ec7a854fe9ccfd5daef45048c4234fef5b39161b014c4b5ff65acf6ef8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0071_create__pluto",
+      "token_sha256": "20ab69ecf01e5806eb07b031a2806acad423aeb8506590c57cfac4fdfe03248f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0072_bbl__pluto",
+      "token_sha256": "45df95b9eb82306bee3eff0b814e002208cad88b210564ba4efe05097712c405",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0073_allocated__pluto",
+      "token_sha256": "a1969ef9dcba7cbed8d14712bc92056020c6c911abfc3311aea3f2cb4f283e86",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0074_allocated__pluto",
+      "token_sha256": "209e36e0ebeb5874b3156554fda885fdf91282e77336f43ea4ff807ef82db582",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0075_allocated__pluto",
+      "token_sha256": "2a81c673da44c9b938febd64899af9b3e9f3abdc9768fd9df767be25d102d723",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0076_geocodes__pluto",
+      "token_sha256": "4be327ba2aa0af0c811a9b7abc3e2e58851af402f303dd790e628fd4e48d0002",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0077_geocodes__pluto",
+      "token_sha256": "db7991bb69fd0e6e8c9ad511b0509e8c7759bbcd7d53303080dd2a6fe53e62c8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0078_geocodes__pluto",
+      "token_sha256": "3ebf300456840b42688154f25f2a14c3560b82fd146251a27dba574388856e65",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0079_geocodes__pluto",
+      "token_sha256": "62860d71ea6dc97d33379a688035bea820f735a1ff89ec8689b9bb09b301bd0e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0080_landuse__pluto",
+      "token_sha256": "0a99b847fd8cdc9c41d514056932fccdd00304b990338cc6c60ed85796f7009b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0081_landuse__pluto",
+      "token_sha256": "6825405a5652388dd2e2a138911fc8e20af84cc8643288002a78570ea120669c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0082_create_cama_primebbl__pluto_input_cama",
+      "token_sha256": "d2e67312cedd25632a4fb8258fb89bfcfa9accb797b7c23b2f80d51d11edbe29",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0083_create_cama_primebbl__pluto_input_cama",
+      "token_sha256": "d0a9c97e1f1efef5c6ce2812473423b660a83c5a8e696b64da4c994159394f6c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0084_create_cama_primebbl__pluto_input_cama",
+      "token_sha256": "3cc87d48eb5d2eb13f4bc42696733522e8539d45592d9c59abefd0d44bf717e0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0085_create_cama_primebbl__pluto_input_cama",
+      "token_sha256": "8006c192c78192b937e3d62b104a8d301e867a058e0d8cd6fcad612db9b1ab83",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0086_cama_bsmttype__pluto",
+      "token_sha256": "505c3366b75f00c631c4ed5f6b7cf7f12677ff2d8c2ade09bd6105ed03925682",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0087_cama_bsmttype__pluto",
+      "token_sha256": "34601d50993bda6fe7c46b2544844e1613d2c5391279c22f7ec6bc9c49259216",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0088_cama_lottype__pluto",
+      "token_sha256": "608ae1d04740d7d5d54df4de1ba303d891c4701bc956098f50dabae3061f3aea",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0089_cama_lottype__pluto",
+      "token_sha256": "c9826854d6fdf9e14df3fc365a2b86c2c24e79c97622ca4f5bd988ec7ad4de33",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0090_cama_lottype__pluto",
+      "token_sha256": "00c4962985f30b33fcd6e5468f92ee60545c883ec70122e6d35e22ffca2aaa91",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0091_cama_proxcode__pluto",
+      "token_sha256": "63aa86183b89806f2c25a2a59ff125063929e56c00c1c7ac1cb962f93690ae18",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0092_cama_proxcode__pluto",
+      "token_sha256": "94d6816fc425af5389afbe244e439ad4a3847c9b1eaf81a6c54bff75cf0711a3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0093_cama_bldgarea_1__pluto",
+      "token_sha256": "ab0296075901e24b39e2f70dc309e0e298711ab589bae1b9124a22989a737b05",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0094_cama_bldgarea_2__pluto",
+      "token_sha256": "1752a691c975edbd151f5972f1a4ce39a626de6cae6dffe968dc13d097c05747",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0095_cama_bldgarea_3__pluto",
+      "token_sha256": "63663a1c0eecb409555eb0e15328fa859775540352595d7871bdb414cf96ad5d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0096_cama_bldgarea_4__pluto",
+      "token_sha256": "a788530c650421e9dd75defc5daa55772c47e70c425c4b9d61f4fb7921cb73a0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0097_cama_bldgarea_4__pluto",
+      "token_sha256": "d23de46c6d38d723faf1f24c8d5a4affda5252c976dae41ba4b7059dc8f73969",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0098_cama_bldgarea_4__pluto",
+      "token_sha256": "a2a483531b0c0ae8504fdf9fe6b06512c108bfcab52982597396f676102d8ba1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0099_cama_bldgarea_4__pluto",
+      "token_sha256": "e39389d50008b1ec20f670f7b68c3a3c1270f095fc50293d711a550bb2d87190",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0100_cama_bldgarea_4__pluto",
+      "token_sha256": "4ebabd4f018b6e6d8cca8630ba4c460c9184985bfbfe2e03c8c954ff8083d998",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0101_cama_bldgarea_4__pluto",
+      "token_sha256": "f1876760ff5fee5c71a09a113a89464ed3e686c8b479277e2102f2127dc86836",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0102_cama_easements__pluto",
+      "token_sha256": "3d66575d1eab6699fa1eebb7f52797a5024f94612d9b5cc959b306a2c33715d8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0103_cama_easements__pluto",
+      "token_sha256": "099e13a2073629616e215dfbcec09fa6d5657c4f4825b526ce98986e528f6d37",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0104_edesignation__pluto",
+      "token_sha256": "49bfdab9a8ed1a31399569cc4005e9318776399241cd7f0373ab19093d3650e2",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0105_ownertype__pluto",
+      "token_sha256": "56d18641aa94702d8deefc008c5397c880580677181e35a5b20a6f4ebca613f1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0106_ownertype__pluto",
+      "token_sha256": "1cc039b505db3bb5e1718dedcee2139df385f656247adfc49710018cab57323a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0107_address__pluto",
+      "token_sha256": "738f9e55d2c63012837115b606e46036dbbcdf57b276a27fe9ae23c1070fe431",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0108_address__pluto",
+      "token_sha256": "df2e273703dc5373d9a6b33a041bbcd2132db5b90f4db6a0b392461e083fd162",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0109_dedupecondotable__pluto_condo",
+      "token_sha256": "8a5b8e1f176ccc156a12afb4532c49bd1b11296dfed9a855f7783ff7ca26ab35",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0110_dedupecondotable__pluto_condo",
+      "token_sha256": "86a018403363a25c278def1e2318ab918ce853ab96fa534a628b86a7f0490ae1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0111_dedupecondotable__pluto_condo",
+      "token_sha256": "bf385ce6997e12ab2e4a2643190062b2f9dda4101f001ff13795bda1c83efa52",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0112_dedupecondotable__pluto_condo",
+      "token_sha256": "31286413775c7931ce9d224e796cb13b79ac52404813f6d5280822ab799a283a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0113_dedupecondotable__pluto_condo",
+      "token_sha256": "57635fd61c3bb7425a5b5aaf42b348e5323e42d4b600b596c2adaf5525d43028",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0114_dtmmergepolygons__pluto_dtm",
+      "token_sha256": "72c29eab79f2ffebc6a2cf7d8cd0df987ca3b85d37ac19fbbf5e26779d2a4ee7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0115_dtmmergepolygons__pluto_dtm",
+      "token_sha256": "7e453f19ed0a9e53cbd7d92f1ed93c0816670e2d600c00b5d2e71169b1c49061",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0116_dtmmergepolygons__pluto_dtm",
+      "token_sha256": "735bc5c1a991ee8614d37b2cc76c6b8772d19a590fddb8965b1fc819e48d4e5d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0117_dtmmergepolygons__pluto_dtm_condosmerged",
+      "token_sha256": "56a82f0acf92de676098042b5e65d4f30ccb21abd37cce92e137c183adc58232",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0118_dtmmergepolygons__pluto_dtm_noncondosmerged",
+      "token_sha256": "2fc2d7f095494df9c1603871dd959954c38f7fcf5ed8795978de190304322878",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0119_dtmmergepolygons__pluto_dtm",
+      "token_sha256": "57590779452b4cc8e719aa9e348449653913d2207ecc77debe34251b98478d01",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0120_plutogeoms__pluto",
+      "token_sha256": "5d51ada03799fb24151da616ff8bd4c8fde46c784d92ad2b17186d3be0e741f5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0121_plutogeoms__pluto",
+      "token_sha256": "ca6a941b2a09c3c4fa5aab9cf558cfcd9e72bfba302fea58b4f323ff2a8e3ba5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0122_dtmgeoms__pluto",
+      "token_sha256": "44e23f3c7f421ccd8952ea1380d3dc5a3907b1980208b3223974e2be1eb020ec",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0123_dtmgeoms__pluto",
+      "token_sha256": "c879576d7b50494f5e436531b4a8ee89a229f9db08a76ee86b37be364b896c88",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0124_dtmgeoms__pluto",
+      "token_sha256": "9489af088043a12276ca98d7ce53f4a0ac5ca5d96e10c95515a2b796593ef3e1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0125_zoning_create_priority__zonedist_priority",
+      "token_sha256": "f17ba8eb8804d4ef78db98cc467e52f81f583d38f465739c669e4f69e0de15e7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0126_zoning_create_priority__zonedist_priority",
+      "token_sha256": "ee4cda41453e9cc13c9175976e2714930e7f20a4baed29db59c0b290591c3a7c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0127_zoning_zoningdistrict__validdtm",
+      "token_sha256": "f8edfb44f5b6b0708517ae42fa063958ac99102703d68d7d8dbae3af1efc51fe",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0128_zoning_zoningdistrict__validzones",
+      "token_sha256": "cb4562cd5c89e083c3ae82230da35dd29ac55011ea545ecc66f0837a89437968",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0129_zoning_zoningdistrict__lotzoneper",
+      "token_sha256": "50446b17faad59a4b912aae00eb26c5b923ed45039556aa9dae44a79ed7b2fa7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0130_zoning_zoningdistrict__lotzoneper_grouped",
+      "token_sha256": "3cd1a513c272a7381d7e8209100d035ea3d19b0ba3651ffe2c53d643c73e5e71",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0131_zoning_zoningdistrict__lotzoneperorder_init",
+      "token_sha256": "e2bbc15349be4d0a8fcec9290aaa4b6c417a7d876ed185da9517383d75c0be93",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0132_zoning_zoningdistrict__lotzoneperorder",
+      "token_sha256": "66567e898a6220e973ba2217bb82373ae229eef784ab61ca8014db93fa46dd28",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0133_zoning_zoningdistrict__pluto",
+      "token_sha256": "d4ab680c5f5a31f1f17466cc890060a019bba8ead76ad7b994b7b57c544ec101",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0134_zoning_zoningdistrict__pluto",
+      "token_sha256": "9724af74db3278b8bca6f5bced6a7e2c95cef9f7260224697cfb08503e64c946",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0135_zoning_zoningdistrict__pluto",
+      "token_sha256": "1688d9f88fdd1140e1e1a3325e7bf496bed6320b0f3603cf905dfebecae7b363",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0136_zoning_zoningdistrict__pluto",
+      "token_sha256": "65d88d0fe3f332d2025197ee6372d515319f657cc3d99a08dc4122c97d8bd37d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0137_zoning_commercialoverlay__commoverlayperorder",
+      "token_sha256": "477de0fa3134c70e801e48dbe0cf1a01ef92fed4ec77ad18d1e80c4080a14251",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0138_zoning_commercialoverlay__pluto",
+      "token_sha256": "f5a0533021854d1210df6d6e62244368f186b6c7d07bdb4201181548f39f3682",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0139_zoning_commercialoverlay__pluto",
+      "token_sha256": "1e57ba1d60fe858d90e7b76357bda423650a73520a5273fa92800ee015d6f2ac",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0140_zoning_specialdistrict__specialpurposeper",
+      "token_sha256": "9423ed4b3f85d270afb735221cd4409b6e992d3f5ba9e9b59316b4db5ee58744",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0141_zoning_specialdistrict__specialpurposeperorder",
+      "token_sha256": "81fd31ea90d4aa3c565ab38479f8cf8beac27b9efa60f31aafd871d00517314f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0142_zoning_specialdistrict__pluto",
+      "token_sha256": "c5a586a402e74485c62d3cff46f1be495cb877bc576f7e15e62d938a7b28827c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0143_zoning_specialdistrict__pluto",
+      "token_sha256": "e89f197a126d54db39af791adf4d5ae2f64698b169b2625bc7a40eb8cbc09162",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0144_zoning_specialdistrict__pluto",
+      "token_sha256": "4d8d52cdf4d59fa200616903e8ec1d83244dc2aad105fad24c79f44216e2967b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0145_zoning_specialdistrict__pluto",
+      "token_sha256": "f7bd91c23082ae8a97d44f2fbee30bbf084c8ec4882ad1f0aa52b3f2b9db2d49",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0146_zoning_specialdistrict__pluto",
+      "token_sha256": "2846af5c51ba677e1a577a242f7e19e079cfdae7a1698f375c20a0594ea36ccb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0147_zoning_specialdistrict__pluto",
+      "token_sha256": "1e1ca1d2329c89b96d8433ed43679c2e4ef4b9da99b34980c7671bc2f5cab6d6",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0148_zoning_specialdistrict__pluto",
+      "token_sha256": "a0ffec65646f6deeeb60aecbd4df111a59c55b30003b6b8fd60ee8715bb5c9be",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0149_zoning_specialdistrict__pluto",
+      "token_sha256": "edfe8a51193fc96972027d6d0b00aa0154bd32ff316886c531156432976d121c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0150_zoning_specialdistrict__pluto",
+      "token_sha256": "6c3bf5adf1785abee12cb8ac452d75f9f75a12e6a403bbeee3b5dfe8ed227109",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0151_zoning_specialdistrict__pluto",
+      "token_sha256": "27c7cb1cdb5660ccedc3bdc43c7b3c4315714adf92cff05a3ff0c0980c6ee9ec",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0152_zoning_limitedheight__limitedheightperorder",
+      "token_sha256": "33628f016b881515883b1c11528502783cea19b7d4f71edd84b5544e8559a270",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0153_zoning_limitedheight__pluto",
+      "token_sha256": "6a0465f182eebb412c68e64409f8e4829c39ef7ceccaedc89e1cda8339982cb8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0154_zoning_zonemap__zoningmapperorder",
+      "token_sha256": "7ee119f69887530b028444389151db4fa750ed8bd0ea88ed2715e10158aa64d6",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0155_zoning_zonemap__pluto",
+      "token_sha256": "eb27d998d7c75eda4d6d5a4bff8b7e894ad0262f25a134b439873f0cda34c680",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0156_zoning_zonemap__pluto",
+      "token_sha256": "424e86674da4fd381da2b12384ba38764be5e1d85630a596655f3c5113df11b5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0157_zoning_parks__pluto",
+      "token_sha256": "4bea34ba647fd047a3a5220be2ab8fcc75c2d1190c82dc0068220dac69e08bd7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0158_zoning_splitzone__pluto",
+      "token_sha256": "55509b67f3bcd63a16b18c3d070d713e11e3ae827af5072274432a3c99c0101f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0159_zoning_splitzone__pluto",
+      "token_sha256": "b306b622e251bd8cba1e7c4c4bb8a8b15c2bfc10c8025e61e26ee37b730af39e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0160_int_pluto__far",
+      "token_sha256": "fcd42997119e6f363fc9510f07331e38ad3a91013a116476ed8db45702b808ee",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0161_int_pluto__irrlotcode",
+      "token_sha256": "8ba010544a7765ce564b9043f6439ce082023c5de4bdee840fff13badc861e77",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0162_int_pluto__condono",
+      "token_sha256": "7dc8ff93af35d3c383cc3203950ec3272125717e2eea2ec2f0eec88402ec111d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0163_int_pluto__lpc",
+      "token_sha256": "c2328d248c195de4d9fbec106ac336e29781b0636a1954c8f1270ce4ea3ba6f9",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0164_int_pluto__numericfields",
+      "token_sha256": "20b348661ee52cf33a2c57c354caec8114df31de0181d2003e135a94ef0186e0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0165_int_pluto__latlong",
+      "token_sha256": "381c03b924b71170c623ff4068a2e9252773fa14f379bbe43b5b71ed42a537b5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0166_int_mih__cleaned",
+      "token_sha256": "2b3b6e4fe7d9bf0b31a119267ebf6c79628cbac93688042a1af7f2b24c0c2bb4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0167_int_mih__lot_overlap",
+      "token_sha256": "85528e040973b94497b92987c38d0c2dd9c32c01d85c4a3ebc8643df8284be98",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0168_int_pluto__miharea",
+      "token_sha256": "381425bdb04076b5bd8285c9f3a3c652a49fff52cd5d1928a91cb896aa4052ec",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0169_int_tz__tax_blocks",
+      "token_sha256": "59b78a3461bbd14c92f0ada2142ad2470bcdf5786a107f8e1a57866cf7fa053a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0170_int_tz__atomic_geoms",
+      "token_sha256": "4d67621d77a53f0550dc640a3159a0341bfdc127a6aea24cad9e2438efef9b97",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0171_int_tz__block_to_tz_ranked",
+      "token_sha256": "85550120d776a5a8013ddd83190639a4524ed8f866818d0b6bbb54908d949d2f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0172_int_tz__bbl_to_tz_ranked",
+      "token_sha256": "3d31710a682cd52245af15af9f5cb0ee306ee9e32cab059ed949d717d8668cae",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0173_int_tz__union_coverage",
+      "token_sha256": "05dd5d708a87b901f252680ee4dd8847174c156ac820b325a77d4fde176b016a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0174_int_pluto__transitzone",
+      "token_sha256": "64284ff7e904f41388987a463ae00a3b69ac4b868b86ee3e13b08052bb4c7287",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0175_pluto_enriched",
+      "token_sha256": "59d27fe1a56678f0a592195d44b824c52a0b521aedb139408aaab104c10cfbd1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0176_apply_dbt_enrichments__pluto",
+      "token_sha256": "4bca38c818b948de9b3741c9467b0dd079dc5e933da475777bd89ba3abc0c6af",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0177_bldgclass__pluto",
+      "token_sha256": "d6481bca3b20f81d1afa67f14a5bf8fa81e373a984ea8d504b757dd6c1869268",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0178_bldgclass__bblsbldgclasslookup",
+      "token_sha256": "834bfd55a39920409fad2d236881bd8df5651b9327610fe50477684370388b99",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0179_bldgclass__bblsbldgclass",
+      "token_sha256": "307d0300d05deece84f9fe8273b7d1771c307689f34e46507b4aa57252ba9bdb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0180_bldgclass__pluto",
+      "token_sha256": "7303ecd5db42256c338826e4cbf1f30594854deca0875110f74b23a8be44a7ff",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0181_bldgclass__pluto",
+      "token_sha256": "b12d4173f711b194e8ad06e4173609572e30b350bbc323f6b59fc505d2d353f8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0182_bldgclass__pluto",
+      "token_sha256": "24a9627db908cfa9c45545f3ea9bea03baac977bda865507ffdec3a6a0c9729b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0183_bldgclass__pluto",
+      "token_sha256": "c03fe6ca5b70e5b61de76e167be27d05a7cf5e80242ba41266cddfc405ff121c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0184_bldgclass__pluto",
+      "token_sha256": "d3253082993969e46731093ff840f6b32f0fece56c2244909c462cc4635e13cb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0185_bldgclass__pluto",
+      "token_sha256": "ef95d70eae05346b1d67cd85b953ab1b9d767a2fb7c87192eebe41d42518d9d1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0186_bldgclass__pluto",
+      "token_sha256": "d2195b137c760e6d9d07882a239c052db3da4a8a4fe2d08e98c413b94969f1c8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0187_bldgclass__pluto",
+      "token_sha256": "841ab6db3ed1c79d57dc3d026d86d448ed368579fbc3fe4e1bab9c8b7e621955",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0188_bldgclass__pluto",
+      "token_sha256": "7ffe3cfd763781f28b6e727bff6fffb8057823606683fc0471a4fa5cdaf6759e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0189_landuse__pluto",
+      "token_sha256": "6e8d04eddaaea07900c229c1109bee9adbd1ca5a59ef0dd7c8b2bbd7d7373210",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0190_landuse__pluto",
+      "token_sha256": "2b1c961bb94866d05d9128ffdf06d530c0506ffbc8970b321fe3d68de15e1914",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0191_update_empty_coord__pluto",
+      "token_sha256": "01d9dded6c44a61dd4bb6bbcd70316ba540bec10ed75d743bd7f8ae0dcb67266",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0192_flood_flag__pluto",
+      "token_sha256": "e9293ca72c83f8521ef2bf718e0af6882be6bc1fbb162e8e20cb06fd2f2aa42b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0193_flood_flag__pluto",
+      "token_sha256": "5474f7ba31c1f467d63c7dc6481c41e80a67bf0e10886248bd95b60e8de4698c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0194_spatialjoins__pluto",
+      "token_sha256": "981e263f931714fe3c85be44a7d13dd9f2c24182b5ce574b9f1600fd7550b0e1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0195_spatialjoins__pluto",
+      "token_sha256": "5468320201cfb6fc1eef1012508e890dc7c5f10311f028d063b5ac9f0f1f71aa",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0196_spatialjoins__pluto",
+      "token_sha256": "299be6841857238a9f33706b4fd868106e511f0ee79dacf8ad592dfebb0e7bbd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0197_spatialjoins__pluto",
+      "token_sha256": "41d732ba9dd600cdaf86905908d1a3435869bdbfb4fc026204de75b0846ebad2",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0198_spatialjoins__pluto",
+      "token_sha256": "9d6329af870eaf2c1e13298432cf8748b8d4f8dd02cdfc412300ee8b2ab35a72",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0199_spatialjoins__pluto",
+      "token_sha256": "0d378610579b375516c0b0a3e6b03ab26ff8de916d545e194738233903628879",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0200_spatialjoins__pluto",
+      "token_sha256": "13e789ebdaf5d6e660063a0f9b2febd9412ca11de20dc8fcd1945bfab771603a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0201_spatialjoins__pluto",
+      "token_sha256": "c180b35e5f4d47da582472c0949c36944961f392c954b68f25aa45394f7648c0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0202_spatialjoins__pluto",
+      "token_sha256": "d60e15ffa1c33c1e41a4be542acf267f16a24d08ae1d325cffda7f9d4e2d2ea5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0203_spatialjoins__pluto",
+      "token_sha256": "ada6755dbfef469dc88bad791acbc73d325040f2fb9bb184685a8e5783792407",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0204_spatialjoins__pluto",
+      "token_sha256": "e6a29249237027589cdc73cbeac220f82b075b183fcc26981198735504869e3c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0205_spatialjoins__pluto",
+      "token_sha256": "2961bb7b660cf6b451bed1b9aef934798aa984947bae023520f8c0a8034396c6",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0206_spatialjoins__pluto",
+      "token_sha256": "09d4d9a4e96a0b9b666c361f196195cac260262ed8ba5de54b7f062d0383d38f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0207_spatialjoins__pluto",
+      "token_sha256": "afcee35c7231cf01cd94b3119aa49b69abb18be4df7dcab80888854191d0a8a3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0208_spatialjoins__pluto",
+      "token_sha256": "82bf3b32373f70ddfcb1c90316589e25e6b790a24cdbe2fe83f804d04bfaf8aa",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0209_spatialjoins__pluto",
+      "token_sha256": "0b469c95263bb7c1f29a56adfa8a785b3af9b9db751a89977aca545a181724dd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0210_numericfields_geomfields__pluto",
+      "token_sha256": "099f7b7e070a1aa4653e69ec8ae47bc52d15cdaaec998613edf36f8c44cf02af",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0211_numericfields_geomfields__pluto",
+      "token_sha256": "5412cf292c03c108b1b5a2c5a5bebfbcdb9334657daade9f846016d5cac0337a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0212_numericfields_geomfields__pluto",
+      "token_sha256": "1d12d6ba72b49aae009a7d34e32b269ca97cea7c3a8ee3d4b81e5fa91489b833",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0213_numericfields_geomfields__pluto",
+      "token_sha256": "fdad71763c80235483c34e76dec1633df4650b4a5f545983f5e1b7fddb96efc4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0214_numericfields_geomfields__pluto",
+      "token_sha256": "e4e03e50622c6d5ad68228944aa1daf364792cb3f37628698da6b903389b449f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0215_numericfields_geomfields__pluto",
+      "token_sha256": "8164f3b59322e8ee957960d625679a05f9534199ff789a31d8973673d0240e2f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0216_numericfields_geomfields__pluto",
+      "token_sha256": "e28cc8fada74cb84c1a93586f2c41e4a3a841cdf5151d0a78496cc1daf211e8c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0217_numericfields_geomfields__pluto",
+      "token_sha256": "1e52851d97d7a07a61b308af75395b4e7410de57c99cb7b39ded9439ca209eb8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0218_numericfields_geomfields__pluto",
+      "token_sha256": "3c3a24b49295d26400f51596ab1f9480d0d42f301b3de6e1ecd64933fd74ff20",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0219_numericfields_geomfields__pluto",
+      "token_sha256": "4727321c485a2e30993dc49749c4292e75606e3606bb6ba0a8a63f9014395b15",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0220_numericfields_geomfields__pluto",
+      "token_sha256": "20b3ec1423978e5cd0f1e1a4104e097d06d1ce860b78af5fa2569830d239eaed",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0221_numericfields_geomfields__pluto",
+      "token_sha256": "dbf08159b54516e4e8cb3ced895c85182a127759412a1d306ee4285ffdf1ace2",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0222_numericfields_geomfields__pluto",
+      "token_sha256": "e61639bcf794fbe8e3bdb32ad6f920a38a655e00ba6e482fda16a5afe29c883f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0223_sanitboro__pluto",
+      "token_sha256": "b0080f1b7f9339ab87351b3a87280eeafc20efd51c1d12180e56c403e2f39525",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0224_sanitboro__pluto",
+      "token_sha256": "da23de2ec5119f5b57760d0e9089be3c564359d5f61329f63e0b795d78be1f79",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0225_plutomapid__pluto",
+      "token_sha256": "2e94a24745e367b4fdab9e5b800235f27f924198ef5d497952989b031ca5935d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0226_plutomapid__pluto",
+      "token_sha256": "504402ad74babf09197fb4e0eaa6614baef14549376f355b5974a9f71fadc21f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0227_plutomapid__dof_shoreline_subdivide",
+      "token_sha256": "5950d35b7999113c0695dfefb0719fc0984ccf570a6072fb2966b9bfcedce1ef",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0228_plutomapid_1__pluto",
+      "token_sha256": "ec75db76844cb8b0a325720be1ea706314ad342f68489212cf5aa9f79b9cd829",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0229_plutomapid_2__pluto",
+      "token_sha256": "271467764b18615301d0bc5637dd99489b6162ae74380c336e6c0376db1e13b7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0230_shorelineclip__shoreline_bbl",
+      "token_sha256": "5aae616a8aab40c64f3a3b254788161e9242bfb8a5a4fd8cbb195266ceb9d637",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0231_shorelineclip__pluto_geom_tmp",
+      "token_sha256": "2675c1891ebdf07a9236ef06b9729dddc4b001647a084d2b5f9504e3512d91ef",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0232_shorelineclip__pluto_geom",
+      "token_sha256": "3f4cdcdae066ed5876c88a96dea92b008e5aba7078d594eb3c19e632b2256679",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0233_corr_create__pluto",
+      "token_sha256": "fdd8c489003c9534eb464a9b8b5b19ad8dc7add12f63609f08479514f5f7e72b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0234_corr_create__pluto_changes_not_applied",
+      "token_sha256": "063f9755d27d4d5d0ebe7fd50ac252dd1819de4bdaa173ea03ae72cce0fe4862",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0235_corr_create__pluto_changes_not_applied",
+      "token_sha256": "ee21491f8c6d0254c393808b5879a5b904e6b29608227450642e7bc3eb02fb28",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0236_corr_create__pluto_changes_applied",
+      "token_sha256": "411f2daccb3fb3abe54d311cd7b7401876effca73decbc4f9610a56ebc2d92c4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0237_corr_lotarea__pluto_changes_applied",
+      "token_sha256": "1adcc5c58c21ba57e5463539b9cd87d346648bee979ced2af6bd10c5eff343b7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0238_corr_lotarea__pluto_changes_not_applied",
+      "token_sha256": "1c7c510479b253111dbdb65bef1080e3af83fc5196469f0e84c8fed1b5ae308d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0239_corr_lotarea__pluto_changes_applied",
+      "token_sha256": "fcf7f4b3b89f06d82cc3f1d129dc96b8f6ebfd6178281d34b91af164ea381623",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0240_corr_lotarea__pluto",
+      "token_sha256": "c66f77710903a191bb2d503dd2960d7b9c0dda28c551848e242cf315647dc49b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0241_corr_lotarea__pluto_changes_not_applied",
+      "token_sha256": "4366ce7e0247ebabf9cbbda715fa74fa6801dded1fc5298f84525286c754f82e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0242_corr_lotarea__pluto_changes_applied",
+      "token_sha256": "2e1f75759111adb135850eda40fb04f536c071debba7581abda2fff1f6fbd02b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0243_corr_lotarea__pluto",
+      "token_sha256": "1c8ff878b7999778cacb30b158b8bcc2047b08845c2e1185f626ac55e531c060",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0244_corr_lotarea__pluto",
+      "token_sha256": "89af0700a0ad2a4276fe4649eeadc8585331a622e15141f5e611e3e8b4daaad8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0245_corr_lotarea__pluto_changes_not_applied",
+      "token_sha256": "72403948b2bf95e77a6ad450d36cd05de238538d784bbdd4983b1608384bd75c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0246_corr_lotarea__pluto_changes_applied",
+      "token_sha256": "f7fffd37b502f7608551d954152a69cf3152ebfbec91cda9be308535e96e742a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0247_corr_lotarea__pluto",
+      "token_sha256": "4f86e7e88918f4187aa60dffcafb801d7d8ed0dc7c96bf23aa30fb93226690fd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0248_corr_lotarea__pluto_changes_not_applied",
+      "token_sha256": "12758859e8fbb664a3ad1f668faf585b42bc42ba5581a915facb7031ae80d67d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0249_corr_lotarea__pluto_changes_applied",
+      "token_sha256": "a3d223de296398f58e05c7d88196afbc0efb0cc486d8a4c1e2a0090c7abc9d08",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0250_corr_lotarea__pluto",
+      "token_sha256": "709f9732af79a789414a621a77a5ee87d5e2a69c0d4e5f66e72aeae0c8bf93a0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0251_corr_template_yearbuilt__pluto_changes_not_applied",
+      "token_sha256": "0234a71e3700acf4cc17304fcb4ac2a839ab37f2e5150ce9725ae411671073c4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0252_corr_template_yearbuilt__pluto_changes_applied",
+      "token_sha256": "3eea005fc5e9f2e6865cf49b3a17434a3a4f66c282712b58965f6813d2107c9f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0253_corr_template_yearbuilt__pluto",
+      "token_sha256": "82d77b611d624897e06d3481c6427399971d40d007c13cb8cfbfdafdc429902f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0254_corr_template_yearbuilt__pluto_changes_applied",
+      "token_sha256": "d88aff2b4708298d22a803312a9a704a893364f67451b314eba10460932470b3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0255_corr_template_yearbuilt__pluto",
+      "token_sha256": "6dbde1e8be479cfda142015b44b03c5ac2fcdd70ceb9d467c402db2c937d3c4b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0256_corr_template_ownername__pluto_changes_not_applied",
+      "token_sha256": "90a1d9e57640318e881e23e54e4dbfc78fd5d0149c6636c2502a0d69f38c8106",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0257_corr_template_ownername__pluto_changes_applied",
+      "token_sha256": "4d26827137f1635f1016b315d233e356ffa22c7b1984dd0122ebff75618c924d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0258_corr_template_ownername__pluto",
+      "token_sha256": "b0b9344fbacede1b01a071a5b03f1ac964d8c50659c2a3436604bd0f66fea05e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0259_corr_template_ownername__pluto_changes_applied",
+      "token_sha256": "a8874c0c8521ec8d817180035e0c34165e1a9d4f61b73c57e19f5b88f3e4a395",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0260_corr_template_ownername__pluto",
+      "token_sha256": "1a41f626d3efa12e86b6578f5995020121e4486105b8b208b86d270e22e58d75",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0261_corr_ownername_punctuation__pluto",
+      "token_sha256": "5db9125edabc9a6cb43ea08f7e9e307b9d82b563c5d1b252ee383ebeae18f765",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0262_corr_template_cd__pluto_changes_not_applied",
+      "token_sha256": "3a91a3077cc1fb5b479460c22c2285eeae98209c1c9872a25c257cff04c77ab4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0263_corr_template_cd__pluto_changes_applied",
+      "token_sha256": "918e68050d285a7b51cc86144a5331067f743fee7959d87afe78a031780b7dcf",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0264_corr_template_cd__pluto",
+      "token_sha256": "530fcbbd5dc165129061e5c6348bc6f99f8b341641cee26e6bc14e397aaee302",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0265_corr_template_cd__pluto_changes_applied",
+      "token_sha256": "30bc55d61484e0f54b98ea1dcbddba6f9b4bcacc85040bbf208e3ccc22a5299c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0266_corr_template_cd__pluto",
+      "token_sha256": "81a808bbb26c5bd528a8c5e1856d0277741b1d2e098fca1961e6343abe235eca",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0267_corr_template_numfloors__pluto_changes_not_applied",
+      "token_sha256": "fd012ec9890b7968ed65fba882294962895dbbbd2d5fbde0acab4054ecc6c940",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0268_corr_template_numfloors__pluto_changes_applied",
+      "token_sha256": "12b2e714d2de5eac3202e77612f0d0c32d9b7b3577fb54231f4ddcecce1a1512",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0269_corr_template_numfloors__pluto",
+      "token_sha256": "929b9f642ba7a5192fa439e3b5f2fb192aa1bc2a7eb4da7cab553f442d540c90",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0270_corr_template_numfloors__pluto_changes_applied",
+      "token_sha256": "8c3c35ff97c7f2567d460c827bf048bcbbdd54e76cd1990971d9733db4506f25",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0271_corr_template_numfloors__pluto",
+      "token_sha256": "1f9d419834ae8e8cd6b5c0a4dc284d4cba7f9ab7cce37a69192fa81cf6fd151d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0272_corr_template_numbldgs__pluto_changes_not_applied",
+      "token_sha256": "1ec54f3ceda413abb2a6f1edb8654b283b122995cb7997302af24b53c5b5bb50",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0273_corr_template_numbldgs__pluto_changes_applied",
+      "token_sha256": "58765c5eef06b4001e1e32fac31311efe17f84c56b8ffdb626516c0fa4007ffb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0274_corr_template_numbldgs__pluto",
+      "token_sha256": "6c667c49ccb6b0e8a72b4fceffcb429904679ed30b2f113a840e403785adafa1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0275_corr_template_numbldgs__pluto_changes_applied",
+      "token_sha256": "409abb6d925b7e84f83c0c3e2691a1592fb4f598946ff163e2985870ceb8962c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0276_corr_template_numbldgs__pluto",
+      "token_sha256": "b3618ab7f13496632a40c565a366d2466d1eef887aa217a41170da4bc7bfe14f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0277_corr_template_unitsres__pluto_changes_not_applied",
+      "token_sha256": "622b2929d8bf77a5599999707d6e3ecf4204632e6d430915dbc4cee97f82badb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0278_corr_template_unitsres__pluto_changes_applied",
+      "token_sha256": "6929b551c00f6ced34c8235e8ecde4705f9357722b8985df2a6177a62b979f7b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0279_corr_template_unitsres__pluto",
+      "token_sha256": "4141061c72c745c1120d75416904f5286d71227f8c5677c561b7a53989144a61",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0280_corr_template_unitsres__pluto_changes_applied",
+      "token_sha256": "18a969368a08367a6127b405ac4f4d695d5d8cc1fa56a0432af02f169915eecb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0281_corr_template_unitsres__pluto",
+      "token_sha256": "e82e253b3e443f2086fb31bfea1003e4ef1d80a890317965831153eb4a60209a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0282_corr_template_unitstotal__pluto_changes_not_applied",
+      "token_sha256": "12d1b7a4f9d68c0a7b205a19013c24029af6bdfb2c72b54d18f44cf43cf075da",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0283_corr_template_unitstotal__pluto_changes_applied",
+      "token_sha256": "3ca897355bb301f0e88e8f05bc3ccf6388932b397df454acd0a6e27b56a5d07d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0284_corr_template_unitstotal__pluto",
+      "token_sha256": "6eb895992f98b1051d8c49735c0201bafb7c5f16eaf046434558b1a716b7b833",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0285_corr_template_unitstotal__pluto_changes_applied",
+      "token_sha256": "d1a69193f0b7799ad251c03fd55afd75f8def9391c6abd590f3b05223eace901",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0286_corr_template_unitstotal__pluto",
+      "token_sha256": "e8009c12733d941cec50b80f8861993bb66e83eb9a661fb4bae4050fdd5bb9c7",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0287_corr_inwoodrezoning__pluto",
+      "token_sha256": "e7316bc417019b6c5939d37116a9075866b9cd7c8c90cf581a62016f4abe5f06",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0288_corr_template_bct2020__pluto_changes_not_applied",
+      "token_sha256": "3cf9b97dbaaf4df01c9fc75e81515317d6ca51a55f1ecd92de450a97e2d74a8a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0289_corr_template_bct2020__pluto_changes_applied",
+      "token_sha256": "4012c7eeeebc7d2ad8caf331de3ed15c979abbeb94b1827e776dd0d3c6ee31fd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0290_corr_template_bct2020__pluto",
+      "token_sha256": "8e74c7e43ca79aa89ce4ea867bc732685e51beaba0f16d0bf92fdc5b80b2bad5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0291_corr_template_bct2020__pluto_changes_applied",
+      "token_sha256": "0972bcdaad8eebc7cba558fbc8e851b2e32e047e0213af6b222a2a23111d7dc5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0292_corr_template_bct2020__pluto",
+      "token_sha256": "e08374b2c3c9bde77839d37e5417a38f57f5f0d41f067bffceed8d69a4278d23",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0293_corr_template_address__pluto_changes_not_applied",
+      "token_sha256": "589d3e2c847fd0c3a986a04fc7a7a20c89123846f78b5c08e21dcfae9f8dea7c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0294_corr_template_address__pluto_changes_applied",
+      "token_sha256": "452e56f892d32281715f380d4ee4d6fea9ede4d35924335c16f5641160428ba9",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0295_corr_template_address__pluto",
+      "token_sha256": "4cc117ab5013291f14d1960e9999d27f3d5a20397730712ba84f358d99a96b54",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0296_corr_template_address__pluto_changes_applied",
+      "token_sha256": "f946766f224c2d19fe4df596430f5c0254ea2584fb71858219c32addd11810b4",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0297_corr_template_address__pluto",
+      "token_sha256": "c80c4c40a378caa5561ee42a67be4eca34401804cf0561e538e546a49852b775",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "__m_0298_remove_unitlots__pluto_removed_records",
+      "token_sha256": "f509790b4a1e19bbd32e2fc341dff931b20e71666b2c51a2774415dfb17d6b4d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0299_remove_unitlots__pluto_removed_records",
+      "token_sha256": "ad9b512282597fead6dc6c2e34b040d5078fa4b38b2711278d83ba0073bbbe84",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0300_remove_unitlots__pluto",
+      "token_sha256": "71f84291f9f5c47ca425ab888bb5c396e1f832c53ddaeacec2bc8f8f7fba5013",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0301_remove_unitlots__pluto_removed_records",
+      "token_sha256": "f13e84c0847d7fa3651c867dc7c79cf48733f8b4b4c9e30c07ceeeaaef96bae2",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0302_remove_unitlots__pluto",
+      "token_sha256": "c3182b80be214ee9a947c3fa170503b9a7554a37fb7dfd48e348fb3bb96d2d4a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0303_export__export_pluto",
+      "token_sha256": "ef83bc2d2d318b05ae7a8855024132d5a69530ae6e82e2df473ca1e4c607bedf",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0304_export__archive_pluto",
+      "token_sha256": "f7556662e02fafeabffbed50fd87acecbb45f0e9471ee007f1732a9c13fba391",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0305_export__unmapped",
+      "token_sha256": "b5b9af13ce292e425ffaea73340d99d697bee4cfb4217b5addb861e5bc0af73d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0306_export_mappluto_shp_mappluto__mappluto",
+      "token_sha256": "bd821354ec551e2edc93ffdc2bd73a1edfc17752578b64cc43c08ab4169aea1a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0307_export_mappluto_shp_mappluto_unclipped__mappluto_unclipped",
+      "token_sha256": "6979772a8aea07167049b07559145ac95fe8ea879c48295f0aa3d8c0046eb0cd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0308_export_mappluto_gdb_mappluto_gdb__mappluto_gdb",
+      "token_sha256": "ffbcb3acf6b19a2c78c247723c79bc862729aab5c5c4ef29e24469b15917f085",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0309_export_mappluto_gdb_mappluto_unclipped_gdb__mappluto_unclipped_gdb",
+      "token_sha256": "93a822ecd3d961df4fda90c1d727a98fa2b5df0fac04046c35097251afbc9e8a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0310_qaqc_expected__qaqc_expected_current",
+      "token_sha256": "1d1420850cb21809a14c33deb23fce81d0f1c09f875192a7bf13e2796a337e4b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0311_05_qaqc__qaqc_expected",
+      "token_sha256": "209d528466bc751676aefb0408910e22a4c842eb8c93b3ed72607cb6554ac23d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0312_qaqc_bbl_diffs__qaqc_bbl_diffs_current",
+      "token_sha256": "7231cd46f68ce15a0f613e7ca41c8b39cc290ea4a730ab2d9369fb309ca0158e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0313_05_qaqc__qaqc_bbl_diffs",
+      "token_sha256": "2eea02eed7b3245d459aa18c5936c71800230ce8b6476f8bf0bacd23ac417dfa",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0314_qaqc_aggregate__qaqc_aggregate_true_true",
+      "token_sha256": "3eeab2a30d8e5f48d569ba28ed2b509fbd0b4bf42cb57342e4a1f84bf637ab52",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0315_qaqc_aggregate__qaqc_aggregate_true_false",
+      "token_sha256": "efabe78ce5f70457b9e6026a35ff0370de3a38cd0d4ca625ef0ff212b461ebb3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0316_qaqc_aggregate__qaqc_aggregate_false_true",
+      "token_sha256": "8fd8e9547aa2fd25e245abd3eca6dc9f1f440b40e0e895be3b13c689cdd18348",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0317_qaqc_aggregate__qaqc_aggregate_false_false",
+      "token_sha256": "6b15bd22e9f7306402c3d3092c668672e10a2a991ec26f9834159928d20c9d39",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0318_05_qaqc__qaqc_aggregate",
+      "token_sha256": "322fc13dfe23d4fb781218190eb41e8da57fe8d2de214dba3201c161c59d67c1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0319_qaqc_mismatch__qaqc_mismatch_true_true",
+      "token_sha256": "f0633366b5efc53d72cf94e6b8d336bb566f7d19a1402d9478e7ef74ea1eb5b3",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0320_qaqc_mismatch__qaqc_mismatch_true_false",
+      "token_sha256": "1148c3e23dd3ec7682c7eaa135f319735ed21ca18288a6013a267ba766af7e61",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0321_qaqc_mismatch__qaqc_mismatch_false_true",
+      "token_sha256": "aa20221d71d66b796dcb5ba7965bc0e5d9ea87a334cc385e1359a8b606cc7724",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0322_qaqc_mismatch__qaqc_mismatch_false_false",
+      "token_sha256": "a5512e19c2c69279bdd0c34a8d0e78033d34e3e23969173180c24009b55310be",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0323_05_qaqc__qaqc_mismatch",
+      "token_sha256": "eacdcfc2d04370d738593b993fe103cc2a3a3654ed417bb2d03f393e3720509b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0324_qaqc_null__qaqc_null_true_true",
+      "token_sha256": "c3cafcca9c10b5801416905102d9eebc90c835c56fcc0699e3851d0f27e7ca9f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0325_qaqc_null__qaqc_null_true_false",
+      "token_sha256": "d069e223b1c72562d17d278ba28f00bf9bd7b57752276249c96c42759d313e46",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0326_qaqc_null__qaqc_null_false_true",
+      "token_sha256": "8366d468635e0a5e6d15d3f425046192877beb0c3e3788d69bff5ab396b47b8a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0327_qaqc_null__qaqc_null_false_false",
+      "token_sha256": "16686703f4f0706c595c68b12b9d71ced82aae5e8714dd3e598d8b16ba300fb2",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0328_05_qaqc__qaqc_null",
+      "token_sha256": "021d3ccdb92eef804c508f9c95f56357dde4271025bccacc256128c0e99e12c0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0329_qaqc_outlier__qaqc_outlier_true_true",
+      "token_sha256": "ef4c3d0885a3258ca92710436c1340aa0c4394a7757348ebc735b88cf76b8782",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0330_qaqc_outlier__qaqc_outlier_true_false",
+      "token_sha256": "49e42a29ed05f3ec941cadac19cc468ad9ee887e5e36477b743b7afcdb8f93cc",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0331_qaqc_outlier__qaqc_outlier_false_true",
+      "token_sha256": "ddba51a2c4e5a4c520210050a2068b073e06cc7f40695eff400fd565277db52c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0332_qaqc_outlier__qaqc_outlier_false_false",
+      "token_sha256": "9d211b53ed285d87c417a3f680daf5c2d44a5b0adbc1444ed0a81f70c5b26728",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "__m_0333_05_qaqc__qaqc_outlier",
+      "token_sha256": "6e118214179b807178620de6f4f1af02bb8bc2a9a8c8a9cb942d75f60826317a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "archive_pluto",
+      "token_sha256": "4be8cf7ddb2c5721f9344c19eb708c72d9575308631c6d65512490330156cef5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "check__pluto_spatial_ids",
+      "token_sha256": "a74367a72e0ed69aa9f3c62de64ff0d46b8d01877e0aa1d007f613cc75c077a5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "export_pluto",
+      "token_sha256": "6a20f87bf3388cf983b327ef66bd40523f6d5065394ce1dba9b2dcbd5c877390",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "input__dcp_cb2010_wi",
+      "token_sha256": "e4ff934a25c31b28cd30d14871b2c6c8fabaebea53cb7f866820b338d02438f0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_cb2020_wi",
+      "token_sha256": "45ddbd7626e4bb2d9f2b0899a3be594267fb188e99f8689b68ce973c691124bc",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_colp",
+      "token_sha256": "a433eeae85746aeb48c3251ab49cf99b4c33042b4d949bd8a43f26067580697c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_commercialoverlay",
+      "token_sha256": "b018dc0d78870a616cca5ecf250ef23dcd7534357f106fabfc694a20aa249252",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_ct2010_wi",
+      "token_sha256": "d92c8a675a23f4274d6f9401af10a607ffbec9c9ce5b579209c318cea9ad367c",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_ct2020_wi",
+      "token_sha256": "3a33ed871e63d22e675098b9bbee645c621e4062b7700762aeb4343dbb5a8705",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_developments",
+      "token_sha256": "ffc91dc160495acb74d932ba8226df67eaeea71ccd16ef89be3f0e2a35119225",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_edesignation",
+      "token_sha256": "125075b179d59d6901f890301e0fa7e77056dfb8881416a93b6dcc54e47200f2",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_firecompanies",
+      "token_sha256": "898a53bf2c8f58f65fbb546876e1c54864617a821fe3aba16a46d835a6e1307f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_gis_mandatory_inclusionary_housing",
+      "token_sha256": "4fdfbf384b8e604a22a0276a3bd310a7ac419034c7e0ae4c037809ac25bfba41",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_healthareas",
+      "token_sha256": "74b476fa0b08203f52445a0faf45fa72f8e9adf2fca5103133de5b1c139a540d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_healthcenters",
+      "token_sha256": "27d60db07f8cd068bb837d888207b96b823a0dacf34c7374a3ebda7c5fbc66b1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_limitedheight",
+      "token_sha256": "f0830cca46f943b6ad0a5ceec39b548b8736476ae7b5ed91f288e19f5e0055e8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_specialpurpose",
+      "token_sha256": "db3a35ea67d683b54bffe2a5585eaf3398df6dd118894ea748f3b8a9c6ae03c8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_specialpurposesubdistricts",
+      "token_sha256": "670d53e09be54fd4240e81d0b74a815ad054e983b55ed5d9c1ed39d4b6ab8723",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_transit_zone_ranks",
+      "token_sha256": "0ac5d013246f73eae6cf49bbaee4fde6fa7179dc7eed90736a856b4bf9ae6990",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_transit_zones",
+      "token_sha256": "c106cd3bb315565d64bc363c1b91b5498a70fb0b9259715b991a05a40da49c66",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_zoning_maxfar",
+      "token_sha256": "3ab11263eba2876c3e2855cea4ed00676f3fc05ce8947c46b0445ce89e61aa92",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_zoningdistricts",
+      "token_sha256": "06f89ec410d5f9adb611105c7159c588ce4ebb76c1052c5a26d467fdbeafd514",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dcp_zoningmapamendments",
+      "token_sha256": "6570efed6114761fdb87b839361489f62fbbf083893a3f71fb660cf9ee34e7ed",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dof_condo",
+      "token_sha256": "5a45b84a12ac1166c33c67ceb77d5fa0db4a86d5c9387279d1a0aa10ce0a72e5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dof_dtm",
+      "token_sha256": "565498527aa51c9ef0bbe4998c59173e67821d808c8ecc65474d451d11aee117",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dof_shoreline",
+      "token_sha256": "bc0d6ef51624fe8469377ef065e5c65468b6879ccf84d76a7870bc521f2ada33",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__dpr_greenthumb",
+      "token_sha256": "e08878680c977582d0db3fb5880450fd8e51abd35341625fd0cd0b5084b0f172",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__ignored_bbls_for_unit_count_test",
+      "token_sha256": "29b8ca7690fa261a5ec19baf0e6a29286ab1d526cf8148b116059fb06afe611d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__lookup_bldgclass",
+      "token_sha256": "22cb0d7465f23bebae974dadd906ebad714ee49e8f7b23f1bb979f5870445c8b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__lookup_lottype",
+      "token_sha256": "a02134686ee7b6bcbc61e5b678c780f810b83c0511aaeab6a4e34e9a6dd22568",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__lpc_historic_districts",
+      "token_sha256": "621aac286789a6fa1d33aac35acec2e5a9c0d4b49a9ef090174112e236ebedda",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__lpc_landmarks",
+      "token_sha256": "3c640651e9a26d8d1ce3505e2a475a02114fdad98ee4073c8bcb88bc7f13a847",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_bsmtcode",
+      "token_sha256": "58e49e1f60ebf797b32084543e65a3078b006b938cb1be2fd3920845b229ae8e",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_cama_dof",
+      "token_sha256": "127f44ab65cf43eb312024ca0b7d0ace8bc819588639d9928c83014cd4e0c906",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_condo_bldgclass",
+      "token_sha256": "925ec8e3f67b72857831c057f8fda1245454c890f3757dfc4c032f14ee5042c1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_condolot_descriptiveattributes",
+      "token_sha256": "f695ccee0340b6fb3cf81e0b621cb85521e08a6c8b2d3cddf24a2935c7e863ee",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_geocodes",
+      "token_sha256": "fd8b84cd9229f8167d8d2ef626210a2d0f83a34d446bd297ff2cd11259a9b493",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_landuse_bldgclass",
+      "token_sha256": "47946ff1eecc9046a6a93a823030aed9d75d87c97feca08d46281e046375661f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_numbldgs",
+      "token_sha256": "f8967ebed3845586f4adf675d67abd196808589193d9e5707b7a8cdd37c3a280",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_input_research",
+      "token_sha256": "6563b58d9451e708b449c626fe526e37c65ec19d3cae2b5688acb093702b75b6",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__pluto_pts",
+      "token_sha256": "d506e738b011f7373cb14aaaf8744c5f13c2415a5b244eabc284fbc45857cf31",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__previous_pluto",
+      "token_sha256": "3a108a23d85a401125e0a917da462392641906a725af4b05df255cd5f9b71803",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "input__zoning_district_class_descriptions",
+      "token_sha256": "8d269c15a7332f75ad88bd7d09d1327ffa32b5319ff2990536acacc4c5917f3b",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": true
+    },
+    {
+      "model": "mappluto",
+      "token_sha256": "48df60d54e95b5b03f21eb5ea5f5063e68942f90692c249ac13c6dada3b17985",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "mappluto_gdb",
+      "token_sha256": "af2a85e50c573708a98a6d21d78d7948de29f69899185946df9b87ff4e2939d8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "mappluto_unclipped",
+      "token_sha256": "1db74da395de5f4aabe1d294f2896ea4f7a01b8a35d7abacf927089d871a31ce",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "mappluto_unclipped_gdb",
+      "token_sha256": "0fb44d42f069a0642ed5270bbc122ff8c7b02308f58cfa7245d3540b96c8251f",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0196_spatialjoins",
+      "token_sha256": "5d391ef855521e1d93c9902ab7a8fc95f55329fc0433374ed76fa01d822f79ba",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0197_spatialjoins",
+      "token_sha256": "5711300ff8bf8d86334445ecb7e0c8ebeaa861703426c0c2c06104f6f3c7aa5a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0198_spatialjoins",
+      "token_sha256": "3092995f8be719a6794fcbfa76e2ae93fd71ea7c70c885c8ae688ce1350f6112",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0199_spatialjoins",
+      "token_sha256": "b8b8cb005b3ee4a25a08a0df4cfabf0039299f65aa191d35df045cb1f7930f01",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0200_spatialjoins",
+      "token_sha256": "a66a7d94ade2926d830043e6fbcd58263c61d06f076f7c381203df0e453b6e0a",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0201_spatialjoins",
+      "token_sha256": "74548ed81d245fc803f0c85c5338d42a66daaab516c52d235563f6e79cf4566d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0202_spatialjoins",
+      "token_sha256": "45cf642ac23ff005014a69232330f0315c4120cc10c1b06510c5236e117382a8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0203_spatialjoins",
+      "token_sha256": "865ec9dc99519b7e92f7455f0870efad2b1a28b51e8c045061f98a68ef034710",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0204_spatialjoins",
+      "token_sha256": "1d3abfbbb3a48c9d28ea5f6cf84a0d94809f72650e15de07b17a706da9ba4ab9",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0205_spatialjoins",
+      "token_sha256": "71987e63ad0f31f083a3933b34013ff7f74eab6329bf9ca741cef3bc0667b94d",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0206_spatialjoins",
+      "token_sha256": "a5c3c6c7c6449ae709120137f7803e9c78dcb4385f831fd2f11e318f0dead351",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0207_spatialjoins",
+      "token_sha256": "b685365ad839922ba917429429c0926741072ccf5e7607789005548e9bc995c1",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "patch__0208_spatialjoins",
+      "token_sha256": "43306017ebed357c0d0653e64079302d8beb1340fd25b5ed9a320b830fcfafdb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "pluto",
+      "token_sha256": "1efefb6ad629ec75b8577817ca65b850a50678b33d959ace2be35f727638dccd",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "pluto_changes_applied",
+      "token_sha256": "49a51c3ae14823b499db402f5cec80f4653cc886bb207e1b5c2b63fc319e5e97",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "pluto_changes_not_applied",
+      "token_sha256": "4b76d2112755ae7c2df7c5fc5b3bff7de16a36a1ed0b7139f75d78b0023249a5",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "pluto_geom",
+      "token_sha256": "1c2a9a23a2edd2e0c599ebce6ef1913e5f37c21d37aabbd61d4136ad964939ed",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "pluto_removed_records",
+      "token_sha256": "e565d76708938ae039727358d5cb43d4f36f46d2e6d3a4587a3c2f273156ac73",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "qaqc_aggregate",
+      "token_sha256": "1325a9b0b730ca4d398c4a951c6e4a3fedcd43ca05b9c0b2b90ab080051bbfe0",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "qaqc_bbl_diffs",
+      "token_sha256": "e6a4348bbc17683e82fc74bf37db64ac3dbcfcff9056ea4436f04a3658429370",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "qaqc_expected",
+      "token_sha256": "9adf1a518924e194e23d3c31afef1ddcba0862674eb590f21f58367029804f41",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "qaqc_mismatch",
+      "token_sha256": "ca466429ca485c645cbe67830247b8c8c9ba0a39d477df1713cd410ceb23be38",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "qaqc_null",
+      "token_sha256": "fd3588c123d474fb9352dc7c8c3bb4590334f8daf83d9e46e5bbf643418b44eb",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    },
+    {
+      "model": "qaqc_outlier",
+      "token_sha256": "2bffe407b3be777009eb6ed3355e843884572983a8f40119c078688d44c6acf8",
+      "token_equal": true,
+      "idempotent": true,
+      "format_changed": false
+    }
+  ],
+  "tests": "21 compiler tests passed after applying formatter. Executed project/database/artifacts were read only."
+}

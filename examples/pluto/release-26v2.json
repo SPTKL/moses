@@ -1,0 +1,8 @@
+{
+  "target_release": "26v2",
+  "release_type": "major",
+  "version_prev": null,
+  "available": {},
+  "seeds": {},
+  "notes": "Target chosen by the user. Major is the planning mode, not an attestation of the published build metadata. Resolve VERSION_PREV, exact 26v2 source versions and seed hashes from the approved build manifest. Never populate latest_version with today's releases to reconstruct 26v2."
+}

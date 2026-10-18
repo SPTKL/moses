@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: landuse
+    columns:
+      - name: bbl
+        data_tests: [not_null, unique]
+  - name: create_pts
+    columns:
+      - name: bbl
+        data_tests: [not_null]
