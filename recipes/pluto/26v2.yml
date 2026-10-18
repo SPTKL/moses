@@ -1,0 +1,1737 @@
+schema_version: 1
+kind: source_collection
+name: pluto_26v2_inputs
+provider: nyc_pluto_26v2
+release: 26v2
+source_commit: 32bc98f632f15e7182933a17fb61ecf74e853518
+previous_release: 26v1
+description: Prepare locked raw/normalized captures and seeds; no PLUTO business transforms or dbt execution.
+  Version tokens resolve only through the supplied exact input lock.
+inputs:
+- name: dcp_transit_zone_ranks
+  source:
+    kind: catalog
+    dataset: dcp_transit_zone_ranks
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    tz_name:
+      nulls: trimmed_empty_or_null
+    tz_rank:
+      type: decimal_38_12
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+- name: dcp_zoning_maxfar
+  source:
+    kind: catalog
+    dataset: dcp_zoning_maxfar
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    zonedist:
+      nulls: trimmed_empty_or_null
+    contextual:
+      nulls: trimmed_empty_or_null
+    zoningdistricttype:
+      nulls: trimmed_empty_or_null
+    resdisteq:
+      nulls: trimmed_empty_or_null
+    residfar:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    affresfar:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    facilfar:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    commfar:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    mnffar:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    verified:
+      nulls: trimmed_empty_or_null
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+- name: dcp_zoningmapindex
+  source:
+    kind: catalog
+    dataset: dcp_zoningmapindex
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns: {}
+  upstream:
+    kind: normalized_archive
+    release: '20190701'
+    provenance: null
+- name: doitt_zipcodeboundaries
+  source:
+    kind: catalog
+    dataset: doitt_zipcodeboundaries
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns: {}
+  upstream:
+    kind: normalized_archive
+    release: '20180910'
+    provenance: null
+- name: dsny_frequencies
+  source:
+    kind: catalog
+    dataset: dsny_frequencies
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns: {}
+  upstream:
+    kind: normalized_archive
+    release: '20240410'
+    provenance: null
+- name: fema_firms2007_100yr
+  source:
+    kind: catalog
+    dataset: fema_firms2007_100yr
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns: {}
+  upstream:
+    kind: normalized_archive
+    release: '20181219'
+    provenance: null
+- name: fema_pfirms2015_100yr
+  source:
+    kind: catalog
+    dataset: fema_pfirms2015_100yr
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns: {}
+  upstream:
+    kind: normalized_archive
+    release: '20181219'
+    provenance: null
+- name: ignored_bbls_for_unit_count_test
+  source:
+    kind: catalog
+    dataset: ignored_bbls_for_unit_count_test
+    version: input_lock
+  role: retained_source
+  provisional: false
+  columns: {}
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+  note: Captured for release completeness; not consumed by the current PLUTO transformation.
+- name: lookup_bldgclass
+  source:
+    kind: catalog
+    dataset: lookup_bldgclass
+    version: input_lock
+  role: retained_source
+  provisional: false
+  columns: {}
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+  note: Captured for release completeness; not consumed by the current PLUTO transformation.
+- name: lookup_lottype
+  source:
+    kind: catalog
+    dataset: lookup_lottype
+    version: input_lock
+  role: retained_source
+  provisional: false
+  columns: {}
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+  note: Captured for release completeness; not consumed by the current PLUTO transformation.
+- name: pluto_input_bsmtcode
+  source:
+    kind: catalog
+    dataset: pluto_input_bsmtcode
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    bsmnt_type:
+      nulls: trimmed_empty_or_null
+    bsmntgradient:
+      nulls: trimmed_empty_or_null
+    bsmtcode:
+      nulls: trimmed_empty_or_null
+    bsmnt_typevalue:
+      nulls: trimmed_empty_or_null
+    ' bsmntgradientvalue':
+      nulls: trimmed_empty_or_null
+    ' bsmtcodevalue':
+      nulls: trimmed_empty_or_null
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+- name: pluto_input_condo_bldgclass
+  source:
+    kind: catalog
+    dataset: pluto_input_condo_bldgclass
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    Code:
+      nulls: trimmed_empty_or_null
+    Description:
+      nulls: trimmed_empty_or_null
+    Type:
+      nulls: trimmed_empty_or_null
+    DCP created:
+      nulls: trimmed_empty_or_null
+    Logic for codes created by DCP:
+      nulls: trimmed_empty_or_null
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+- name: pluto_input_condolot_descriptiveattributes
+  source:
+    kind: catalog
+    dataset: pluto_input_condolot_descriptiveattributes
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    CondNO:
+      nulls: trimmed_empty_or_null
+    Boro:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    PARID:
+      nulls: trimmed_empty_or_null
+    BC:
+      nulls: trimmed_empty_or_null
+    TC:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    LandSize:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    Story:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    YearBuilt:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+- name: pluto_input_landuse_bldgclass
+  source:
+    kind: catalog
+    dataset: pluto_input_landuse_bldgclass
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    bldgclass:
+      nulls: trimmed_empty_or_null
+    landuse:
+      nulls: trimmed_empty_or_null
+    landusevalue:
+      nulls: trimmed_empty_or_null
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+- name: pluto_input_research
+  source:
+    kind: catalog
+    dataset: pluto_input_research
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    bbl:
+      nulls: trimmed_empty_or_null
+    field:
+      nulls: trimmed_empty_or_null
+    old_value:
+      nulls: trimmed_empty_or_null
+    new_value:
+      nulls: trimmed_empty_or_null
+    Type:
+      nulls: trimmed_empty_or_null
+      type: decimal_38_12
+      numeric_grouping: true
+    reason:
+      nulls: trimmed_empty_or_null
+    version:
+      nulls: trimmed_empty_or_null
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+- name: pluto_pts
+  source:
+    kind: catalog
+    dataset: pluto_pts
+    version: input_lock
+  role: prepared_input
+  provisional: false
+  columns:
+    boro:
+      nulls: empty
+    block:
+      nulls: empty
+    lot:
+      nulls: empty
+    street_name:
+      nulls: empty
+    housenum_lo:
+      nulls: empty
+    housenum_hi:
+      nulls: empty
+    aptno:
+      nulls: empty
+    zip_code:
+      nulls: empty
+    bldg_class:
+      nulls: empty
+    ease:
+      nulls: empty
+    av_owner:
+      nulls: empty
+    land_area:
+      nulls: empty
+    gross_sqft:
+      nulls: empty
+    residential_area_gross:
+      nulls: empty
+    office_area_gross:
+      nulls: empty
+    retail_area_gross:
+      nulls: empty
+    garage_area:
+      nulls: empty
+    storage_area_gross:
+      nulls: empty
+    factory_area_gross:
+      nulls: empty
+    other_area_gross:
+      nulls: empty
+    num_bldgs:
+      nulls: empty
+    bld_story:
+      nulls: empty
+    coop_apts:
+      nulls: empty
+    units:
+      nulls: empty
+    lot_frt:
+      nulls: empty
+    lot_dep:
+      nulls: empty
+    bld_frt:
+      nulls: empty
+    bld_dep:
+      nulls: empty
+    bld_ext:
+      nulls: empty
+    lot_irreg:
+      nulls: empty
+    curactland:
+      nulls: empty
+    curacttot:
+      nulls: empty
+    curactextot:
+      nulls: empty
+    yrbuilt:
+      nulls: empty
+    yralt1:
+      nulls: empty
+    yralt2:
+      nulls: empty
+    condo_number:
+      nulls: empty
+    appt_boro:
+      nulls: empty
+    appt_block:
+      nulls: empty
+    appt_lot:
+      nulls: empty
+    appt_ease:
+      nulls: empty
+    appt_date:
+      nulls: empty
+    parid:
+      nulls: empty
+  upstream:
+    kind: normalized_archive
+    release: '20260729'
+    provenance: null
+- name: dcp_cb2010_wi
+  source:
+    kind: catalog
+    dataset: raw__dcp_cb2010_wi
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    cb2010:
+      nulls: empty
+    borocode:
+      nulls: empty
+    boroname:
+      nulls: empty
+    ct2010:
+      nulls: empty
+    bctcb2010:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_cb2010_wi
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_cb2010_wi/26b/config.json
+      file_type: parquet
+      name: dcp_cb2010_wi
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_cb2010_wi/26b/dcp_cb2010_wi.parquet
+      version: 26b
+- name: dcp_cb2020_wi
+  source:
+    kind: catalog
+    dataset: raw__dcp_cb2020_wi
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    cb2020:
+      nulls: empty
+    borocode:
+      nulls: empty
+    boroname:
+      nulls: empty
+    ct2020:
+      nulls: empty
+    bctcb2020:
+      nulls: empty
+    geoid:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_cb2020_wi
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_cb2020_wi/26b/config.json
+      file_type: parquet
+      name: dcp_cb2020_wi
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_cb2020_wi/26b/dcp_cb2020_wi.parquet
+      version: 26b
+- name: dcp_cdboundaries_wi
+  source:
+    kind: catalog
+    dataset: raw__dcp_cdboundaries_wi
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns: {}
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_cdboundaries_wi
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_cdboundaries_wi/26b/config.json
+      file_type: parquet
+      name: dcp_cdboundaries_wi
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_cdboundaries_wi/26b/dcp_cdboundaries_wi.parquet
+      version: 26b
+- name: dcp_colp
+  source:
+    kind: catalog
+    dataset: raw__dcp_colp
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    uid:
+      nulls: empty
+    borough:
+      nulls: empty
+    block:
+      nulls: empty
+    lot:
+      nulls: empty
+    bbl:
+      nulls: empty
+    mapbbl:
+      nulls: empty
+    cd:
+      nulls: empty
+    hnum:
+      nulls: empty
+    sname:
+      nulls: empty
+    address:
+      nulls: empty
+    parcelname:
+      nulls: empty
+    agency:
+      nulls: empty
+    usecode:
+      nulls: empty
+    usetype:
+      nulls: empty
+    ownership:
+      nulls: empty
+    category:
+      nulls: empty
+    expandcat:
+      nulls: empty
+    excatdesc:
+      nulls: empty
+    leased:
+      nulls: empty
+    finalcom:
+      nulls: empty
+    agreement:
+      nulls: empty
+    xcoord:
+      nulls: empty
+    ycoord:
+      nulls: empty
+    latitude:
+      nulls: empty
+    longitude:
+      nulls: empty
+    dcpedited:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260430'
+    provenance:
+      alias: dcp_colp
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_colp/20260430/config.json
+      file_type: parquet
+      name: dcp_colp
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_colp/20260430/dcp_colp.parquet
+      version: '20260430'
+- name: dcp_commercialoverlay
+  source:
+    kind: catalog
+    dataset: raw__dcp_commercialoverlay
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    overlay:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dcp_commercialoverlay
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_commercialoverlay/20260731/config.json
+      file_type: parquet
+      name: dcp_commercialoverlay
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_commercialoverlay/20260731/dcp_commercialoverlay.parquet
+      version: '20260731'
+- name: dcp_councildistricts_wi
+  source:
+    kind: catalog
+    dataset: raw__dcp_councildistricts_wi
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns: {}
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_councildistricts_wi
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_councildistricts_wi/26b/config.json
+      file_type: parquet
+      name: dcp_councildistricts_wi
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_councildistricts_wi/26b/dcp_councildistricts_wi.parquet
+      version: 26b
+- name: dcp_ct2010_wi
+  source:
+    kind: catalog
+    dataset: raw__dcp_ct2010_wi
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    ctlabel:
+      nulls: empty
+    borocode:
+      nulls: empty
+    boroname:
+      nulls: empty
+    ct2010:
+      nulls: empty
+    boroct2010:
+      nulls: empty
+    cdeligibil:
+      nulls: empty
+    ntacode:
+      nulls: empty
+    ntaname:
+      nulls: empty
+    puma:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_ct2010_wi
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_ct2010_wi/26b/config.json
+      file_type: parquet
+      name: dcp_ct2010_wi
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_ct2010_wi/26b/dcp_ct2010_wi.parquet
+      version: 26b
+- name: dcp_ct2020_wi
+  source:
+    kind: catalog
+    dataset: raw__dcp_ct2020_wi
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    ctlabel:
+      nulls: empty
+    borocode:
+      nulls: empty
+    boroname:
+      nulls: empty
+    ct2020:
+      nulls: empty
+    boroct2020:
+      nulls: empty
+    cdeligibil:
+      nulls: empty
+    ntaname:
+      nulls: empty
+    nta2020:
+      nulls: empty
+    cdta2020:
+      nulls: empty
+    cdtaname:
+      nulls: empty
+    geoid:
+      nulls: empty
+    puma:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_ct2020_wi
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_ct2020_wi/26b/config.json
+      file_type: parquet
+      name: dcp_ct2020_wi
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_ct2020_wi/26b/dcp_ct2020_wi.parquet
+      version: 26b
+- name: dcp_developments
+  source:
+    kind: catalog
+    dataset: raw__dcp_developments
+    version: input_lock
+  role: retained_source
+  provisional: true
+  columns: {}
+  upstream:
+    kind: raw_candidate
+    release: 25Q4
+    provenance:
+      alias: dcp_developments
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_developments/25Q4/config.json
+      file_type: parquet
+      name: dcp_developments
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_developments/25Q4/dcp_developments.parquet
+      version: 25Q4
+  note: Captured for release completeness; not consumed by the current PLUTO transformation.
+- name: dcp_edesignation
+  source:
+    kind: catalog
+    dataset: raw__dcp_edesignation
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    enumber:
+      nulls: empty
+    ceqr_num:
+      nulls: empty
+    ulurp_num:
+      nulls: empty
+    zoning_map:
+      nulls: empty
+    descriptio:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260707'
+    provenance:
+      alias: dcp_edesignation
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_edesignation/20260707/config.json
+      file_type: parquet
+      name: dcp_edesignation
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_edesignation/20260707/dcp_edesignation.parquet
+      version: '20260707'
+- name: dcp_firecompanies
+  source:
+    kind: catalog
+    dataset: raw__dcp_firecompanies
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    firecotype:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_firecompanies
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_firecompanies/26b/config.json
+      file_type: parquet
+      name: dcp_firecompanies
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_firecompanies/26b/dcp_firecompanies.parquet
+      version: 26b
+- name: dcp_gis_mandatory_inclusionary_housing
+  source:
+    kind: catalog
+    dataset: raw__dcp_gis_mandatory_inclusionary_housing
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    boro:
+      nulls: empty
+    status:
+      nulls: empty
+    project_name:
+      nulls: empty
+    zr_ulurp_no:
+      nulls: empty
+    zr_map:
+      nulls: empty
+    cd:
+      nulls: empty
+    mih_option:
+      nulls: empty
+    zoning_map:
+      nulls: empty
+    project_id:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dcp_gis_mandatory_inclusionary_housing
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_gis_mandatory_inclusionary_housing/20260731/config.json
+      file_type: parquet
+      name: dcp_gis_mandatory_inclusionary_housing
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_gis_mandatory_inclusionary_housing/20260731/dcp_gis_mandatory_inclusionary_housing.parquet
+      version: '20260731'
+- name: dcp_healthareas
+  source:
+    kind: catalog
+    dataset: raw__dcp_healthareas
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    boroname:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_healthareas
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_healthareas/26b/config.json
+      file_type: parquet
+      name: dcp_healthareas
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_healthareas/26b/dcp_healthareas.parquet
+      version: 26b
+- name: dcp_healthcenters
+  source:
+    kind: catalog
+    dataset: raw__dcp_healthcenters
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    boroname:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_healthcenters
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_healthcenters/26b/config.json
+      file_type: parquet
+      name: dcp_healthcenters
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_healthcenters/26b/dcp_healthcenters.parquet
+      version: 26b
+- name: dcp_limitedheight
+  source:
+    kind: catalog
+    dataset: raw__dcp_limitedheight
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    lhname:
+      nulls: empty
+    lhlbl:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dcp_limitedheight
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_limitedheight/20260731/config.json
+      file_type: parquet
+      name: dcp_limitedheight
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_limitedheight/20260731/dcp_limitedheight.parquet
+      version: '20260731'
+- name: dcp_policeprecincts
+  source:
+    kind: catalog
+    dataset: raw__dcp_policeprecincts
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns: {}
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_policeprecincts
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_policeprecincts/26b/config.json
+      file_type: parquet
+      name: dcp_policeprecincts
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_policeprecincts/26b/dcp_policeprecincts.parquet
+      version: 26b
+- name: dcp_school_districts
+  source:
+    kind: catalog
+    dataset: raw__dcp_school_districts
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns: {}
+  upstream:
+    kind: raw_candidate
+    release: 26b
+    provenance:
+      alias: dcp_school_districts
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_school_districts/26b/config.json
+      file_type: parquet
+      name: dcp_school_districts
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_school_districts/26b/dcp_school_districts.parquet
+      version: 26b
+- name: dcp_specialpurpose
+  source:
+    kind: catalog
+    dataset: raw__dcp_specialpurpose
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    sdname:
+      nulls: empty
+    sdlbl:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dcp_specialpurpose
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_specialpurpose/20260731/config.json
+      file_type: parquet
+      name: dcp_specialpurpose
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_specialpurpose/20260731/dcp_specialpurpose.parquet
+      version: '20260731'
+- name: dcp_specialpurposesubdistricts
+  source:
+    kind: catalog
+    dataset: raw__dcp_specialpurposesubdistricts
+    version: input_lock
+  role: retained_source
+  provisional: true
+  columns: {}
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dcp_specialpurposesubdistricts
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_specialpurposesubdistricts/20260731/config.json
+      file_type: parquet
+      name: dcp_specialpurposesubdistricts
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_specialpurposesubdistricts/20260731/dcp_specialpurposesubdistricts.parquet
+      version: '20260731'
+  note: Captured for release completeness; not consumed by the current PLUTO transformation.
+- name: dcp_transit_zones
+  source:
+    kind: catalog
+    dataset: raw__dcp_transit_zones
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    transit_zone:
+      nulls: empty
+    shape_leng:
+      nulls: empty
+    shape_area:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20251209'
+    provenance:
+      alias: dcp_transit_zones
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_transit_zones/20251209/config.json
+      file_type: parquet
+      name: dcp_transit_zones
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_transit_zones/20251209/dcp_transit_zones.parquet
+      version: '20251209'
+- name: dcp_zoningdistricts
+  source:
+    kind: catalog
+    dataset: raw__dcp_zoningdistricts
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    zonedist:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dcp_zoningdistricts
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_zoningdistricts/20260731/config.json
+      file_type: parquet
+      name: dcp_zoningdistricts
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_zoningdistricts/20260731/dcp_zoningdistricts.parquet
+      version: '20260731'
+- name: dcp_zoningmapamendments
+  source:
+    kind: catalog
+    dataset: raw__dcp_zoningmapamendments
+    version: input_lock
+  role: retained_source
+  provisional: true
+  columns: {}
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dcp_zoningmapamendments
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_zoningmapamendments/20260731/config.json
+      file_type: parquet
+      name: dcp_zoningmapamendments
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_zoningmapamendments/20260731/dcp_zoningmapamendments.parquet
+      version: '20260731'
+  note: Captured for release completeness; not consumed by the current PLUTO transformation.
+- name: dof_condo
+  source:
+    kind: catalog
+    dataset: raw__dof_condo
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    condo_base_boro:
+      nulls: empty
+    condo_base_block:
+      nulls: empty
+    condo_base_lot:
+      nulls: empty
+    condo_base_bbl:
+      nulls: empty
+    condo_base_bbl_key:
+      nulls: empty
+    condo_key:
+      nulls: empty
+    condo_number:
+      nulls: empty
+    condo_name:
+      nulls: empty
+    condo_billing_bbl:
+      nulls: empty
+    cinc_parent_flag:
+      nulls: empty
+    cinc_condo_parent:
+      nulls: empty
+    cinc_unit_parent:
+      nulls: empty
+    cinc_gen:
+      nulls: empty
+    created_user:
+      nulls: empty
+    last_edited_user:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dof_condo
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dof_condo/20260731/config.json
+      file_type: parquet
+      name: dof_condo
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dof_condo/20260731/dof_condo.parquet
+      version: '20260731'
+- name: dof_dtm
+  source:
+    kind: catalog
+    dataset: raw__dof_dtm
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    boro:
+      nulls: empty
+    bbl:
+      nulls: empty
+    condo_flag:
+      nulls: empty
+    reuc_flag:
+      nulls: empty
+    air_lot_fl:
+      nulls: empty
+    sub_lot_fl:
+      nulls: empty
+    easement_f:
+      nulls: empty
+    lot_note:
+      nulls: empty
+    effective_:
+      nulls: empty
+    bill_bbl_f:
+      nulls: empty
+    nycmap_bld:
+      nulls: empty
+    conversion:
+      nulls: empty
+    value_refl:
+      nulls: empty
+    created_us:
+      nulls: empty
+    last_edite:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260731'
+    provenance:
+      alias: dof_dtm
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dof_dtm/20260731/config.json
+      file_type: parquet
+      name: dof_dtm
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dof_dtm/20260731/dof_dtm.parquet
+      version: '20260731'
+- name: dof_shoreline
+  source:
+    kind: catalog
+    dataset: raw__dof_shoreline
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    created_by:
+      nulls: empty
+    last_modif:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20220429'
+    provenance:
+      alias: dof_shoreline
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dof_shoreline/20220429/config.json
+      file_type: parquet
+      name: dof_shoreline
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dof_shoreline/20220429/dof_shoreline.parquet
+      version: '20220429'
+- name: dpr_greenthumb
+  source:
+    kind: catalog
+    dataset: raw__dpr_greenthumb
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    nta:
+      nulls: empty
+    zipcode:
+      nulls: empty
+    parksid:
+      nulls: empty
+    coundist:
+      nulls: empty
+    openhrsf:
+      nulls: empty
+    openhrsw:
+      nulls: empty
+    openhrstu:
+      nulls: empty
+    openhrsm:
+      nulls: empty
+    censustract:
+      nulls: empty
+    congressionaldist:
+      nulls: empty
+    openhrsth:
+      nulls: empty
+    statesenatedist:
+      nulls: empty
+    bbl:
+      nulls: empty
+    crossstreets:
+      nulls: empty
+    communityboard:
+      nulls: empty
+    openhrssa:
+      nulls: empty
+    gardenname:
+      nulls: empty
+    status:
+      nulls: empty
+    address:
+      nulls: empty
+    lon:
+      nulls: empty
+    policeprecinct:
+      nulls: empty
+    juris:
+      nulls: empty
+    openhrssu:
+      nulls: empty
+    lat:
+      nulls: empty
+    borough:
+      nulls: empty
+    assemblydist:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260729'
+    provenance:
+      alias: dpr_greenthumb
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dpr_greenthumb/20260729/config.json
+      file_type: parquet
+      name: dpr_greenthumb
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dpr_greenthumb/20260729/dpr_greenthumb.parquet
+      version: '20260729'
+- name: lpc_historic_districts
+  source:
+    kind: catalog
+    dataset: raw__lpc_historic_districts
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    build_type:
+      nulls: empty
+    style_sec:
+      nulls: empty
+    shape_area:
+      nulls: empty
+    build_nme:
+      nulls: empty
+    mat_sec:
+      nulls: empty
+    bbl:
+      nulls: empty
+    alt_arch_1:
+      nulls: empty
+    date_high:
+      nulls: empty
+    use_orig:
+      nulls: empty
+    des_addres:
+      nulls: empty
+    alt_date_1:
+      nulls: empty
+    use_other:
+      nulls: empty
+    shape_leng:
+      nulls: empty
+    mat_prim:
+      nulls: empty
+    alt_arch_2:
+      nulls: empty
+    mat_four:
+      nulls: empty
+    block:
+      nulls: empty
+    mat_third:
+      nulls: empty
+    own_devel:
+      nulls: empty
+    alt_date_2:
+      nulls: empty
+    style_prim:
+      nulls: empty
+    hist_dist:
+      nulls: empty
+    lot:
+      nulls: empty
+    bin:
+      nulls: empty
+    notes:
+      nulls: empty
+    build_oth:
+      nulls: empty
+    circa:
+      nulls: empty
+    altered:
+      nulls: empty
+    style_oth:
+      nulls: empty
+    lm_new:
+      nulls: empty
+    mat_other:
+      nulls: empty
+    lm_orig:
+      nulls: empty
+    date_low:
+      nulls: empty
+    borough:
+      nulls: empty
+    date_combo:
+      nulls: empty
+    arch_build:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260203'
+    provenance:
+      alias: lpc_historic_districts
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/lpc_historic_districts/20260203/config.json
+      file_type: parquet
+      name: lpc_historic_districts
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/lpc_historic_districts/20260203/lpc_historic_districts.parquet
+      version: '20260203'
+- name: lpc_landmarks
+  source:
+    kind: catalog
+    dataset: raw__lpc_landmarks
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    pluto_addr:
+      nulls: empty
+    bct2020:
+      nulls: empty
+    last_actio:
+      nulls: empty
+    latitude:
+      nulls: empty
+    cd:
+      nulls: empty
+    boundaries:
+      nulls: empty
+    vacant_lot:
+      nulls: empty
+    public_hea:
+      nulls: empty
+    bbl:
+      nulls: empty
+    council:
+      nulls: empty
+    desig_addr:
+      nulls: empty
+    count_bldg:
+      nulls: empty
+    longitude:
+      nulls: empty
+    bin_number:
+      nulls: empty
+    block:
+      nulls: empty
+    status:
+      nulls: empty
+    lm_type:
+      nulls: empty
+    hist_distr:
+      nulls: empty
+    other_hear:
+      nulls: empty
+    lot:
+      nulls: empty
+    lp_number:
+      nulls: empty
+    nta2020:
+      nulls: empty
+    non_bldg:
+      nulls: empty
+    most_curre:
+      nulls: empty
+    boroughid:
+      nulls: empty
+    lm_name:
+      nulls: empty
+    secnd_bldg:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260618'
+    provenance:
+      alias: lpc_landmarks
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/lpc_landmarks/20260618/config.json
+      file_type: parquet
+      name: lpc_landmarks
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/lpc_landmarks/20260618/lpc_landmarks.parquet
+      version: '20260618'
+- name: pluto_input_cama_dof
+  source:
+    kind: catalog
+    dataset: raw__pluto_input_cama_dof
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    bbl:
+      nulls: empty
+    parcelcard:
+      nulls: empty
+    bldgnum:
+      nulls: empty
+    bldgclass:
+      nulls: empty
+    primaryusecode:
+      nulls: empty
+    developmentname:
+      nulls: empty
+    streettype:
+      nulls: empty
+    lottype:
+      nulls: empty
+    residarea:
+      nulls: empty
+    officearea:
+      nulls: empty
+    retailarea:
+      nulls: empty
+    garagearea:
+      nulls: empty
+    storagearea:
+      nulls: empty
+    factoryarea:
+      nulls: empty
+    otherarea:
+      nulls: empty
+    grossarea:
+      nulls: empty
+    ownerarea:
+      nulls: empty
+    grossvolume:
+      nulls: empty
+    commercialarea:
+      nulls: empty
+    proxcode:
+      nulls: empty
+    bsmnt_type:
+      nulls: empty
+    bsmntgradient:
+      nulls: empty
+    bsmntarea:
+      nulls: empty
+    firstfloorarea:
+      nulls: empty
+    secondfloorarea:
+      nulls: empty
+    upperfloorarea:
+      nulls: empty
+    partresfloorarea:
+      nulls: empty
+    unfinishedfloorarea:
+      nulls: empty
+    finishedfloorarea:
+      nulls: empty
+    nonresidfloorarea:
+      nulls: empty
+    residconstrtype:
+      nulls: empty
+    commercialconstrtype:
+      nulls: empty
+    condomainconstrtype:
+      nulls: empty
+    condounitsconstrtype:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260729'
+    provenance:
+      alias: pluto_input_cama_dof
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/pluto_input_cama_dof/20260729/config.json
+      file_type: parquet
+      name: pluto_input_cama_dof
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/pluto_input_cama_dof/20260729/pluto_input_cama_dof.parquet
+      version: '20260729'
+- name: pluto_input_geocodes
+  source:
+    kind: catalog
+    dataset: raw__pluto_input_geocodes
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    billingbbl:
+      nulls: empty
+    bbl:
+      nulls: empty
+    cd:
+      nulls: empty
+    ct2010:
+      nulls: empty
+    cb2010:
+      nulls: empty
+    ct2020:
+      nulls: empty
+    cb2020:
+      nulls: empty
+    schooldist:
+      nulls: empty
+    council:
+      nulls: empty
+    zipcode:
+      nulls: empty
+    policeprct:
+      nulls: empty
+    healthcenterdistrict:
+      nulls: empty
+    healtharea:
+      nulls: empty
+    sanitdistrict:
+      nulls: empty
+    sanitsub:
+      nulls: empty
+    boepreferredstreetname:
+      nulls: empty
+    taxmap:
+      nulls: empty
+    sanbornmapidentifier:
+      nulls: empty
+    latitude:
+      nulls: empty
+    longitude:
+      nulls: empty
+    grc:
+      nulls: empty
+    grc2:
+      nulls: empty
+    msg:
+      nulls: empty
+    msg2:
+      nulls: empty
+    firecomp:
+      nulls: empty
+    borough:
+      nulls: empty
+    block:
+      nulls: empty
+    lot:
+      nulls: empty
+    easement:
+      nulls: empty
+    input_sname:
+      nulls: empty
+    input_hnum:
+      nulls: empty
+    numberofexistingstructures:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260729'
+    provenance:
+      alias: pluto_input_geocodes
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/pluto_input_geocodes/20260729/config.json
+      file_type: parquet
+      name: pluto_input_geocodes
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/pluto_input_geocodes/20260729/pluto_input_geocodes.parquet
+      version: '20260729'
+  preparation:
+    adapter: nyc_geosupport_parcel_cohort
+    runtime: explicit_pinned_bundle
+    axis_policy: historical_recipe_compatibility; generic address recipes use longitude as X
+- name: pluto_input_numbldgs
+  source:
+    kind: catalog
+    dataset: raw__pluto_input_numbldgs
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    bbl:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: '20260803'
+    provenance:
+      alias: pluto_input_numbldgs
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/pluto_input_numbldgs/20260803/config.json
+      file_type: parquet
+      name: pluto_input_numbldgs
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/pluto_input_numbldgs/20260803/pluto_input_numbldgs.parquet
+      version: '20260803'
+  preparation:
+    adapter: nyc_geosupport_building_counts
+    runtime: explicit_pinned_bundle
+    axis_policy: historical_recipe_compatibility; generic address recipes use longitude as X
+- name: previous_pluto
+  source:
+    kind: catalog
+    dataset: raw__previous_pluto
+    version: input_lock
+  role: prepared_input
+  provisional: true
+  columns:
+    borough:
+      nulls: empty
+    block:
+      nulls: empty
+    lot:
+      nulls: empty
+    cd:
+      nulls: empty
+    bct2020:
+      nulls: empty
+    bctcb2020:
+      nulls: empty
+    ct2010:
+      nulls: empty
+    cb2010:
+      nulls: empty
+    schooldist:
+      nulls: empty
+    council:
+      nulls: empty
+    zipcode:
+      nulls: empty
+    firecomp:
+      nulls: empty
+    policeprct:
+      nulls: empty
+    healthcenterdistrict:
+      nulls: empty
+    healtharea:
+      nulls: empty
+    sanitboro:
+      nulls: empty
+    sanitdistrict:
+      nulls: empty
+    sanitsub:
+      nulls: empty
+    address:
+      nulls: empty
+    zonedist1:
+      nulls: empty
+    zonedist2:
+      nulls: empty
+    zonedist3:
+      nulls: empty
+    zonedist4:
+      nulls: empty
+    overlay1:
+      nulls: empty
+    overlay2:
+      nulls: empty
+    spdist1:
+      nulls: empty
+    spdist2:
+      nulls: empty
+    spdist3:
+      nulls: empty
+    ltdheight:
+      nulls: empty
+    splitzone:
+      nulls: empty
+    bldgclass:
+      nulls: empty
+    landuse:
+      nulls: empty
+    easements:
+      nulls: empty
+    ownertype:
+      nulls: empty
+    ownername:
+      nulls: empty
+    lotarea:
+      nulls: empty
+    bldgarea:
+      nulls: empty
+    comarea:
+      nulls: empty
+    resarea:
+      nulls: empty
+    officearea:
+      nulls: empty
+    retailarea:
+      nulls: empty
+    garagearea:
+      nulls: empty
+    strgearea:
+      nulls: empty
+    factryarea:
+      nulls: empty
+    otherarea:
+      nulls: empty
+    areasource:
+      nulls: empty
+    numbldgs:
+      nulls: empty
+    numfloors:
+      nulls: empty
+    unitsres:
+      nulls: empty
+    unitstotal:
+      nulls: empty
+    lotfront:
+      nulls: empty
+    lotdepth:
+      nulls: empty
+    bldgfront:
+      nulls: empty
+    bldgdepth:
+      nulls: empty
+    ext:
+      nulls: empty
+    proxcode:
+      nulls: empty
+    irrlotcode:
+      nulls: empty
+    lottype:
+      nulls: empty
+    bsmtcode:
+      nulls: empty
+    assessland:
+      nulls: empty
+    assesstot:
+      nulls: empty
+    exempttot:
+      nulls: empty
+    yearbuilt:
+      nulls: empty
+    yearalter1:
+      nulls: empty
+    yearalter2:
+      nulls: empty
+    histdist:
+      nulls: empty
+    landmark:
+      nulls: empty
+    builtfar:
+      nulls: empty
+    residfar:
+      nulls: empty
+    commfar:
+      nulls: empty
+    facilfar:
+      nulls: empty
+    borocode:
+      nulls: empty
+    bbl:
+      nulls: empty
+    condono:
+      nulls: empty
+    tract2010:
+      nulls: empty
+    xcoord:
+      nulls: empty
+    ycoord:
+      nulls: empty
+    zonemap:
+      nulls: empty
+    zmcode:
+      nulls: empty
+    sanborn:
+      nulls: empty
+    taxmap:
+      nulls: empty
+    edesignum:
+      nulls: empty
+    appbbl:
+      nulls: empty
+    appdate:
+      nulls: empty
+    plutomapid:
+      nulls: empty
+    firm07_flag:
+      nulls: empty
+    pfirm15_flag:
+      nulls: empty
+    version:
+      nulls: empty
+    dcpedited:
+      nulls: empty
+    latitude:
+      nulls: empty
+    longitude:
+      nulls: empty
+    notes:
+      nulls: empty
+    mih_opt1:
+      nulls: empty
+    mih_opt2:
+      nulls: empty
+    mih_opt3:
+      nulls: empty
+    mih_opt4:
+      nulls: empty
+    trnstzone:
+      nulls: empty
+    affresfar:
+      nulls: empty
+    mnffar:
+      nulls: empty
+  upstream:
+    kind: raw_candidate
+    release: 26v1
+    provenance:
+      alias: previous_pluto
+      config_url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_pluto/26v1/config.json
+      file_type: parquet
+      name: dcp_pluto
+      url: https://edm-recipes.nyc3.digitaloceanspaces.com/datasets/dcp_pluto/26v1/dcp_pluto.parquet
+      version: 26v1
+- name: zoning_district_class_descriptions
+  source:
+    kind: catalog
+    dataset: zoning_district_class_descriptions
+    version: input_lock
+  role: retained_source
+  provisional: false
+  columns: {}
+  upstream:
+    kind: seed
+    release: 26v2
+    provenance: null
+  note: Captured for release completeness; not consumed by the current PLUTO transformation.
