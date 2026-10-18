@@ -1,0 +1,1585 @@
+{
+  "source_commit": "32bc98f632f15e7182933a17fb61ecf74e853518",
+  "source_files": [
+    {
+      "path": "products/pluto/.envrc",
+      "sha256": "e71158c86418fad1377f60f9f5d7bcaa6707aa1b3aaa0021e502beb7f22f9481"
+    },
+    {
+      "path": "products/pluto/README.md",
+      "sha256": "6c4ff835bed603a5bc666cc9e006954e021f490b8ef0cb7b6ef2d5adccc3da81"
+    },
+    {
+      "path": "products/pluto/dbt_project.yml",
+      "sha256": "f722a4ed842058cde52ff4fe250f7b3704c63a2aadaa979a428c130c64c18b89"
+    },
+    {
+      "path": "products/pluto/docs/dbt_refactor/instructions.md",
+      "sha256": "f667d836bfd5e19727f083f8d5a6c1ca692cf1c45ead65b74eda02908935e4bc"
+    },
+    {
+      "path": "products/pluto/models/_sources.yml",
+      "sha256": "87e16d24eb8b1e2019489f44a8fb155f9fb42aa2ecb80d810a8b27069541967f"
+    },
+    {
+      "path": "products/pluto/models/intermediate/miharea/_miharea_models.yml",
+      "sha256": "f316764f26bfa1081b1ccd5048791c7591aaf4baac96e830de04655760e8aed4"
+    },
+    {
+      "path": "products/pluto/models/intermediate/miharea/int_mih__cleaned.sql",
+      "sha256": "227e7c6888fb0bbb30d0eee8b5318d4cd3eec1d96fe9c4aa8467a857a6668fe2"
+    },
+    {
+      "path": "products/pluto/models/intermediate/miharea/int_mih__lot_overlap.sql",
+      "sha256": "8de05c3524c73a8bd2dc59749788411d7365998419f62d75e1cc0118aaa5ab5e"
+    },
+    {
+      "path": "products/pluto/models/intermediate/miharea/int_pluto__miharea.sql",
+      "sha256": "ebd8b81ef461053cefa16fa3a9feaf888213cdbee9147809e3b80cef50eaea21"
+    },
+    {
+      "path": "products/pluto/models/intermediate/simple/_simple_models.yml",
+      "sha256": "79bc0ad583725fdc702268cb95fcf2db9ce8b9162306bc85d4750adfe7ed412b"
+    },
+    {
+      "path": "products/pluto/models/intermediate/simple/int_pluto__condono.sql",
+      "sha256": "d43d4285394b434cda0e765b0ea2bb422b498de817b04bdfc04928593f429082"
+    },
+    {
+      "path": "products/pluto/models/intermediate/simple/int_pluto__far.sql",
+      "sha256": "193274586b8851698f2189f287349588bf50b576bdd968ff1d7ff1d1ce170700"
+    },
+    {
+      "path": "products/pluto/models/intermediate/simple/int_pluto__irrlotcode.sql",
+      "sha256": "bdae38c1682e836fedb75baec02f1a1e6ffd90c6e213b8e8bef5576b57dc4a1e"
+    },
+    {
+      "path": "products/pluto/models/intermediate/simple/int_pluto__latlong.sql",
+      "sha256": "bd3f8c786f4693583f0dd4ca11146c7b8d9d8abaa55a8d1920c03346042069bf"
+    },
+    {
+      "path": "products/pluto/models/intermediate/simple/int_pluto__lpc.sql",
+      "sha256": "c897fb8070e3d004d8a570d98e9450be86fe7fe17a156330dd4725dee58499ea"
+    },
+    {
+      "path": "products/pluto/models/intermediate/simple/int_pluto__numericfields.sql",
+      "sha256": "6b6d55f1c248345f757738d680b5ccf503a3bec5b54e5acedea7702701021ae9"
+    },
+    {
+      "path": "products/pluto/models/intermediate/transitzone/_transitzone_models.yml",
+      "sha256": "8fc09c52ab14e068e5f00e74eef4c05e3da021f9159900329cd2349a3e28b407"
+    },
+    {
+      "path": "products/pluto/models/intermediate/transitzone/int_pluto__transitzone.sql",
+      "sha256": "9b2b41010b866c1e78eca0fd004eb8d2ff67408fe31439e62209d48b53495899"
+    },
+    {
+      "path": "products/pluto/models/intermediate/transitzone/int_tz__atomic_geoms.sql",
+      "sha256": "c4176ac8d80e2455ba783f29382b1e12010d333e46c11d889c44d3944c164291"
+    },
+    {
+      "path": "products/pluto/models/intermediate/transitzone/int_tz__bbl_to_tz_ranked.sql",
+      "sha256": "c215916114d246c9f674bccddf489a39ba56ee2744f6d9527cc6323b409a3614"
+    },
+    {
+      "path": "products/pluto/models/intermediate/transitzone/int_tz__block_to_tz_ranked.sql",
+      "sha256": "4b8be705348a7dec7ec7f9e5b20aa01fd551bac3e71e60873cd8bc9c8f0cab42"
+    },
+    {
+      "path": "products/pluto/models/intermediate/transitzone/int_tz__tax_blocks.sql",
+      "sha256": "27ac9e422c83b5b0ce9ace39ccbbaf04f68eac823b15f286c2bad177e2bb6b20"
+    },
+    {
+      "path": "products/pluto/models/intermediate/transitzone/int_tz__union_coverage.sql",
+      "sha256": "f322bf880a86c4d42c8c9c8ad6c7b393cd7d95beb049c95115ee1ed611abd28c"
+    },
+    {
+      "path": "products/pluto/models/product/pluto_enriched.sql",
+      "sha256": "966f5dc8770cb319275e6cd2fd0d3f53cf4b85bb84309360eda59ee8752d65dd"
+    },
+    {
+      "path": "products/pluto/models/qaqc/intermediate/_int_models.yml",
+      "sha256": "58ad79fd64b2f7e6b63f38c5cb10bff7c9fa2e4ee6678c8f04272c22ec32e2ac"
+    },
+    {
+      "path": "products/pluto/models/qaqc/intermediate/qaqc_int__active_condo_bbl_unitsres_corrections.sql",
+      "sha256": "10eebd4e605fa54552943fa04882d0e1cb99f597cc310798bfe70bc5ccddafa4"
+    },
+    {
+      "path": "products/pluto/models/qaqc/intermediate/qaqc_int__devdb_bbl_units_summary.sql",
+      "sha256": "bd2e80a6f4b5e59c6c11d1184d4a0704e317a7aa2f829ae3eb629471682072c8"
+    },
+    {
+      "path": "products/pluto/models/qaqc/intermediate/qaqc_int__mihareas_questionable_assignments.sql",
+      "sha256": "c6cafbcab589385bb77212ca9690fa75a71b17edc433e2ac0b15d9c732cabe11"
+    },
+    {
+      "path": "products/pluto/models/qaqc/intermediate/qaqc_int__transit_zones_questionable_assignments.sql",
+      "sha256": "3f7b3304703f972add080e847a2d5f7e03eccf6b8b45bab8746cd4d3bba61e0b"
+    },
+    {
+      "path": "products/pluto/models/qaqc/reports/_reports_models.yml",
+      "sha256": "56f92f5f59b3d7903edc8c7e82926d1b887cb3d6dece37d86a54096705c3d468"
+    },
+    {
+      "path": "products/pluto/models/qaqc/reports/qa__pluto_changes_detail.sql",
+      "sha256": "c941cc097efcef5e75ea0c1ff7f2f3c572d511377d5063112cfe591d25373d3e"
+    },
+    {
+      "path": "products/pluto/models/qaqc/reports/qa__pluto_version_comparison.sql",
+      "sha256": "a04285084c964332679d8d3f207ac228cc82be725c090e64dd3595a44a39247e"
+    },
+    {
+      "path": "products/pluto/models/qaqc/reports/qaqc_reports__dof_incorrect_condo_res_units.sql",
+      "sha256": "34dc63e3121ceb7e7ecdecc59a8d1adcd8f161bb9b7c9ac936713ad42686c91c"
+    },
+    {
+      "path": "products/pluto/models/qaqc/reports/qaqc_reports__dof_pts_incorrect_condo_res_units.sql",
+      "sha256": "681ff3d886df35890a0d1b2a587beedfc400d9d73c924fa455be8d6f1a69f0a4"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_cb2010_wi.sql",
+      "sha256": "005f467e9799dbf76978b8203b200fd398b82e1e06e6176b3eea0d8ef92caa90"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_cb2020_wi.sql",
+      "sha256": "cbb7e67cd94cfc2efac94064afe2e13ed48a32a649864b5e8b3ae32423305ac7"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_cdboundaries_wi.sql",
+      "sha256": "7023b4885ae261957aa62e1da02c850494bc8943313c2ff19149df45b220a762"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_colp.sql",
+      "sha256": "516852b73d46fef67e61fd91c0bc899eba27751bee76c86684622d680abf7221"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_commercialoverlay.sql",
+      "sha256": "80b3704ccbe3e1bf8ccf680fbfcf01aebc039df34ec07b0c8c05acc9dac5f96d"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_councildistricts_wi.sql",
+      "sha256": "23686586365ee4336eeac09f9baeb1866f0f48045e1704b57db635afafdf2b25"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_ct2010_wi.sql",
+      "sha256": "3e5124cc66172069f97d70f863ccabb3c2ab3faf5a9c68edbc0871c121eca59b"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_ct2020_wi.sql",
+      "sha256": "6b5f8dc40cb7dc5d07efdb94a26e08c83480da5521356da7ffdb296fc1bb6552"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_developments.sql",
+      "sha256": "43556b5a44b68f01656552216b3c3cb0b8f7931f7d33eb3eef67447c0e137002"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_edesignation.sql",
+      "sha256": "59b1d152abbb1cd41684a84e257269e0cc34712f9d0e4b8e6d22f466e1cad7c3"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_firecompanies.sql",
+      "sha256": "32889044f848a25893bee7ebed4fdf4f88108015075461b9b9fae3e5787e51cc"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_gis_mandatory_inclusionary_housing.sql",
+      "sha256": "4cf3ac451ad62e88b3158c9fa790b56fe1be8cc78905e533af7acd2ea199abc3"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_healthareas.sql",
+      "sha256": "c99f41600d99cc473e7d298e5227e808fe8e29a50154ec11be5fbbbacedd0187"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_healthcenters.sql",
+      "sha256": "d99fb204777ccaa1b477b8df606fae850b794ea762418d287bc35701de368448"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_limitedheight.sql",
+      "sha256": "aa6fb49e1daa42b38af2f94b89a5b3caa3105834372d877d84c53c4e896c7bbb"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_mappluto.sql",
+      "sha256": "61ee956d2b041392f70641584feb9f68457e867070b366795bff4c6803fd84a5"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_policeprecincts.sql",
+      "sha256": "4bfd9710a4f09203f8394edd885960e7f49b7248959406c47a768d9aec442d9b"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_school_districts.sql",
+      "sha256": "91303a9e57f8f2009280c63c59d1672413161f0878d449a6a733f3affa2a9992"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_specialpurpose.sql",
+      "sha256": "f59c82b7c8ee3f99ffbe0df4b86669bf47ff745aec72a86ffd237aadbaa59c7e"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_specialpurposesubdistricts.sql",
+      "sha256": "9d2911c3204a9701b4b3ce626c88115fb2ccc345a4f3782aefa4c2993b07d814"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_transit_zones.sql",
+      "sha256": "f1a9107c23e86e7ef4859ff6577fc852066533e869223aea4089452ecea81f97"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_zoningdistricts.sql",
+      "sha256": "135452a07d950481cc4f83f1487706415a12d4ce3c4e48d1a0fd07f4e5fa6d5e"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_zoningmapamendments.sql",
+      "sha256": "09c1d05690f8149621a37688f8e951e17f1ad646b878350065791485d3dc6c07"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dcp_zoningmapindex.sql",
+      "sha256": "54be68dc0380ca963db44f371d4599d77e968fb734dbddbbe5b59e7e4289141d"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dof_condo.sql",
+      "sha256": "66232d0c2167d2cff6f99ca6689904289231e9bf4b599d7de1edac77296a9d18"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dof_dtm.sql",
+      "sha256": "dd8a497486055f4e59ee8f8db719855236863bc52a8f494e9b381188dd012a05"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dof_shoreline.sql",
+      "sha256": "093f4a0dfa50ac661e12ceca9214166baac84abc8221fe526b2e38284a94ddc8"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__doitt_zipcodeboundaries.sql",
+      "sha256": "0de026e642b78b22f95e072886b2ad04a6f7d3a0f867baf26cb4bf82cd049141"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dpr_greenthumb.sql",
+      "sha256": "21c305953b88cc3e6b0c55e8fa48de2d1036bece9e241dcf931350670d050d75"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__dsny_frequencies.sql",
+      "sha256": "01a0f79d050e77b69f3091f9e0c6d5b226aae9707d26fd136188391e4dd041e7"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__fema_firms2007_100yr.sql",
+      "sha256": "dc62f88cfe6618b1569c3e84dbb30d2564c741502636878439af5f87738da1ce"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__fema_pfirms2015_100yr.sql",
+      "sha256": "a0b0c3fa9e6aaab379184c62ddea82a3c60b328be5a564276b1f3bee556c4d7a"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__lpc_historic_districts.sql",
+      "sha256": "cdb4466325f6392d07f8487bc1c47d4e49d899c32bd1765898af70fe8e9b70a7"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__lpc_landmarks.sql",
+      "sha256": "eb6813087158a295a302cd7e0398ecf7d5085a2d1950032deced2ef6fde22b06"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__pluto_input_cama_dof.sql",
+      "sha256": "326874537a48f95f2f631d4b74b7a7496689d40d33c63ff09285db5afef1d5ef"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__pluto_input_geocodes.sql",
+      "sha256": "cd5f38304977e7a9eaae95285e7fb9aaeb1bf78b996178eb8a5450dc5f8c3ccd"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__pluto_input_numbldgs.sql",
+      "sha256": "1f4fea66743ffa5229d006344c3f2a14f9cdbbe86b099e16432c9f1bbd9ad098"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__pluto_input_research.sql",
+      "sha256": "87349f4219eca9f37b2322b48a71a02c8683581ca78d039a88406306403be82b"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__pluto_pts.sql",
+      "sha256": "77d2bdd07941d4c38ebd0232f1107550c5b66460f8f1b97aebc57b3a16124909"
+    },
+    {
+      "path": "products/pluto/models/staging/stg__previous_pluto.sql",
+      "sha256": "cf4caf6be9ee03f2c1be0614a62858b899455b8fcd70a6403e51f0b623691ba4"
+    },
+    {
+      "path": "products/pluto/packages.yml",
+      "sha256": "d63935d35bcdc56a3858b01fb4ff21a6ce3c436ef019a36b87a16e7e8a9fa8ed"
+    },
+    {
+      "path": "products/pluto/pluto_build/00_setup.sh",
+      "sha256": "1237ce62112d1aad9c84f84c46b267d9a388a4d97bd08c1e24b6b1228bbafb4f"
+    },
+    {
+      "path": "products/pluto/pluto_build/01a_dbt_staging.sh",
+      "sha256": "22954bdc457a0d6a9da229ea5b7fce11d973fb74d2d98925e296bb0677b3fad8"
+    },
+    {
+      "path": "products/pluto/pluto_build/02_build.sh",
+      "sha256": "769967c57700ebea1610e951536280f55cd6d15e8eda8b11f339de82705a0a72"
+    },
+    {
+      "path": "products/pluto/pluto_build/03_corrections.sh",
+      "sha256": "2d8580fc704ec59639516b41916a133c63fa3d18e1c8467f2df3a479095974bc"
+    },
+    {
+      "path": "products/pluto/pluto_build/04_archive.sh",
+      "sha256": "0152c931cca9bbbbd47fad543c0c82b0d395eba18865f71dc19189daed1bb907"
+    },
+    {
+      "path": "products/pluto/pluto_build/05_qaqc.sh",
+      "sha256": "a28497692e86487bf05ad2ada5a63fe2086b2fff87ca2308ce1d7f635310f23f"
+    },
+    {
+      "path": "products/pluto/pluto_build/06_export.sh",
+      "sha256": "75c9d3603bde7a0487ebba56060910e089f5e3956fe9098038bc21ee3b04dc6a"
+    },
+    {
+      "path": "products/pluto/pluto_build/07_custom_qaqc.sh",
+      "sha256": "fc7e46918864c6667b89fefa6fff9757b2cf3810511a32e13e95780c6c7c05de"
+    },
+    {
+      "path": "products/pluto/pluto_build/bash/cli.sh",
+      "sha256": "de184e4b230235808a874d38e19496c098449e4dcb3f82d36d50bf6208df3621"
+    },
+    {
+      "path": "products/pluto/pluto_build/bash/config.sh",
+      "sha256": "87972fb2c1d0281067656f174df145075dc7b32aead14888363f011c59f44946"
+    },
+    {
+      "path": "products/pluto/pluto_build/pluto",
+      "sha256": "fea35dcde7990c98beaa834b38256e9f17b6cd327d72c775839229c04427a7ed"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/_create.sql",
+      "sha256": "b8c418de2c6418f3f87f39c127a401e273e28e5901de3c92d553691a34439d4f"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/address.sql",
+      "sha256": "bd2cea7df4fc8f7caa78af11009232a3631a60c0780e1b4115b8a0bbd5ce83ec"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/allocated.sql",
+      "sha256": "96115964a1d0738b36454ff8a6633e6ef3d729f9f89c8e8013c2f1cd29fcedf0"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/apdate.sql",
+      "sha256": "5aaa2bfc2335ef0a63a936fa53d80fef7389474986faa320fccd6bf140fe6384"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/apply_dbt_enrichments.sql",
+      "sha256": "f1ed80796fc4b6685824d3828b0958606dd30e56c35496ec8f5343fa7c9cad45"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/backfill.sql",
+      "sha256": "e6f7702c6192fb26c4c4f4aa93b143b63a63aae6180f72af75a327a0ae8dfa53"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/bbl.sql",
+      "sha256": "233a62ad73ffe1b46aa5b4fdadda59f0d6521949ce42a693292b404510535475"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/bldgclass.sql",
+      "sha256": "bc014b5ccc38256dea0bc6dc2d7de14f1e1904d7b4c9d8b4d1d8c4ee916e23bb"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_bldgarea_1.sql",
+      "sha256": "388d146cad5c7cd0b9b456946138d22e0390532e64b63bbd890c6a32259a38db"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_bldgarea_2.sql",
+      "sha256": "44e361cbbd1b88c8f9a87aec56ef4961d476e5ceba5a78da892c4dd62f11301b"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_bldgarea_3.sql",
+      "sha256": "7369b3804335f3e422703f8a1fcfe29518acfd4bf8f4d7408e88c54ad8133818"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_bldgarea_4.sql",
+      "sha256": "d6ae3c0caaf4d37e408adf3341688910732b60eca516a077bdd48d20438f4391"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_bsmttype.sql",
+      "sha256": "74778410cdb5790646f8d65bfaf94fe2e54af23fb7073bfc911eaae9457ba65d"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_easements.sql",
+      "sha256": "4355ba9f0fc70e2c49fd1a19bb9036b9c4af0d4ef89f35bbe59c4a8805f732e6"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_lottype.sql",
+      "sha256": "a3554d39741216effa3f18010fc89a90b3b258e2e105a521a1cd69df60498c8c"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/cama_proxcode.sql",
+      "sha256": "23afdcc0ecd21bbbd197b194a518195aac45d5d3cc9812f366fbcc920a15e8b7"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/clean_database.sql",
+      "sha256": "f1fdc45dc09d5e6ab537bdf629c3cbc29d28b8145e52f03a969436507ac61cca"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/condono.sql",
+      "sha256": "a814fdd5c33477bb6e1b8533b1464c67d6425dee669bcf79fde9a9c58c3d6567"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/corr_create.sql",
+      "sha256": "77130b17dc7f67bdd0b1fbaee46f56747b2fd04c949e54c8b9c7206306eb7410"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/corr_inwoodrezoning.sql",
+      "sha256": "b8185a33109422ae89b34843a220776f514a5d9e5728fea270ff8db86da81d9d"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/corr_lotarea.sql",
+      "sha256": "324a664d261d8bb16afa34fa4146c1a847d7333c43b99fa96022c425d8adc5a5"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/corr_ownername_punctuation.sql",
+      "sha256": "fcd01d93c07401cc4817029936fcdba2a9566372cc61acfe4b2bd908643d1298"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/corr_template.sql",
+      "sha256": "9991d0d819ec260eef18ce90bc9a31db3047c6f8fef17910b1f83a76bd64ecb9"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/create.sql",
+      "sha256": "23d18f5213e5b4f2b1d69b9ea11770f8db9e9e7bc56a8d8e542cba9dbec3199d"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/create_allocated.sql",
+      "sha256": "b977d0fabb1268e03eab01854590cb67e411b849597ff5ee2a00299d1b3b6d71"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/create_cama_primebbl.sql",
+      "sha256": "59d8349d0faee6828fcecb9c3b7014982491228da59875645a42e0a1dd18e156"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/create_pts.sql",
+      "sha256": "d7370df9faae26319b0fb10dd934f198a0da137159b8e3520a1863e4c47d5bf5"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/create_rpad_geo.sql",
+      "sha256": "dd9b9a6eb8feb64e27de0d2edd005bb03e86278760abd2c022c0dfc44b49123e"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/dedupecondotable.sql",
+      "sha256": "47ddbf84c4d5eaa4e8e3d22e877eaaad4a398387f047719b2cf3916bb369659f"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/dtmgeoms.sql",
+      "sha256": "54d7e02bf53ef9fbb10bce3f4a4351e36bfcfbb48819204f3fdfae514fecd05c"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/dtmmergepolygons.sql",
+      "sha256": "517651308da104f47a14cef80b48b5e59efe8ff1341f66f133039438a558da42"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/edesignation.sql",
+      "sha256": "b7f69d34b66ca8e3e1d9c9a63160586262481ef425dcb68e21d977556151beaa"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/export.sql",
+      "sha256": "da53ada74cef924274787fe4523cfd17908892fffbb43b4b13c38c685ed4db90"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/export_mappluto_gdb.sql",
+      "sha256": "422bd6f7a9197dbd3556e4cdf11040882296e3a033c430c977134d7f9c802cf4"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/export_mappluto_shp.sql",
+      "sha256": "48355f6b77b022a3af7b63d286c4c2b255fb70f05db6e7becee114f53e104fe2"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/far.sql",
+      "sha256": "3a0f0cce9c8fa424a8b96c516a7faa9281521d7c90bb8acfb5f85dd163e98853"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/flood_flag.sql",
+      "sha256": "c270a49102df1fe3df0a29f3c5a316bea83692cce0b5cce53dbd4d1bec6b7fa4"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/geocode_billingbbl.sql",
+      "sha256": "d4a105fe10ff26411d713c6f428732a4713e1d1ea7d2dd630271f7aec2cd4729"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/geocode_notgeocoded.sql",
+      "sha256": "1609bce760c8e79175e981a772657a5f2945e3ceb2ee2a65369159bfdfe9f5c5"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/geocodes.sql",
+      "sha256": "1cde414630eee6cc5aeeb43072684ec4961bd94b2a14f08ef31a6e7e6fe9b275"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/ipis.sql",
+      "sha256": "61434e9406cc0c63ae231fbfd22dbc95166c492ce1a5c9d46f36fab4ca1a96a4"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/irrlotcode.sql",
+      "sha256": "ffc9fa0a6e42e8b4c21be7edff6481d11e8554aaa64798016f8a22c4be7316e3"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/landuse.sql",
+      "sha256": "0208fdcf15a8b2f6a6ea8c7e1e0dd45608a23da408574e83cbda3adf665916fc"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/latlong.sql",
+      "sha256": "43b1bb2bd3a7f3f9b009afab2ae2282c38b4f8ddb079f3b9a67b97c4955a924e"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/lotarea.sql",
+      "sha256": "62582e66be342a803dec06c459c5125df3c3d7ff65dfaa69bd9b0297351e67ab"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/lpc.sql",
+      "sha256": "d59e0f1b1d7f8bdb0fdc183533a2a3c47e5deeddeb91ee46aa339454a7215dd9"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/miharea.sql",
+      "sha256": "9ea858a6d828c367ffbc5b6e516ac3630065503bee76fc41ca4fed5d04954b06"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/numericfields.sql",
+      "sha256": "6576e8851bb7f97a6f3c207df75652e6da70cd7e51e6e4530ea2943691254ada"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/numericfields_geomfields.sql",
+      "sha256": "fd2f01cfad327e31db0cb81a7236ac91d56c4bb16f658ab48f97b0eb5bd65dc2"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/ownertype.sql",
+      "sha256": "d2f635303dcad76e581eb1917d3fc9d242ad05ca94df810c4a70cb50aeadb119"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/plutogeoms.sql",
+      "sha256": "4fe835462c45fd72d29e42519c2be8cbd764b0cda4ae840b26da0040af2cc385"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/plutomapid.sql",
+      "sha256": "cd47816fffdb03be60d77d8a4d2ac71038b791ebaeac80062c8002316ee548bd"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/plutomapid_1.sql",
+      "sha256": "8af8f5fe8cf77daf95eb4f883780b417e29e2fcaad8e021e0cdb0336cebb62a5"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/plutomapid_2.sql",
+      "sha256": "b97c34fcf11b49f404d3c90be55127a6c09d46ee92583c5278c19d5d83acf24a"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/preprocessing.sql",
+      "sha256": "94181dffc1047f32da6609ec259c2342bc1c55377082bdeb06a3d8ef3aa21f10"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/primebbl.sql",
+      "sha256": "08d0c27026b9b6257827bbf15d3dbab343f91de9c498e3a5b7bc2d4969f2dd49"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/qaqc_aggregate.sql",
+      "sha256": "d8bc35ab2b55080215a254f5f8e459189e6b7782c51c8fdecc68f54b6326d8a4"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/qaqc_bbl_diffs.sql",
+      "sha256": "a1ad093fefe8c9e9619b5236a0a3e8802ffd790e0124b33a29eda9b4e766f3fb"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/qaqc_expected.sql",
+      "sha256": "9a6b641d8e7dd5f303a09b93e788e0c974a67654fa4f279569d374f3ad743f5a"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/qaqc_mismatch.sql",
+      "sha256": "888a5af2fa41eee8fec6687f004cd6e0abca14cd98c12b88ca020cab591cdb09"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/qaqc_null.sql",
+      "sha256": "55ba1c82dc055f29cb9677f6576f3be43e483b61c7d40665059a55e7db7fdc28"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/qaqc_outlier.sql",
+      "sha256": "e166fdd77bfed67dee136d24702c1cbcf5df1ae7e427f32855ee801a85cefaca"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/remove_unitlots.sql",
+      "sha256": "817f5dac62e5ad3826d47f196f5c0de9e100d2299e2a2ee7e6b75ecd1b151d38"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/sanitboro.sql",
+      "sha256": "571ae4bd4f782f439f2e3da1996097a1740212f50d3166c5668c9cbeb9ac221e"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/shorelineclip.sql",
+      "sha256": "c091c700b625f9f52f257b05f2492265d1d9ed22f80dcbb46a1bb3865ded4731"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/spatialindex.sql",
+      "sha256": "448073c3fca8802769222d1727f42ea624669f08fec74c947eda3ea3298cec22"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/spatialjoins.sql",
+      "sha256": "9ec29f3d455f5ffe6ad2dd5195d09f4e1602cf5b3ebc23b7f1141a2686cf7587"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/transitzone.sql",
+      "sha256": "28d6ec65a5207e102a272ef427d2672b7dd27c3081b34eba06f1e733d2d3f3b9"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/update_empty_coord.sql",
+      "sha256": "470d64afe627d75f27f455a128fb3c25b8ed5b425e399686d1f6b99e70b69d9d"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/versions.sql",
+      "sha256": "eb2066810c7ed1ae7f0ab9ec009bd19e79ad66802c5a7614e7d9bc3ac8f32a84"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/yearbuiltalt.sql",
+      "sha256": "57a73b5af9dec6162a2a7d82f6313ca88c30861389dd2387e2942bfdc1a18ea6"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zerovacantlots.sql",
+      "sha256": "34165ae528b092b69a052570fdf251089acba4a5daae7d273436aa0265cabb54"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning.sql",
+      "sha256": "b21470864ba67f767ec35de0946e8d086f19cb30669c53b6d3c621239d6bd3fb"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_commercialoverlay.sql",
+      "sha256": "2188696cf0b9931197c61cac9d793e3d039604a26c0f7ca7b3a2e430790183ae"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_create_priority.sql",
+      "sha256": "eb64055d35ad84494fa2703751e96cac057574b031802b18228cf2ae9c1cf21a"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_limitedheight.sql",
+      "sha256": "9b66e0db577d07fb502f563d587f03a6cc5e3d6d1e1bf9b7471da3c3648e9264"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_parks.sql",
+      "sha256": "d727981f585ff0656aaaa120d2e6226b180294a931a0621bda6e77da1356dfda"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_specialdistrict.sql",
+      "sha256": "67cb93fd8154d3a3b8b17212ef4b64f0545c6f2e6d48e530d655e8058bff7e8e"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_splitzone.sql",
+      "sha256": "6389f09f082605f49264789ab895e8fdfb27fca3d720ed8e415078ba8cc675e0"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_zonemap.sql",
+      "sha256": "bc07d225aeb2c650c80dd588d248851dd7c2d219262478949a9157ddd6b3718b"
+    },
+    {
+      "path": "products/pluto/pluto_build/sql/zoning_zoningdistrict.sql",
+      "sha256": "eb8c3618f508bc7c4af9996b515eacfd9da6bc745fdf6501bc32f0a25a8a8108"
+    },
+    {
+      "path": "products/pluto/profiles.yml",
+      "sha256": "32c6f75c43b17c666e395d70ba03719ca6ead70af8206453643e3e20abdfa549"
+    },
+    {
+      "path": "products/pluto/recipe-minor.yml",
+      "sha256": "91e2ae957c2e494ed97b564369427f46d2c9e88e59b8819ed357b088fd546296"
+    },
+    {
+      "path": "products/pluto/recipe.yml",
+      "sha256": "459de9f731d01775760cbebd7c3c3d98d99fbf17da98a23ee2adc0c7294ec229"
+    },
+    {
+      "path": "products/pluto/schemas/dcp_mappluto.json",
+      "sha256": "eb2590a42b291cc7a3394c05b888f26e41e5f7e0575dff7d569f56b99d63ee0f"
+    },
+    {
+      "path": "products/pluto/schemas/dcp_mappluto_02b.json",
+      "sha256": "3c7f4deb59a66bab9f271cbefd4b4b40917c5e551930bb0d661db018d341a926"
+    },
+    {
+      "path": "products/pluto/schemas/dcp_mappluto_03c.json",
+      "sha256": "eda96ae16f94397d7f94713cb7c179757a9e9575a6e23511beb8bdfac5dab581"
+    },
+    {
+      "path": "products/pluto/schemas/dcp_mappluto_04c.json",
+      "sha256": "f008a1b254d83bbe1279ba2cc607c8b136b241f0a69ffd1063a64976996179e9"
+    },
+    {
+      "path": "products/pluto/schemas/dcp_mappluto_05d.json",
+      "sha256": "6d2110c64c0ac20cb7972165e22f90a6a4550fec1e8201e91a4a32a1e6439c51"
+    },
+    {
+      "path": "products/pluto/seeds/_seeds.yml",
+      "sha256": "7b76e80b79207248706256d9886121a1f8d004f470f2b884fd3526d66339270c"
+    },
+    {
+      "path": "products/pluto/seeds/dcp_transit_zone_ranks.csv",
+      "sha256": "a4717f01e8afc5a06ae66e22ffe45194751b49df293826e01b5471192e589eb9"
+    },
+    {
+      "path": "products/pluto/seeds/dcp_zoning_maxfar.csv",
+      "sha256": "3a3e278f01267a5d9dcf4e2884db7c299fab7155f3f79599d6c2041d6db8ed88"
+    },
+    {
+      "path": "products/pluto/seeds/ignored_bbls_for_unit_count_test.csv",
+      "sha256": "5996e634bcef7ffb0edb46aea697419ba474374c1ca110c73708cd7bc4e1a381"
+    },
+    {
+      "path": "products/pluto/seeds/lookup_bldgclass.csv",
+      "sha256": "d10c45ff23bf69a9627737b451bd57f9315b22562c38a15492caadf0aa71c203"
+    },
+    {
+      "path": "products/pluto/seeds/lookup_lottype.csv",
+      "sha256": "b7e2112ff829c7a95432a0ab8e0b8cbfb5d9285fe0dc2ad2d144f6ab473a426e"
+    },
+    {
+      "path": "products/pluto/seeds/pluto_input_bsmtcode.csv",
+      "sha256": "49743d0a77d9045f4f31b3a6e904a6858d54bea66c2f2326447b7506dd09fed8"
+    },
+    {
+      "path": "products/pluto/seeds/pluto_input_condo_bldgclass.csv",
+      "sha256": "3e4b9439c7b8ac7e35a2c8202a6013df015a33aebeac847767a88e8cdc6aacd2"
+    },
+    {
+      "path": "products/pluto/seeds/pluto_input_condolot_descriptiveattributes.csv",
+      "sha256": "b8f7a9bbccb17bdaaa993505260bc78a85a81e360d93d12cff272c38d75c196c"
+    },
+    {
+      "path": "products/pluto/seeds/pluto_input_landuse_bldgclass.csv",
+      "sha256": "53c146b1c31390c6b9a6550708ded8e676513d9d92c2f483a60407ad39cc8e95"
+    },
+    {
+      "path": "products/pluto/seeds/pluto_input_research.csv",
+      "sha256": "666f51683c88c0cf2959dd0542abfb224642e802dd234d6b2b259d994bcc04f6"
+    },
+    {
+      "path": "products/pluto/seeds/zoning_district_class_descriptions.csv",
+      "sha256": "9156283dfb47ba9898c8397b85cb80b13827e456d3440d393e2560746b1e5f38"
+    },
+    {
+      "path": "products/pluto/tests/assert_all_zoning_districts_have_far.sql",
+      "sha256": "86726ee6a07a0a1e8c8c571e97acf0992b331380045eceea5a5b71fe38a80067"
+    },
+    {
+      "path": "products/pluto/tests/assert_bbl_count_is_different.sql",
+      "sha256": "8f6fed20df24518bbfc1debe0e62e38383a84802afe5329308091bf34534af3f"
+    },
+    {
+      "path": "products/pluto/tests/assert_bbl_count_is_the_same.sql",
+      "sha256": "c346037f15779b40ce4ff47f647fe045e17826aae92d1f40bd915a68b0a39790"
+    },
+    {
+      "path": "products/pluto/tests/assert_condo_bbl_unit_count_research_required.sql",
+      "sha256": "dce88eee9e235ba0967c10148cffe27f69667d689d618203afbded8018543312"
+    },
+    {
+      "path": "products/pluto/tests/assert_only_zoning_fields_changed.sql",
+      "sha256": "68dada0be043a9e8974720d3a8efdf137c5c96d51e1aae21502178101bccc2e7"
+    }
+  ],
+  "numeric_policy": {
+    "bare_numeric": "DECIMAL(38,12)",
+    "integer_digits": 26,
+    "fractional_digits": 12,
+    "rounding": "Values beyond scale12 round on cast; NUMERIC multiplication results reset to scale12 after each operation, and decimal ratios recast before ROUND. Products must still fit DuckDB 38-digit intermediates (14 integer digits for two scale12 factors). PostgreSQL arbitrary precision is not claimed.",
+    "numeric_to_text": "Strip fixed-scale trailing zeros for numeric values; existing text stays unchanged.",
+    "varchar_casts": "Explicit VARCHAR(n) casts truncate to n characters as PostgreSQL does.",
+    "census_tract_text": "The pinned ct2010 cleanup produces integer or two-digit fractional text. Its numeric-to-text assignment preserves that scale (170.10), while other numeric text continues to trim adaptation-introduced zeros."
+  },
+  "makevalid_policy": "Preserve collection inputs as MULTI when GEOS repairs to a singleton, matching PostGIS lwgeom_make_valid_params. Original atomic inputs and mixed-dimensional collections retain native repair behavior.",
+  "union_aggregate_policy": "Single-argument PostgreSQL ST_Union returns SQL NULL for empty/all-NULL groups. Guard DuckDB ST_Union_Agg with COUNT(g)=0; preserve explicit nonnull empty geometries and mixed NULL/valid input. Binary ST_Union remains native.",
+  "canonical_match_policy": {
+    "scope": "Equality-key CAMA update family and ZIP spatial fallback only.",
+    "ordering": "Existing identity columns first (CAMA bbl,bldgnum,primebbl,billingbbl; ZIP zipcode,ogc_fid), then every remaining source column alphabetically. Canonical VARCHAR values ascend with NULLS LAST; geometry uses hexadecimal WKB. Equal full payload rows make identical assignments.",
+    "interpretation": "Operational replay policy, not upstream business precedence or a choice derived from reference outputs.",
+    "ordered_operations": [
+      {
+        "model": "__m_0086_cama_bsmttype__pluto",
+        "origin": "pluto_build/sql/cama_bsmttype.sql statement 1",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "bsmnt_type",
+          "bsmntgradient",
+          "bsmtcode"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0088_cama_lottype__pluto",
+        "origin": "pluto_build/sql/cama_lottype.sql statement 1",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "lottype"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0089_cama_lottype__pluto",
+        "origin": "pluto_build/sql/cama_lottype.sql statement 2",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "bldgnum",
+          "primebbl",
+          "billingbbl",
+          "bldgclass",
+          "bsmnt_type",
+          "bsmntarea",
+          "bsmntgradient",
+          "commercialarea",
+          "commercialconstrtype",
+          "condomainconstrtype",
+          "condounitsconstrtype",
+          "developmentname",
+          "factoryarea",
+          "finishedfloorarea",
+          "firstfloorarea",
+          "garagearea",
+          "grossarea",
+          "grossvolume",
+          "lottype",
+          "nonresidfloorarea",
+          "officearea",
+          "otherarea",
+          "ownerarea",
+          "parcelcard",
+          "partresfloorarea",
+          "primaryusecode",
+          "proxcode",
+          "residarea",
+          "residconstrtype",
+          "retailarea",
+          "secondfloorarea",
+          "storagearea",
+          "streettype",
+          "unfinishedfloorarea",
+          "upperfloorarea"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0091_cama_proxcode__pluto",
+        "origin": "pluto_build/sql/cama_proxcode.sql statement 1",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "proxcode"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0093_cama_bldgarea_1__pluto",
+        "origin": "pluto_build/sql/cama_bldgarea_1.sql statement 7",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "primebbl",
+          "billingbbl",
+          "ap_block",
+          "ap_boro",
+          "ap_date",
+          "ap_datef",
+          "ap_ease",
+          "ap_lot",
+          "aptno",
+          "bdft",
+          "bfft",
+          "bldgcl",
+          "bldgs",
+          "block",
+          "boepreferredstreetname",
+          "boro",
+          "borough",
+          "cb2010",
+          "cb2020",
+          "cd",
+          "condo_number",
+          "coop_apts",
+          "council",
+          "ct2010",
+          "ct2020",
+          "curavl_act",
+          "curavt_act",
+          "curext_act",
+          "ease",
+          "easement",
+          "ext",
+          "factoryarea",
+          "firecomp",
+          "garagearea",
+          "geo_bbl",
+          "geom",
+          "grc",
+          "grc2",
+          "gross_sqft",
+          "healtharea",
+          "healthcenterdistrict",
+          "housenum_hi",
+          "housenum_lo",
+          "input_hnum",
+          "input_sname",
+          "irreg",
+          "land_area",
+          "latitude",
+          "ldft",
+          "lfft",
+          "longitude",
+          "lot",
+          "msg",
+          "msg2",
+          "numberofexistingstructuresonlot",
+          "officearea",
+          "otherarea",
+          "owner",
+          "policeprct",
+          "residarea",
+          "retailarea",
+          "row_number",
+          "sanbornmapidentifier",
+          "sanitdistrict",
+          "sanitsub",
+          "schooldist",
+          "storagearea",
+          "story",
+          "street_name",
+          "taxmap",
+          "tb",
+          "tl",
+          "units",
+          "xcoord",
+          "ycoord",
+          "yralt1",
+          "yralt2",
+          "yrbuilt",
+          "zip",
+          "zipcode"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0094_cama_bldgarea_2__pluto",
+        "origin": "pluto_build/sql/cama_bldgarea_2.sql statement 1",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "bldgnum",
+          "primebbl",
+          "billingbbl",
+          "bldgclass",
+          "bsmnt_type",
+          "bsmntarea",
+          "bsmntgradient",
+          "commercialarea",
+          "commercialconstrtype",
+          "condomainconstrtype",
+          "condounitsconstrtype",
+          "developmentname",
+          "factoryarea",
+          "finishedfloorarea",
+          "firstfloorarea",
+          "garagearea",
+          "grossarea",
+          "grossvolume",
+          "lottype",
+          "nonresidfloorarea",
+          "officearea",
+          "otherarea",
+          "ownerarea",
+          "parcelcard",
+          "partresfloorarea",
+          "primaryusecode",
+          "proxcode",
+          "residarea",
+          "residconstrtype",
+          "retailarea",
+          "secondfloorarea",
+          "storagearea",
+          "streettype",
+          "unfinishedfloorarea",
+          "upperfloorarea"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0095_cama_bldgarea_3__pluto",
+        "origin": "pluto_build/sql/cama_bldgarea_3.sql statement 1",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "primebbl",
+          "commercialarea",
+          "factoryarea",
+          "garagearea",
+          "officearea",
+          "otherarea",
+          "residarea",
+          "retailarea",
+          "storagearea"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0097_cama_bldgarea_4__pluto",
+        "origin": "pluto_build/sql/cama_bldgarea_4.sql statement 2",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "bldgnum",
+          "primebbl",
+          "billingbbl",
+          "bldgclass",
+          "bsmnt_type",
+          "bsmntarea",
+          "bsmntgradient",
+          "commercialarea",
+          "commercialconstrtype",
+          "condomainconstrtype",
+          "condounitsconstrtype",
+          "developmentname",
+          "factoryarea",
+          "finishedfloorarea",
+          "firstfloorarea",
+          "garagearea",
+          "grossarea",
+          "grossvolume",
+          "lottype",
+          "nonresidfloorarea",
+          "officearea",
+          "otherarea",
+          "ownerarea",
+          "parcelcard",
+          "partresfloorarea",
+          "primaryusecode",
+          "proxcode",
+          "residarea",
+          "residconstrtype",
+          "retailarea",
+          "secondfloorarea",
+          "storagearea",
+          "streettype",
+          "unfinishedfloorarea",
+          "upperfloorarea"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0098_cama_bldgarea_4__pluto",
+        "origin": "pluto_build/sql/cama_bldgarea_4.sql statement 3",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "primebbl",
+          "grossarea"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "__m_0102_cama_easements__pluto",
+        "origin": "pluto_build/sql/cama_easements.sql statement 1",
+        "method": "equality_key",
+        "canonical": true,
+        "source_columns": [
+          "bbl",
+          "numeasements"
+        ],
+        "null_order": "LAST"
+      },
+      {
+        "model": "patch__0208_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 15",
+        "method": "lateral",
+        "canonical": true,
+        "source_columns": [
+          "zipcode",
+          "ogc_fid",
+          "area",
+          "bldgzip",
+          "county",
+          "cty_fips",
+          "geom",
+          "po_name",
+          "population",
+          "shape_area",
+          "shape_len",
+          "st_fips",
+          "state",
+          "url",
+          "wkb_geometry"
+        ],
+        "null_order": "LAST"
+      }
+    ],
+    "remaining_unordered_operations": [
+      {
+        "model": "__m_0049_create_rpad_geo__pluto_rpad_geo",
+        "origin": "pluto_build/sql/create_rpad_geo.sql statement 10",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0051_lotarea__pluto_rpad_geo",
+        "origin": "pluto_build/sql/lotarea.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0056_primebbl__dof_pts_propmaster",
+        "origin": "pluto_build/sql/primebbl.sql statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0061_create_allocated__pluto_allocated",
+        "origin": "pluto_build/sql/create_allocated.sql statement 4",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0062_create_allocated__pluto_allocated",
+        "origin": "pluto_build/sql/create_allocated.sql statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0063_create_allocated__pluto_allocated",
+        "origin": "pluto_build/sql/create_allocated.sql statement 6",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0064_create_allocated__pluto_allocated",
+        "origin": "pluto_build/sql/create_allocated.sql statement 7",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0065_create_allocated__pluto_allocated",
+        "origin": "pluto_build/sql/create_allocated.sql statement 8",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0066_create_allocated__pluto_allocated",
+        "origin": "pluto_build/sql/create_allocated.sql statement 9",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0067_create_allocated__pluto_allocated",
+        "origin": "pluto_build/sql/create_allocated.sql statement 10",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0073_allocated__pluto",
+        "origin": "pluto_build/sql/allocated.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0075_allocated__pluto",
+        "origin": "pluto_build/sql/allocated.sql statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0076_geocodes__pluto",
+        "origin": "pluto_build/sql/geocodes.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0077_geocodes__pluto",
+        "origin": "pluto_build/sql/geocodes.sql statement 2",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0078_geocodes__pluto",
+        "origin": "pluto_build/sql/geocodes.sql statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0079_geocodes__pluto",
+        "origin": "pluto_build/sql/geocodes.sql statement 4",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0080_landuse__pluto",
+        "origin": "pluto_build/sql/landuse.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0104_edesignation__pluto",
+        "origin": "pluto_build/sql/edesignation.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0105_ownertype__pluto",
+        "origin": "pluto_build/sql/ownertype.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0107_address__pluto",
+        "origin": "pluto_build/sql/address.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0116_dtmmergepolygons__pluto_dtm",
+        "origin": "pluto_build/sql/dtmmergepolygons.sql statement 4",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0121_plutogeoms__pluto",
+        "origin": "pluto_build/sql/plutogeoms.sql statement 2",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0133_zoning_zoningdistrict__pluto",
+        "origin": "pluto_build/sql/zoning_zoningdistrict.sql statement 19",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0134_zoning_zoningdistrict__pluto",
+        "origin": "pluto_build/sql/zoning_zoningdistrict.sql statement 20",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0135_zoning_zoningdistrict__pluto",
+        "origin": "pluto_build/sql/zoning_zoningdistrict.sql statement 21",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0136_zoning_zoningdistrict__pluto",
+        "origin": "pluto_build/sql/zoning_zoningdistrict.sql statement 22",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0138_zoning_commercialoverlay__pluto",
+        "origin": "pluto_build/sql/zoning_commercialoverlay.sql statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0139_zoning_commercialoverlay__pluto",
+        "origin": "pluto_build/sql/zoning_commercialoverlay.sql statement 4",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0142_zoning_specialdistrict__pluto",
+        "origin": "pluto_build/sql/zoning_specialdistrict.sql statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0143_zoning_specialdistrict__pluto",
+        "origin": "pluto_build/sql/zoning_specialdistrict.sql statement 6",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0144_zoning_specialdistrict__pluto",
+        "origin": "pluto_build/sql/zoning_specialdistrict.sql statement 7",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0153_zoning_limitedheight__pluto",
+        "origin": "pluto_build/sql/zoning_limitedheight.sql statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0155_zoning_zonemap__pluto",
+        "origin": "pluto_build/sql/zoning_zonemap.sql statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0156_zoning_zonemap__pluto",
+        "origin": "pluto_build/sql/zoning_zonemap.sql statement 4",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0176_apply_dbt_enrichments__pluto",
+        "origin": "pluto_build/sql/apply_dbt_enrichments.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0177_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 1",
+        "method": "lateral"
+      },
+      {
+        "model": "__m_0180_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 4",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0181_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0182_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 6",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0183_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 7",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0184_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 8",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0185_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 9",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0187_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 11",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0188_bldgclass__pluto",
+        "origin": "pluto_build/sql/bldgclass.sql statement 12",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0189_landuse__pluto",
+        "origin": "pluto_build/sql/landuse.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0191_update_empty_coord__pluto",
+        "origin": "pluto_build/sql/update_empty_coord.sql statement 1",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0192_flood_flag__pluto",
+        "origin": "pluto_build/sql/flood_flag.sql statement 1",
+        "method": "lateral"
+      },
+      {
+        "model": "__m_0193_flood_flag__pluto",
+        "origin": "pluto_build/sql/flood_flag.sql statement 2",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0196_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 3",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0197_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 4",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0198_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 5",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0199_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 6",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0200_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 7",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0201_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 8",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0202_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 9",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0203_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 10",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0204_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 11",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0205_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 12",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0206_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 13",
+        "method": "lateral"
+      },
+      {
+        "model": "patch__0207_spatialjoins",
+        "origin": "pluto_build/sql/spatialjoins.sql statement 14",
+        "method": "lateral"
+      },
+      {
+        "model": "__m_0240_corr_lotarea__pluto",
+        "origin": "pluto_build/sql/corr_lotarea.sql statement 4",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0243_corr_lotarea__pluto",
+        "origin": "pluto_build/sql/corr_lotarea.sql statement 7",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0247_corr_lotarea__pluto",
+        "origin": "pluto_build/sql/corr_lotarea.sql statement 11",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0250_corr_lotarea__pluto",
+        "origin": "pluto_build/sql/corr_lotarea.sql statement 14",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0253_corr_template_yearbuilt__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=yearbuilt statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0255_corr_template_yearbuilt__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=yearbuilt statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0258_corr_template_ownername__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=ownername statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0260_corr_template_ownername__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=ownername statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0264_corr_template_cd__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=cd statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0266_corr_template_cd__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=cd statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0269_corr_template_numfloors__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=numfloors statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0271_corr_template_numfloors__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=numfloors statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0274_corr_template_numbldgs__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=numbldgs statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0276_corr_template_numbldgs__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=numbldgs statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0279_corr_template_unitsres__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=unitsres statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0281_corr_template_unitsres__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=unitsres statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0284_corr_template_unitstotal__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=unitstotal statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0286_corr_template_unitstotal__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=unitstotal statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0290_corr_template_bct2020__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=bct2020 statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0292_corr_template_bct2020__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=bct2020 statement 5",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0295_corr_template_address__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=address statement 3",
+        "method": "equality_key"
+      },
+      {
+        "model": "__m_0297_corr_template_address__pluto",
+        "origin": "pluto_build/sql/corr_template.sql FIELD=address statement 5",
+        "method": "equality_key"
+      }
+    ],
+    "replay_limitation": "Other multiple-match UPDATE sources and existing upstream window ties retain their pinned unordered choice; complete replay invariance is not claimed."
+  },
+  "runtime": "Ordinary dbt build against a separately prepared read-only DuckDB input; no acquisition, source normalization, native geocoding, upstream checkout or Moses runtime.",
+  "input_contract": "models/contract.yml",
+  "prepared_source_count": 42,
+  "business_model_count": 38,
+  "adopted_release": "26v2m4",
+  "hashes": {
+    "models/allocation/allocated_lots.sql": "556439baa6ab5050debcac2123efb947516678158dc056a59f89e9ae60adeaa6",
+    "models/attributes/flood.sql": "aa10867a862fd365a94a37ca901cd397179d574d296cfcffa8de72065674b15e",
+    "models/attributes/normalized_parcels.sql": "beb0261ce53acb3fa21bd8f565a65faab628dbccd4bfbf06e094c38ab65b8f2f",
+    "models/attributes/parcel_base.sql": "aeb137423a9e07e949f70c410bbe6565641138737389245bd37fc3fb4149a736",
+    "models/attributes/parcel_classification.sql": "78a325a1a6a7cb52b1ad6ef1e2a5b14dd8e4eade00019488cfbe743a0d769d36",
+    "models/attributes/political_geography.sql": "e50844599311b6882e9a2b1ded41137123305f16e167d947074671e2362ebfbc",
+    "models/attributes/property_attributes.sql": "89b54e64a97f4d627766dd0d3947358792e967bd2abe7ed5cc1e6a6d85fe4858",
+    "models/attributes/service_geography.sql": "951257b4525c988285846363775ebafb629161b67108fce5420a03bf063d9b4a",
+    "models/cama/parcel_cama.sql": "1bb4e7d9f95b848b12b00c307c94cebb6770a70e55a7d8142711e1c141c734c8",
+    "models/contract.yml": "e073ced0bd60107f87fe11b68989669e7ec301cc3aaa838c9709188dd617aae2",
+    "models/corrections/correction_decisions.sql": "bfdf775ec86436117e04a295aaadc43eb0e91cfb5383c1a29ab03cfa11feea69",
+    "models/corrections/pluto.sql": "f744f07988d24cd8d9d98498a2a9803d6d4d82b055fb513a6ed38b923566a11c",
+    "models/corrections/pluto_changes_applied.sql": "a9a139038467d1d97e637da6ff0297815469a3f70ed8c2dd0be3ffa59b7d8503",
+    "models/corrections/pluto_changes_not_applied.sql": "ad2736a38b106e43630f132f423340303d8bcff9503e8c98ba33b45b99fbe462",
+    "models/corrections/pluto_removed_records.sql": "550aff41a20e9a78c246852ccf47a3f8216767f17f43bcd23faa4d71f70bae89",
+    "models/enrichment/mih.sql": "3c3d50422d31b9bb8895d9768f60136ed523562bf80aff39a72abe3691ecd4dc",
+    "models/enrichment/parcel_enriched.sql": "4e3eae7c86bc9943d7a9782b4e285b11f3ab32aa3bebeee8f232f544e94f3d1b",
+    "models/enrichment/transit.sql": "22df4c865b3475e653d3a418dc5f86d7e9666175340ec7ba1eeb758e67581ecf",
+    "models/exports/archive_pluto.sql": "3baaa678a157f0f3dac04000e648febd2a6783a338122b3e735923ec9a046614",
+    "models/exports/export_pluto.sql": "e19f638ce948e983fd09de2d621c628166fed005de4bcd8134580bf0c60ed27a",
+    "models/exports/mappluto.sql": "59419fc6418e0dfb3e5ffdea31f1fcf414bcb78dc8c887c51449166c91d1efa2",
+    "models/exports/mappluto_gdb.sql": "ba5fbe9dec8e849fc80ed7f3891aa17f15d04bd621748fca357e99fcd9b25e7e",
+    "models/exports/mappluto_unclipped.sql": "267f9ad73b78bc72cc75c23efd880ba7b00e43d498905224f3c969bfcaf38798",
+    "models/exports/mappluto_unclipped_gdb.sql": "bf5a55b4b98dead8f54ee4bf3c972c822092e80930f08fe46c9beb593b2e7a5e",
+    "models/geometry/map_flags.sql": "2ad984280ef08e57b22183493422a56e46ad430946fcde50e91a3aecd618fa6e",
+    "models/geometry/parcel_geometry.sql": "5cba5a0ef21a21b34cc9d580c40a710a1f47336a265c6263ae3e8b71e5ea653f",
+    "models/geometry/pluto_geom.sql": "108f14592a6f666263e3d9cd45db334b05c378c6bd2acf8fd5b6619800383b34",
+    "models/geometry/shoreline_coverage.sql": "b53d6b21b9b2946166b9b87eed435ec2cd16e39b402da6f0bd16166cd140cd4a",
+    "models/geometry/tax_lot_geometry.sql": "4804f7f5da00980befcfff65fa1b1741214e0ce6129aa59fe5d84adc3c2dce69",
+    "models/qa/qaqc_aggregate.sql": "0e640a408fa2b2270dc88245e48be249e2eeb1b6b9d940d7efdac5ece2d3ad69",
+    "models/qa/qaqc_bbl_diffs.sql": "b9d398b94c6e1017af6947ebdf340aa516f81e722244c47d31fbc3ebac304d77",
+    "models/qa/qaqc_expected.sql": "61dfa869afee6d24e5a19d5d4558c764bf14da20c774e407869aed4fae33bba6",
+    "models/qa/qaqc_mismatch.sql": "8157d81113a153d472e884ee3c80f0a237a9284afab79cf75d6bb6adce62ccf8",
+    "models/qa/qaqc_null.sql": "1f818a1b099b50dc26c2183c87830802bc49a78213399720b007705b4e3e125d",
+    "models/qa/qaqc_outlier.sql": "4c8e36370427119adb68a3d77d768c14bf68e0035278c3f03a08b7dde3472494",
+    "models/tax_records/geocode_attributes.sql": "0055a80ff1c0a9e86f895624e371a432ed96aae0df1701ddf7d4a6bfb9e75244",
+    "models/tax_records/pts_property_records.sql": "a0d7aec0ab3758004e9c3b56b31d472aeda52b6c205f095306bd1baba1a51708",
+    "models/tax_records/tax_lot_attributes.sql": "56b0fa18295fd1696d654c8c72f01c985300873cc1cef974d37912ecc52e2e16",
+    "models/zoning/zoning.sql": "4fcd19724448c1c38936ca7c273cef7a070049a2c1a2d8a918c52b8637cadaff",
+    "macros/compatibility.sql": "9dbc36a9b99e2fa29134f9bb4c2e411d708f33faded5b9e14158526d3e160db2",
+    "macros/pluto_corrections.sql": "b2788a25f6858997b3843f6b70989fbc38b0ef107ad9284a095abce4d0d9420a",
+    "macros/pluto_inputs.sql": "31530914ce82020c68d4e79977202accc1ac0dcf71c33c0a1e32cddec0f19ba9",
+    "macros/pluto_qaqc_mismatch.sql": "e45a77167828ee89ee89b6df3af2f74f846071e77e278350fffb699144f59864",
+    "macros/pluto_qaqc_null.sql": "cbb5c93e010801345bec0c10a1d881fff50119a47c253461109a244b2626d56b",
+    "macros/pluto_qaqc_outlier.sql": "dad8de437801cd9c8217980f13656dcce5131a74dc6736f9de39fffebd2fdffb",
+    "macros/validate_inputs.sql": "cd5bc908c34f6f4c16cf6608d0e8fddb129fcd807b80d9bf3ab7ec6027a43297",
+    "dbt_project.yml": "5e494aaa4dd254b616b6ae7d20ac113b37621232ddc1e68541c2b0e1c3c159ad",
+    "profiles.yml": "3acb56eb08076c3dc71f13fcf0de9c4e802dd993fc2a94d7bc472c4312b58ba2"
+  },
+  "prepared_identity_contract": "preparation.identity(input_id VARCHAR, descriptor_sha256 VARCHAR), exactly one immutable publication row",
+  "export_acceptance": "All 38 model IDs must succeed in the same invocation; input identity and descriptor must match the completion receipt."
+}
