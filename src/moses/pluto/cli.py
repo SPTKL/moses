@@ -1,4 +1,4 @@
-"""Local PLUTO planning, dbt execution and reference comparison commands."""
+"""Legacy source acquisition and comparison helpers; PLUTO runs in standalone dbt."""
 from __future__ import annotations
 
 import json
@@ -6,12 +6,12 @@ from pathlib import Path
 
 
 def add_parser(sub):
-    pluto = sub.add_parser("pluto", help="Rebuild PLUTO stages with pinned inputs and dbt-duckdb")
+    pluto = sub.add_parser("pluto", help="Legacy PLUTO source planning and reference comparison")
     commands = pluto.add_subparsers(dest="pluto_command", required=True)
-    build = commands.add_parser("build", help="Build and export a complete PLUTO candidate from locked sources")
-    build.add_argument("--lock", required=True, help="Production ingestion report or exact Moses input lock")
-    build.add_argument("--source-repo", required=True, help="Read-only upstream checkout containing the pinned 26v2 commit")
-    build.add_argument("--output-dir", required=True, help="New directory for database, dbt artifacts and exported PLUTO")
+    build = commands.add_parser("build", help="Retired: use moses prepare followed by standalone dbt build")
+    build.add_argument("--lock", help="Production ingestion report or exact Moses input lock")
+    build.add_argument("--source-repo", help="Read-only upstream checkout containing the pinned 26v2 commit")
+    build.add_argument("--output-dir", help="New directory for database, dbt artifacts and exported PLUTO")
     build.add_argument("--resume", action="store_true", help="Resume a failed build with the same lock and native checkpoints")
     build.add_argument("--reuse-build", help="Clone a completed build's verified caches into a new candidate directory")
     build.add_argument("--candidate-version", default="26v2m4")
@@ -38,12 +38,12 @@ def add_parser(sub):
     acquire = commands.add_parser("acquire", help="Verify and capture resolved local source artifacts")
     acquire.add_argument("--plan", required=True)
     acquire.add_argument("--report", required=True, help="Save acquired input lock and provenance")
-    run = commands.add_parser("run", help="Build one SELECT-only dbt stage from exact catalog versions")
-    run.add_argument("--stage", required=True, choices=["landuse", "create_pts"])
-    run.add_argument("--lock", required=True, help="Moses name/version lock or PLUTO acquisition report")
-    run.add_argument("--output", required=True, help="Accepted output dataset name")
+    run = commands.add_parser("run", help="Retired: run models in the standalone PLUTO dbt project")
+    run.add_argument("--stage", choices=["landuse", "create_pts"])
+    run.add_argument("--lock", help="Moses name/version lock or PLUTO acquisition report")
+    run.add_argument("--output", help="Accepted output dataset name")
     run.add_argument("--reference", help="Reference stage CSV/Parquet; mismatches block publication")
-    run.add_argument("--evidence", required=True, choices=["synthetic", "sample", "exact_stage_input"])
+    run.add_argument("--evidence", choices=["synthetic", "sample", "exact_stage_input"])
     run.add_argument("--report", help="Save successful or failed parity report")
     compare = commands.add_parser("compare", help="Compare keyed reference and candidate table files")
     compare.add_argument("candidate")
@@ -78,28 +78,15 @@ def _lock(value):
 
 
 def execute(args):
+    if args.pluto_command in ("build", "run"):
+        raise ValueError(
+            "PLUTO transformation is now a standalone dbt project. Prepare inputs with "
+            "moses prepare, then run dbt build --project-dir products/pluto/dbt "
+            "--profiles-dir products/pluto/dbt. See products/pluto/README.md."
+        )
     # Fail before writes/long-running work if the requested report already exists.
     if args.report and Path(args.report).exists():
         raise ValueError(f"Report destination already exists: {args.report}")
-    if args.pluto_command == "build":
-        import os
-        import sys
-        from .full import run_full
-        from ..catalog import Catalog
-        if args.geosupport_runtime:
-            os.environ['GEOSUPPORT_RUNTIME'] = args.geosupport_runtime
-        result = run_full(Catalog(args.warehouse), inputs=_lock(_read_json(args.lock)),
-                          source_repo=args.source_repo, output_dir=args.output_dir,
-                          candidate_version=args.candidate_version, output_name=args.output,
-                          extension_directory=args.extension_directory, reference=args.reference,
-                          geosupport_release=args.geosupport_release,
-                          geosupport_extension=args.geosupport_extension,
-                          geosupport_home=args.geosupport_home,
-                          resume=args.resume,
-                          reuse_build=args.reuse_build,
-                          progress=lambda message: print(message, file=sys.stderr, flush=True))
-        _emit(result, args.report)
-        return 0
     if args.pluto_command == "fetch-production":
         import sys
         from .pipeline import capture_production, ingest_production
@@ -141,19 +128,5 @@ def execute(args):
     if args.pluto_command == "acquire":
         from .sources import acquire_sources
         result = acquire_sources(catalog, _read_json(args.plan))
-    else:
-        from .transforms import run_stage, ParityMismatch
-        locked = _lock(_read_json(args.lock))
-        required = {"pluto", "pluto_input_landuse_bldgclass"} if args.stage == "landuse" else {"pluto_pts"}
-        missing = required - locked.keys()
-        if missing:
-            raise ValueError(f"Stage input lock is missing {sorted(missing)}")
-        try:
-            result = run_stage(catalog, stage=args.stage, inputs={name: locked[name] for name in required},
-                               output_name=args.output, reference=args.reference,
-                               evidence=args.evidence)
-        except ParityMismatch as exc:
-            _emit(exc.report, args.report)
-            return 2
     _emit(result, args.report)
     return 0

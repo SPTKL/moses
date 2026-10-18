@@ -1,13 +1,13 @@
 # Full PLUTO candidate build
 
-Moses prepares locked source versions and runs the PLUTO transformation in
-**dbt-duckdb**. The candidate version is **26v2m4**. Its source rules come from
+Moses prepares locked source versions. A separate, ordinary **dbt-duckdb**
+project performs the PLUTO transformation. The candidate version is **26v2m4**. Its source rules come from
 NYCPlanning/data-engineering commit `32bc98f632f15e7182933a17fb61ecf74e853518`.
 The reference checkout is read-only; this workflow never commits or pushes to it.
 
 ## Read the SQL
 
-Start with the [dbt project guide](../src/moses/pluto/dbt_full/README.md).
+Start with the [dbt project guide](../products/pluto/dbt/README.md).
 The project covers tax records, condominium allocation, CAMA, geometry, zoning,
 enrichments, corrections, typed exports and six QA report families. Its SQL uses
 SELECT models with explicit dependencies. Repeated full-column projections have
@@ -19,7 +19,7 @@ models and six QA reports. Named CTEs retain ordered rules inside each process;
 `ref()` connects meaningful process boundaries. The two land-use passes remain
 separate because zoning affects the later classification.
 
-Shared source macros define input cleanup once. Independent projections are
+Moses recipes define physical input cleanup once; dbt retains PLUTO staging projections. Independent projections are
 combined only when their writes and reads permit it. Spatial assignments share
 a stable parcel input and small materialized matches, then apply independent
 fields together. A common correction ledger drives values and audit reports;
@@ -47,67 +47,94 @@ canonical candidate selection. Neither diagnostic alters candidate data.
 The maintained project is portable: sources resolve through `source()`, model
 links through `ref()`, and the current/previous release labels through dbt vars.
 The build also retains its generated project, manifest, compiled SQL and execution
-results beside the output database. `full_manifest.json` records the source code
+results beside the output database. `provenance.json` records the source code
 hashes and each model's dependencies and upstream statement.
 
 ## Run
 
-Install the `pluto` extra and DuckDB Spatial first. The native geocode sources also
-require a compatible duckdb-geosupport extension and an already installed bundle.
-The following example uses the captured 26v2 sources and local 26B bundle.
-Choose a new candidate name and output directory; `26v2-local` below is a fresh
-rebuild example, separate from the completed `26v2m4` candidate:
+The active workflow has two independent commands. See
+[source recipes](source-recipes.md) for the Moses/dlt design and
+[the standalone product](../products/pluto/README.md) for its input contract.
+Install dependencies and native extensions beforehand.
+
+Prepare the 49 locked source inputs and materialize the 42 consumed tables:
 
 ```sh
 .venv/bin/python -m moses \
-  --warehouse .moses/pluto-production/26v2/warehouse pluto build \
+  --warehouse .moses/pluto-production/26v2/warehouse \
+  prepare recipes/pluto/26v2.yml \
   --lock .moses/pluto-production/26v2/production-ingestion.json \
-  --source-repo ../data-engineering \
-  --output-dir .moses/pluto-build/26v2-local \
-  --candidate-version 26v2-local --output pluto_moses \
+  --output-dir .moses/prepared/pluto-26v2-local \
   --extension-directory .extensions \
   --geosupport-release 26b \
   --geosupport-extension /absolute/path/geosupport.duckdb_extension \
   --geosupport-home /absolute/path/geosupport-bundle-store \
-  --geosupport-runtime docker \
-  --reference .moses/pluto-production/26v2/reference/pluto.csv
+  --geosupport-runtime docker
 ```
 
-Use `local` for a supported native Linux runtime. The extension, bundle and source
-versions are explicit. Nothing downloads or selects a newer release implicitly.
-The published final PLUTO CSV is opened only after the candidate transformation;
-it is never used to fill candidate fields. The locked previous release is a
-separate, legitimate upstream dependency.
+Then run PLUTO with the already prepared database:
 
-A fresh build requires a new output directory. After a failure, use the same
-command with `--resume`. Native stages resume committed batches only when their
-input and runtime fingerprint agrees. The dbt project is regenerated in a new
-attempt directory; successful models with unchanged SQL can be reused. Changed
-or failed models and their descendants are rebuilt. Engine versions must remain
-unchanged; a different engine requires a fresh build directory. The build report
-records the selection, execution ledger and failure or final result.
+```sh
+export PLUTO_INPUT_DATABASE="$PWD/.moses/prepared/pluto-26v2-local/prepared.duckdb"
+export PLUTO_OUTPUT_DATABASE="$PWD/.moses/pluto-build/26v2-local.duckdb"
+export PLUTO_SPATIAL_DIRECTORY="$PWD/.extensions"
+.venv/bin/dbt build --project-dir products/pluto/dbt --profiles-dir products/pluto/dbt \
+  --vars '{pluto_version: 26v2-local, previous_pluto_version: 26v1}'
+```
 
-A completed candidate is immutable. To create a corrected candidate while reusing
-verified native caches, select a new directory and version and add
-`--reuse-build .moses/pluto-build/26v2m1`. Moses makes an independent database
-copy (an APFS copy-on-write clone on macOS), verifies the input/runtime identity,
-and rebuilds changed models and their descendants. Compatibility-macro changes
-rebuild the complete dbt graph. The parent candidate and its accepted catalog
-version remain available; the new report records that parent lineage. Each
-attempt also preserves the exact compiler, runner and source-preparation code.
+The second command needs no Moses catalog, upstream checkout, source recipe,
+SQL compiler, Geosupport or network service. It attaches the input database
+read-only and validates its schema before running the 38 business models.
+The old combined `moses pluto build` and `moses pluto run` commands now return
+migration guidance rather than launching acquisition and transformation together.
 
-Cache reuse requires the same source-preparation implementation hash. The final
-source-resume hardening changes that hash: it verifies and resets only native
-extension-owned macros on reopening a checkpoint and uses the upstream shallow
-JSON merge semantics. Fresh builds use that implementation. Existing candidates
-retain their executed code snapshots; their old cache fingerprints are not
-rewritten to make them appear compatible. Reusing those caches with the newer
-source implementation is deliberately rejected, so run a fresh build directory
-when using the current source-preparation code. Native reload fixtures and the
-full candidate's 1,137,132 successful 1A/1E pairs validate the change separately;
-the citywide candidate was executed before this final source hardening.
+To migrate a verified completed legacy source cache, preparation accepts
+`--legacy-source-build .moses/pluto-build/26v2m4` instead of native runtime
+arguments. This explicitly imports source relations, checks their input and
+implementation provenance, and applies declared physical cleanup. The manifest
+identifies migration and retains the native/source implementation actually used.
+It is not a fresh execution of the current source provider.
 
-## Outputs and review
+### Historical combined-run evidence
+
+The citywide evidence below came from the former combined runner. Its completed
+candidate, report, input lock and executed implementation snapshots are preserved.
+Legacy compiler/runner modules remain for reviewing and reproducing that evidence;
+they are not the ordinary product execution path. Old cache fingerprints are not
+rewritten when the preparation implementation changes.
+
+### Standalone citywide verification
+
+The separated workflow completed on 2026-10-18 using the verified prepared
+sources from `26v2m4`. Ordinary dbt rebuilt all 38 models (26 tables and 12 views)
+plus ten hooks in **240.89 seconds**; process wall time was **245.70 seconds**.
+No acquisition, native geocoding, upstream checkout or upstream SQL-port generation was part
+of that invocation. Export then produced all 13 delivery artifacts.
+
+All 858,284 parcel keys and all 99 compared fields match the prior candidate,
+including its candidate version label. The 42 prepared source tables had already
+passed exact schema and row-multiset comparisons across 6,288,770 rows. The
+prepared database's SHA256 remained unchanged after dbt and export.
+
+Applied corrections (42,955 rows) and rejected corrections (517 rows) match as
+exact text/NULL multisets. All 1,810 removed-record rows have different internal
+serial IDs; excluding only that generated ID leaves identical business values,
+NULLs and duplicate multiplicity. The raw mismatch remains in the verification
+report. This does not establish official-release or historical native parity.
+
+Both MapPLUTO exports match the prior candidate's keys, attributes and geometry
+WKB exactly (856,687 clipped and 856,906 unclipped rows), with EPSG:2263 metadata
+and no null or invalid geometries. All six QA reports match after explicitly
+mapping the old `previous_locked` display label to `26v1` and ignoring ordering
+inside unordered expected-value/outlier JSON arrays. Raw differences are retained.
+The [checked-in evidence summary](../examples/pluto/separation-validation.json)
+records hashes, raw versus diagnostic comparisons and remaining limitations.
+
+Local execution evidence is in `.moses/pluto-build/26v2-standalone/`, with source
+evidence in `.moses/prepared/pluto-26v2-separation2/`. The earlier failed 1 GiB
+preparation attempt is retained separately and has no ready manifest.
+
+## Historical outputs and review
 
 The output directory contains `pluto.csv`, `pluto.parquet`, mapped Parquet
 variants, correction CSVs, QA CSVs, per-stage row counts, a source preparation

@@ -12,7 +12,7 @@ Release dates and GitHub assignees remain unset. The tabular foundation, bounded
 | --- | --- | --- |
 | [#2 — Finish and release the local tabular inspection foundation](https://github.com/SPTKL/moses/issues/2) | P0 | In progress |
 | [#3 — Add a versioned local service API with safe resource identifiers](https://github.com/SPTKL/moses/issues/3) | P0 | Read-only slice implemented locally; write execution awaits #6 |
-| [#4 — Add explicit schema recipes, safe format detection, and CRS review](https://github.com/SPTKL/moses/issues/4) | P0 | Primitive recipes/signatures implemented locally; awaiting review/merge |
+| [#4 — Add explicit schema recipes, safe format detection, and CRS review](https://github.com/SPTKL/moses/issues/4) | P0 | YAML source recipes, optional dlt REST and trusted Python implemented and reviewed on branch; awaiting merge |
 | [#5 — Build catalog browsing, history, preview, and diff screens](https://github.com/SPTKL/moses/issues/5) | P1 | Catalog GUI implemented and validated locally; awaiting merge |
 | [#6 — Make upload and ingestion jobs durable and commits short](https://github.com/SPTKL/moses/issues/6) | P0 | Todo |
 | [#7 — Implement guided immutable upload, review, validation, and commit](https://github.com/SPTKL/moses/issues/7) | P0 | Todo |
@@ -39,7 +39,7 @@ Release dates and GitHub assignees remain unset. The tabular foundation, bounded
 | --- | --- | --- |
 | [#14 — Bound memory for parsing, hashing, and version diffs](https://github.com/SPTKL/moses/issues/14) | P1 | Todo |
 | [#15 — Define recoverable backups, retention, and audit operations](https://github.com/SPTKL/moses/issues/15) | P1 | Todo |
-| [#16 — Run approved transformations from locked inputs with lineage](https://github.com/SPTKL/moses/issues/16) | P1 | Full local dbt candidate runner implemented with locked inputs, resumable models and code snapshots; service/resource isolation remains |
+| [#16 — Run approved transformations from locked inputs with lineage](https://github.com/SPTKL/moses/issues/16) | P1 | Standalone local PLUTO dbt project separates transformation from Moses source preparation; service/resource isolation remains |
 
 ## PLUTO adoption and Explore
 
@@ -47,7 +47,7 @@ Release dates and GitHub assignees remain unset. The tabular foundation, bounded
 | --- | --- | --- |
 | [#17 — PLUTO case study and adoption readiness](https://github.com/SPTKL/moses/issues/17) | P0 | Implemented locally; awaiting review |
 | [#18 — Resolve PLUTO source releases into an input manifest](https://github.com/SPTKL/moses/issues/18) | P0 | Published 26v2 manifest resolved; 38 full source captures + 11 seeds obtained; raw reconstruction/lineage pending |
-| [#20 — PLUTO source contracts](https://github.com/SPTKL/moses/issues/20) | P0 | PTS/land-use stage contracts implemented; spatial/other source contracts remain |
+| [#20 — PLUTO source contracts](https://github.com/SPTKL/moses/issues/20) | P0 | Standalone contract declares 42 source tables / 650 columns; source fidelity and historical native parity remain |
 | [#19 — Reference-build parity and staged transforms](https://github.com/SPTKL/moses/issues/19) | P1 | Consolidated 405 models into 38 business processes; citywide candidate produces 858,284 parcels; full-build guide records comparison evidence and source ambiguity policies; historical input/native and spatial parity remain unattested |
 | [#21 — Version-pinned Explore query/map workflow](https://github.com/SPTKL/moses/issues/21) | P1 | Single-version map child #23 implemented locally; remaining Explore work planned |
 | [#23 — Bounded exact-version catalog map](https://github.com/SPTKL/moses/issues/23) | P1 | Implemented locally; awaiting review/merge |
@@ -62,3 +62,8 @@ local fixed-model execution can proceed independently of remote jobs, but does
 not satisfy #16's service or resource-isolation acceptance criteria. All local
 work remains unmerged and unreleased; completed candidate execution does not
 establish official-release or historical production parity.
+
+The [source recipe design](source-recipes.md) separates Moses acquisition and
+homogenization from the [standalone PLUTO project](../products/pluto/README.md).
+dlt supplies an optional REST extraction adapter; Moses retains immutable input
+acceptance and geospatial policies. No issue is closed by this local refactor.

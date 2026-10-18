@@ -1,0 +1,20 @@
+# Relative paths resolve beside this recipe. Import types use renamed names.
+schema_version: 1
+name: example_points
+key: id
+source:
+  kind: local
+  path: points.csv
+import:
+  format: CSV
+  rename: {record_id: id}
+  types: {id: string, visitors: int64}
+  null_policy:
+    tokens: ['', NA]
+    trim: true
+geometry:
+  x: longitude
+  y: latitude
+  crs: EPSG:4326
+  on_null: 'null'
+  on_invalid: error

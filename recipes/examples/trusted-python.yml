@@ -1,0 +1,14 @@
+# Run with PYTHONPATH=recipes/examples so this reviewed example module imports.
+schema_version: 1
+name: example_python_records
+key: id
+source:
+  kind: python
+  callable: recipe_hooks:records
+  parameters: {count: 3}
+import:
+  types: {id: string, amount: int64}
+  null_policy: {tokens: [''], trim: false}
+processing:
+  - callable: recipe_hooks:multiply_amount
+    parameters: {factor: 2}

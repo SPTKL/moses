@@ -1,0 +1,22 @@
+# Configure the exact local binary/store/bundle before running. Zero digests
+# are explicit placeholders, never automatic discovery or a historical claim.
+schema_version: 1
+name: example_addresses
+source: {kind: local, path: addresses.csv}
+import:
+  types: {borough: string, house_number: string, street: string}
+  null_policy: {tokens: [''], trim: true}
+geosupport:
+  adapter: address_points
+  fields: {borough: borough, house_number: house_number, street: street}
+  function: '1A'
+  mode: regular
+  on_failure: record
+  runtime:
+    extension: ./geosupport.duckdb_extension
+    extension_sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+    home: ./geosupport-store
+    bundle_id: '0000000000000000000000000000000000000000000000000000000000000000'
+    release: 26c
+    mode: docker
+    worker_image: duckdb-geosupport-runtime:0.2.0

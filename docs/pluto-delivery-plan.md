@@ -6,14 +6,20 @@ As of 2026-10-18. [Roadmap](https://github.com/SPTKL/moses/issues/1) ·
 
 ## Product decision
 
+The current separation uses [Moses source recipes](source-recipes.md) for
+acquisition and homogenization, including geometry and Geosupport, followed by
+an independent [PLUTO dbt project](../products/pluto/README.md). Source recipe
+organization references dlt; its REST adapter is optional and never participates
+in PLUTO execution. The former combined CLI commands are retired.
+
 **Current direction (2026-10-18):** the user selected PLUTO **26v2** and a
 **dbt rewrite without UPDATE statements**, then requested consolidation around
 business processes, with readability taking priority over execution speed.
 The [full candidate guide](pluto-full-build.md) supersedes the earlier two-stage
 sequencing for the trusted local transform path. The transformation now has
 **38 SELECT models**, reduced from 405: 21 source-to-map processes, five correction
-models, six delivery models and six QA reports. Shared macros define source
-cleanup, corrections and repeated QA calculations once; ordered local CTEs retain
+models, six delivery models and six QA reports. Moses recipes define physical source cleanup; shared dbt macros define
+corrections and repeated QA calculations once; ordered local CTEs retain
 business-rule dependencies. The full guide records citywide results and exact
 comparison evidence, including source ambiguities and candidate-specific policy.
 

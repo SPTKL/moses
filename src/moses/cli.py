@@ -46,6 +46,16 @@ def parser():
     serve.add_argument("--port", type=int, default=8765)
     serve.add_argument("--token-env", default="MOSES_TOKEN", help="Environment variable containing the bearer token")
     sub.add_parser("demo", help="Load a tiny bundled synthetic NYC example, offline")
+    prepare = sub.add_parser("prepare", help="Acquire and homogenize a declarative source recipe")
+    prepare.add_argument("recipe", help="Versioned YAML source recipe or source collection")
+    prepare.add_argument("--lock", help="Exact catalog input lock (source collections)")
+    prepare.add_argument("--output-dir", help="New prepared warehouse directory (source collections)")
+    prepare.add_argument("--extension-directory", default=".extensions")
+    prepare.add_argument("--legacy-source-build", help="Explicitly migrate verified prepared sources from a completed legacy build")
+    prepare.add_argument("--geosupport-release")
+    prepare.add_argument("--geosupport-extension")
+    prepare.add_argument("--geosupport-home")
+    prepare.add_argument("--geosupport-runtime", choices=["local", "docker"])
     load = sub.add_parser("load", help="Capture a local vector or tabular file as a versioned table")
     load.add_argument("source")
     load.add_argument("--name", required=True)
@@ -151,6 +161,36 @@ def main(argv=None):
             set_default_crs(args.warehouse, args.default_crs)
         catalog = Catalog(args.warehouse)
         match args.command:
+            case "prepare":
+                import yaml
+                recipe_path = Path(args.recipe).resolve()
+                # This first safe read only selects the validator. Each runner
+                # validates the complete recipe before acquisition/publication.
+                descriptor = yaml.safe_load(recipe_path.read_text(encoding="utf-8"))
+                if isinstance(descriptor, dict) and descriptor.get("kind") == "source_collection":
+                    from .prepared import prepare_collection
+                    if not args.lock or not args.output_dir:
+                        raise ValueError("Source collections require --lock and --output-dir")
+                    if args.legacy_source_build and args.geosupport_runtime:
+                        raise ValueError("Legacy source migration preserves its recorded native runtime; omit --geosupport-runtime")
+                    if args.geosupport_runtime:
+                        os.environ["GEOSUPPORT_RUNTIME"] = args.geosupport_runtime
+                    result = prepare_collection(
+                        catalog, recipe_path, input_lock=args.lock, output_dir=args.output_dir,
+                        extension_directory=Path(args.extension_directory).resolve(),
+                        legacy_source_build=args.legacy_source_build,
+                        geosupport_release=args.geosupport_release,
+                        geosupport_extension=args.geosupport_extension,
+                        geosupport_home=args.geosupport_home,
+                    )
+                else:
+                    from .source_recipes import prepare_recipe
+                    if any((args.lock, args.output_dir, args.legacy_source_build,
+                            args.geosupport_release, args.geosupport_extension,
+                            args.geosupport_home, args.geosupport_runtime)):
+                        raise ValueError("Collection options require a source_collection recipe; declare source settings in the recipe")
+                    result = prepare_recipe(recipe_path, catalog,
+                                            extension_directory=Path(args.extension_directory).resolve())
             case "init":
                 from .config import resolve_default_crs
                 result = {"warehouse": str(Path(args.warehouse).resolve()),
