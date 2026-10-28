@@ -51,9 +51,11 @@ permissions. Optional `code_sha256` pins their module file; reports record code,
 package and Python identities. Secrets references address parameter names for
 sources and steps, rather than REST config paths. There is no inline eval.
 
-Execution order is acquisition/capture, rename, null/trim policy, primitive
+Execution order is acquisition/capture, rename, optional snake_case, null/trim policy, primitive
 types, ordered custom processing, declared geometry or Geosupport, key checks,
-then catalog publication. Import types refer to renamed columns. Captured
+then catalog publication. Set `import.column_names: snake_case` for lowercase
+ASCII letters, digits and underscores; conflicting names fail rather than being
+silently suffixed. Import types, keys and geometry fields refer to final names. Captured
 record fields with explicit types retain a lexical representation until import
 policies run, including mixed numeric/string identifiers and initially-null
 pages. Other schema changes across capture batches fail visibly. Decimal and

@@ -48,7 +48,8 @@ class S3Publisher:
         objects = {"table": self._put_immutable(f"{base}/table.parquet", parquet.read_bytes(), "application/vnd.apache.parquet"), "raw": []}
         for raw in manifest.get("raw_files", []):
             path = Path(raw)
-            objects["raw"].append(self._put_immutable(f"{base}/raw/{path.name}", path.read_bytes(), "application/octet-stream"))
+            relative = path.relative_to(catalog.root / "raw" / manifest["source_sha256"]).as_posix()
+            objects["raw"].append(self._put_immutable(f"{base}/raw/{relative}", path.read_bytes(), "application/octet-stream"))
         portable = {k: v for k, v in manifest.items() if k not in {"parquet_path", "raw_files"}}
         # Retain provenance, but local path fields never define remote locations.
         portable["objects"] = objects

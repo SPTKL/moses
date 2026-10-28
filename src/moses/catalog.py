@@ -206,6 +206,7 @@ class Catalog:
         infer_types: bool = False,
         types: dict[str, str] | None = None,
         format: str | None = None,
+        column_names: str | None = None,
         provenance: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Capture source files and publish a release if logical content changed.
@@ -215,7 +216,7 @@ class Catalog:
         release readable. Orphaned immutable files after a failure are harmless.
         """
         from .ingest import read_vector
-        from .config import resolve_default_crs
+        from .config import resolve_column_names, resolve_default_crs
         from .recipes import canonical_types, import_recipe, selected_format
 
         self._validate_name(name)
@@ -228,10 +229,17 @@ class Catalog:
         # Validate JSON compatibility before staging any files.
         provenance_json = _encoded(provenance).decode("utf-8")
         provenance = json.loads(provenance_json)
-        source = Path(path).expanduser().resolve(strict=True)
-        if not source.is_file():
-            raise ValueError(f"Source is not a regular file: {source}")
+        from .filegdb import copy_directory, directory_files, reject_symlink_path
+        source = Path(path).expanduser().absolute()
+        if source.is_dir() or source.name.lower().endswith((".gdb", ".gdb.zip")) or (isinstance(format, str) and format.lower() in {"filegdb", "openfilegdb"}):
+            reject_symlink_path(source)
+        source = source.resolve(strict=True)
+        if not source.is_file() and not source.is_dir():
+            raise ValueError(f"Source is not a regular file or FileGDB directory: {source}")
         options = {"layer": layer, "x": x, "y": y, "crs": crs}
+        column_names = resolve_column_names(explicit=column_names)["column_names"]
+        if column_names == "snake_case":
+            options["column_names"] = column_names
         type_choices = canonical_types(types)
         if type_choices:
             options["types"] = type_choices
@@ -265,48 +273,65 @@ class Catalog:
                     raise ValueError(f"Dataset name {name!r} conflicts with {collision['name']!r}")
                 # The first read discovers every constituent file; the second
                 # reads exclusively from the captured, immutable copy.
-                _, discovered = read_vector(source, **options)
+                if chosen == "FileGDB" and source.is_dir():
+                    source_files = directory_files(source)
+                    discovered = None
+                else:
+                    _, discovered = read_vector(source, **options)
+                    source_files = self._source_paths(source, discovered)
                 # An unused fallback is not part of the interpretation. Changing
                 # it must not release identical nonspatial/embedded-CRS data.
-                if discovered.get("crs_source") != "default":
+                if discovered is not None and discovered.get("crs_source") != "default":
                     options.pop("default_crs", None)
-                source_files = self._source_paths(source, discovered)
                 before = {p: (p.stat().st_size, p.stat().st_mtime_ns) for p in source_files}
                 raw_stage = stage / "raw"
                 raw_stage.mkdir()
                 copies: dict[Path, Path] = {}
-                for original in source_files:
-                    target = raw_stage / original.name
-                    if target in copies.values():
-                        raise ValueError("Source files have colliding names")
-                    shutil.copy2(original, target)
-                    copies[original] = target
+                if source.is_dir():
+                    copy_directory(source, raw_stage / source.name)
+                    copies = {original: raw_stage / source.name / original.relative_to(source)
+                              for original in source_files}
+                else:
+                    for original in source_files:
+                        target = raw_stage / original.name
+                        if target in copies.values():
+                            raise ValueError("Source files have colliding names")
+                        shutil.copy2(original, target)
+                        copies[original] = target
                 after = {p: (p.stat().st_size, p.stat().st_mtime_ns) for p in source_files}
-                if before != after:
+                if before != after or (source.is_dir() and directory_files(source) != source_files):
                     raise RuntimeError("Source files changed while being captured; retry import")
                 # This hashes the *bundle* (names and bytes). Including names
                 # ensures an existing raw directory has the files referenced by
                 # its manifest even if a later import renames the source.
                 source_fingerprint = hashlib.sha256()
                 for original in source_files:
-                    name_bytes = original.name.encode("utf-8")
+                    name_bytes = copies[original].relative_to(raw_stage).as_posix().encode("utf-8")
                     source_fingerprint.update(len(name_bytes).to_bytes(8, "big"))
                     source_fingerprint.update(name_bytes)
                     source_fingerprint.update(bytes.fromhex(_digest_file(copies[original])))
                 source_sha256 = source_fingerprint.hexdigest()
                 raw_dir = self.root / "raw" / source_sha256
-                captured_source = copies[source]
+                captured_source = raw_stage / source.name if source.is_dir() else copies[source]
                 table, meta = read_vector(captured_source, **options)
                 if not isinstance(table, pa.Table) or not isinstance(meta, dict):
                     raise TypeError("read_vector must return an Arrow Table and metadata dictionary")
-                self._validate_key(table, key)
+                if meta.get("crs_source") != "default":
+                    options.pop("default_crs", None)
+                if key is not None and column_names == "snake_case":
+                    if key not in meta["column_name_map"]:
+                        raise ValueError(f"Key source column {key!r} is missing")
+                    accepted_key = meta["column_name_map"][key]
+                else:
+                    accepted_key = key
+                self._validate_key(table, accepted_key)
                 recipe = import_recipe(metadata=meta, options=options)
                 current = conn.execute(
                     "SELECT current_version FROM datasets WHERE name = ?", (name,)
                 ).fetchone()
                 old_manifest = self._manifest(conn, name) if current else None
-                if old_manifest and old_manifest["key"] != key:
-                    raise ValueError(f"Key for {name} cannot change from {old_manifest['key']!r} to {key!r}")
+                if old_manifest and old_manifest["key"] != accepted_key:
+                    raise ValueError(f"Key for {name} cannot change from {old_manifest['key']!r} to {accepted_key!r}")
 
                 # Include schema, values and interpretation options. Source bytes
                 # and provenance are observations, not logical dataset identity.
@@ -320,7 +345,7 @@ class Catalog:
                 logical.update(_encoded({
                     "geometry_column": meta.get("geometry_column"),
                     "crs": meta.get("crs"),
-                    "key": key,
+                    "key": accepted_key,
                     "options": options,
                 }))
                 logical.update(b"\x00")
@@ -370,7 +395,7 @@ class Catalog:
                     "warnings": meta.get("warnings", []),
                     "source_sha256": source_sha256,
                     "content_sha256": content_sha256,
-                    "key": key,
+                    "key": accepted_key,
                     "parquet_path": self._relative_path(parquet_path),
                     "format": meta.get("format"),
                     "layer": meta.get("layer"),
@@ -381,6 +406,8 @@ class Catalog:
                     "provenance": provenance,
                     "runtime_versions": _runtime_versions(),
                 }
+                if column_names == "snake_case":
+                    manifest["column_name_map"] = meta["column_name_map"]
                 manifest_json = _encoded(manifest).decode("utf-8")
                 conn.execute(
                     "INSERT INTO versions (name, version, created_at, content_sha256, manifest_json) "

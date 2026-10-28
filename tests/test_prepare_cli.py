@@ -1,3 +1,4 @@
+import argparse
 import json
 import subprocess
 import sys
@@ -36,20 +37,6 @@ key: id
     assert table.to_pylist() == [{"id": "001"}]
 
 
-def test_combined_pluto_commands_retired_before_catalog_or_pipeline(tmp_path, capsys, monkeypatch):
-    import moses.catalog
-
-    def unexpected(*args, **kwargs):
-        raise AssertionError("retired commands must not initialize a catalog")
-
-    monkeypatch.setattr(moses.catalog, "Catalog", unexpected)
-    for command in ("build", "run"):
-        warehouse = tmp_path / command
-        assert main(["-w", str(warehouse), "pluto", command]) == 1
-        assert not warehouse.exists()
-        assert "standalone dbt project" in capsys.readouterr().err
-
-
 def test_local_preparation_needs_no_dlt_dbt_or_sql_compiler(tmp_path):
     (tmp_path / "data.csv").write_text("id\n001\n")
     recipe = tmp_path / "source.yml"
@@ -69,3 +56,24 @@ raise SystemExit(main(sys.argv[1:]))
                              "prepare", str(recipe)], capture_output=True, text=True)
     assert result.returncode == 0, result.stdout + result.stderr
     assert json.loads(result.stdout)["manifest"]["dataset"] == "identifiers"
+
+
+def test_core_cli_exposes_generic_preparation_without_pluto_commands():
+    from moses.cli import parser
+
+    help_text = parser().format_help()
+    assert "prepare" in help_text
+    assert "pluto" not in help_text
+    recipe_help = next(action for action in parser()._actions
+                       if isinstance(action, argparse._SubParsersAction)).choices["prepare"].format_help()
+    assert "--lock" not in recipe_help
+    assert "--legacy-source-build" not in recipe_help
+
+
+def test_core_prepare_rejects_product_collection_without_publication(tmp_path, capsys):
+    recipe = tmp_path / "collection.yml"
+    recipe.write_text("schema_version: 1\nkind: source_collection\nname: pluto\ninputs: []\n")
+    warehouse = tmp_path / "warehouse"
+    assert main(["-w", str(warehouse), "prepare", str(recipe)]) == 1
+    assert "Unknown recipe keys" in capsys.readouterr().err
+    assert Catalog(warehouse).datasets() == []

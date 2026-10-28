@@ -15,7 +15,7 @@ RECIPE_VERSION = 1
 _SUFFIX_FORMATS = {
     ".csv": "CSV", ".tsv": "TSV", ".parquet": "Parquet",
     ".geoparquet": "Parquet", ".geojson": "GeoJSON", ".json": "GeoJSON",
-    ".gpkg": "GeoPackage", ".shp": "Shapefile", ".zip": "Shapefile",
+    ".gpkg": "GeoPackage", ".shp": "Shapefile", ".zip": "Shapefile", ".gdb": "FileGDB",
 }
 _TYPE_ALIASES = {
     "string": "string", "text": "string", "bool": "bool", "boolean": "bool",
@@ -43,19 +43,36 @@ def canonical_types(types: dict[str, str] | None) -> dict[str, str]:
 def selected_format(path: Path, explicit: str | None = None) -> tuple[str, str]:
     """Select an allowlisted reader and reject contradictory strong signatures."""
     suffix = path.suffix.lower()
+    if path.name.lower().endswith(".gdb.zip"):
+        suffix = ".gdb.zip"
     if explicit is None:
-        if suffix not in _SUFFIX_FORMATS:
+        if suffix == ".gdb.zip":
+            selected = "FileGDB"
+        elif suffix not in _SUFFIX_FORMATS:
             raise ValueError(f"unsupported vector source extension: {suffix or '(none)'}")
-        selected = _SUFFIX_FORMATS[suffix]
+        else:
+            selected = _SUFFIX_FORMATS[suffix]
     else:
         if not isinstance(explicit, str):
             raise ValueError("format must name an explicitly supported reader")
         names = {"csv": "CSV", "tsv": "TSV", "parquet": "Parquet", "geoparquet": "Parquet",
                  "geojson": "GeoJSON", "geopackage": "GeoPackage", "gpkg": "GeoPackage",
-                 "shapefile": "Shapefile"}
+                 "shapefile": "Shapefile", "filegdb": "FileGDB"}
         selected = names.get(explicit.lower())
         if selected is None:
             raise ValueError(f"unsupported format {explicit!r}")
+    if selected == "FileGDB":
+        from .filegdb import directory_files, reject_symlink_path
+        reject_symlink_path(path)
+        if path.is_dir():
+            directory_files(path)
+            return selected, ".gdb"
+        with path.open("rb") as stream:
+            if stream.read(4) != b"PK\x03\x04":
+                raise ValueError("FileGDB source must be a .gdb directory or ZIP archive")
+        return selected, ".gdb.zip"
+    if path.is_dir():
+        raise ValueError("directory sources require the FileGDB reader")
     with path.open("rb") as stream:
         head = stream.read(4096)
         if selected == "Parquet":
@@ -157,7 +174,7 @@ def apply_types(table: pa.Table, types: dict[str, str] | None, *, first_row: int
 
 
 def import_recipe(*, metadata: dict[str, Any], options: dict[str, Any]) -> dict[str, Any]:
-    return {
+    result = {
         "version": RECIPE_VERSION,
         "format": metadata.get("format"),
         "layer": metadata.get("layer"),
@@ -167,3 +184,7 @@ def import_recipe(*, metadata: dict[str, Any], options: dict[str, Any]) -> dict[
         "infer_types": bool(options.get("infer_types", False)),
         "crs": {"value": metadata.get("crs"), "source": metadata.get("crs_source")},
     }
+    if options.get("column_names") == "snake_case":
+        result["column_names"] = "snake_case"
+        result["column_name_map"] = metadata["column_name_map"]
+    return result

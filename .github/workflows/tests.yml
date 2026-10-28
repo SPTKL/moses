@@ -16,3 +16,16 @@ jobs:
       - run: python -m pip install ".[dev,s3]"
       - run: python -m pytest
       - run: python -m build
+  pluto-example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install ".[dev]"
+      - run: python -m pip install "./examples/pluto[dev]"
+      - run: python -m pytest
+        working-directory: examples/pluto
+      - run: python -m build
+        working-directory: examples/pluto

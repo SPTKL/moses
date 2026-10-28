@@ -4,7 +4,7 @@ GitHub is the delivery source of truth. The architecture remains in [service-arc
 
 [Project and delivery board](https://github.com/users/SPTKL/projects/1) · [Pinned roadmap tracker](https://github.com/SPTKL/moses/issues/1)
 
-Release dates and GitHub assignees remain unset. The tabular foundation, bounded PLUTO case study, no-op inference fix and explicit primitive import recipes are implemented locally and await review/merge. The authenticated read-only API slice is also implemented locally; the read-only catalog GUI is implemented locally, while durable uploads/jobs, guided loading and remaining capabilities are planned. The [local service contract](local-service.md) identifies the implemented routes and reserved write contracts. These are working-tree updates, not merged or released milestones. The [PLUTO delivery plan](pluto-delivery-plan.md) records the evidence, PM assessment and next dependency waves.
+Release dates and GitHub assignees remain unset. The tabular foundation, no-op inference fix and explicit primitive import recipes are implemented locally and await review/merge. The authenticated read-only API slice is also implemented locally; the read-only catalog GUI is implemented locally, while durable uploads/jobs, guided loading and remaining capabilities are planned. The [local service contract](local-service.md) identifies the implemented routes and reserved write contracts. These are working-tree updates, not merged or released milestones.
 
 ## [M1 — Local guided loading](https://github.com/SPTKL/moses/milestone/1)
 
@@ -39,31 +39,108 @@ Release dates and GitHub assignees remain unset. The tabular foundation, bounded
 | --- | --- | --- |
 | [#14 — Bound memory for parsing, hashing, and version diffs](https://github.com/SPTKL/moses/issues/14) | P1 | Todo |
 | [#15 — Define recoverable backups, retention, and audit operations](https://github.com/SPTKL/moses/issues/15) | P1 | Todo |
-| [#16 — Run approved transformations from locked inputs with lineage](https://github.com/SPTKL/moses/issues/16) | P1 | Standalone local PLUTO dbt project separates transformation from Moses source preparation; service/resource isolation remains |
+| [#16 — Run approved transformations from locked inputs with lineage](https://github.com/SPTKL/moses/issues/16) | P1 | Product-specific runner extracted to a consumer example; generic service/resource isolation remains planned |
 
-## PLUTO adoption and Explore
+## Explore and foundation fixes
 
 | Issue | Priority | Status |
 | --- | --- | --- |
-| [#17 — PLUTO case study and adoption readiness](https://github.com/SPTKL/moses/issues/17) | P0 | Implemented locally; awaiting review |
-| [#18 — Resolve PLUTO source releases into an input manifest](https://github.com/SPTKL/moses/issues/18) | P0 | Published 26v2 manifest resolved; 38 full source captures + 11 seeds obtained; raw reconstruction/lineage pending |
-| [#20 — PLUTO source contracts](https://github.com/SPTKL/moses/issues/20) | P0 | Standalone contract declares 42 source tables / 650 columns; source fidelity and historical native parity remain |
-| [#19 — Reference-build parity and staged transforms](https://github.com/SPTKL/moses/issues/19) | P1 | Consolidated 405 models into 38 business processes; citywide candidate produces 858,284 parcels; full-build guide records comparison evidence and source ambiguity policies; historical input/native and spatial parity remain unattested |
 | [#21 — Version-pinned Explore query/map workflow](https://github.com/SPTKL/moses/issues/21) | P1 | Single-version map child #23 implemented locally; remaining Explore work planned |
 | [#23 — Bounded exact-version catalog map](https://github.com/SPTKL/moses/issues/23) | P1 | Implemented locally; awaiting review/merge |
 | [#22 — Avoid redundant Parquet versions from no-op inference](https://github.com/SPTKL/moses/issues/22) | P1 | Fixed locally; awaiting review |
 
-The PLUTO evidence raises #4 to P0 and #16 to P1. The complete local candidate now supplies citywide scale evidence; source-contract fidelity, remaining ambiguous source choices and service/isolation prerequisites still need resolution. Explore's local analyst flow precedes remote MCP as specified in its design.
+Explore's local analyst flow precedes remote MCP as specified in its design.
 
 Each issue includes scope, acceptance criteria, validation, and prerequisite links. GitHub issues and project fields carry ongoing status; this file is the roadmap index.
 
-The [full PLUTO candidate build](pluto-full-build.md) is the active PLUTO path. Trusted
-local fixed-model execution can proceed independently of remote jobs, but does
-not satisfy #16's service or resource-isolation acceptance criteria. All local
-work remains unmerged and unreleased; completed candidate execution does not
-establish official-release or historical production parity.
+PLUTO adoption work (#17–#20) now belongs to the
+[standalone example project](../examples/pluto/README.md), including its
+[delivery plan](../examples/pluto/docs/pluto-delivery-plan.md) and full-build
+evidence. Its recipe, release-specific preparation, transformations, tests and
+dependencies are outside the Moses distribution. This local extraction does not
+close or transfer GitHub issues, establish production parity, or satisfy #16's
+service/resource-isolation requirements.
+
+## Ingestion direction and Socrata migration
+
+Optional [snake_case column naming](source-recipes.md#column-naming) extends the
+#4 schema-recipe foundation locally: CLI inspection/loading and YAML recipes
+normalize names explicitly, retain mappings, and reject collisions. Existing
+names remain the built-in default. User-wide and nearest-project TOML naming
+defaults, explicit overrides and `moses config show` are implemented locally.
+Configuration is grouped into project storage, normalization, spatial defaults
+and export format, with each value inheriting independently across scopes.
+This local implementation does not
+close or update the GitHub issue.
+
+The primary entry point is [installing Moses in any repository](source-recipes.md#install-and-use-moses-in-any-repository):
+`pip install moses`, project initialization, and user-owned recipe paths. Project
+initialization, recipe discovery and a published package are delivery gaps;
+the current local package is provisionally named `moses-geo`. Package/project
+onboarding belongs with the local foundation and recipes (#2/#4), independently
+of the optional thin remote client (#8) or a hosted catalog. Acceptance requires
+an installed-wheel exercise in an unrelated repository. Existing external-path
+recipe execution is implemented; the proposed initialization options are not.
+
+Project defaults live in [`config.toml`](source-recipes.md#project-configuration-and-output-defaults)
+under `moses.project`, `moses.normalization`, `moses.spatial` and `moses.export`.
+Warehouse location, field naming, source CRS fallback and the existing export
+formats are implemented. The former `moses.input.column_names` remains an alias;
+legacy JSON CRS defaults remain a lower-priority fallback. Output reprojection,
+compression, additional writers, recipe discovery and persistent DuckDB storage
+remain planned. Source CRS defaults only describe otherwise unknown coordinates.
+
+[DuckDB Spatial](source-recipes.md#duckdb-spatial-as-the-geospatial-engine) is the
+target vector calculation engine. Add explicit extension provisioning/loading,
+calculation CRS and units, and a shared execution layer before migrating current
+Python geometry operations. Verify reader/writer and geometry-policy parity
+before removing Shapely, PyProj or Pyogrio. Basic local Spatial capability was
+checked; the backend migration and capacity/performance validation remain planned.
+
+The [conversion and type-preservation contract](source-recipes.md#format-conversion-and-source-type-preservation)
+requires metadata-based CRS discovery, preserved source schema, conservative
+GeoJSON string handling, exactness checks and explicit policies for lossy output
+formats. Bounded conversion/CRS/type probes passed locally; full reader/writer
+parity remains part of migration acceptance.
+
+[File Geodatabase support](source-recipes.md#file-geodatabases) is implemented
+locally for directory/ZIP ingestion, explicit layer selection, typed Arrow
+snapshots, complete raw capture and exact-version single-layer export. The
+existing GDAL adapter supplies layer and CRS metadata; this is independent of
+the Spatial migration. Synthetic regression coverage includes malformed ZIPs,
+source preservation and export fidelity checks. Full ArcGIS semantics, ZIP
+export, multi-layer delivery, raster data, `.mdb` and `.sde` remain outside this
+slice. This work is unmerged and unreleased.
+
+The [community registry design](source-recipes.md#community-recipe-registry)
+adds a proposed `moses[registry]` extra for a separately versioned curated recipe
+pack, plus independently installed organization packs. Implement installed-pack
+discovery, qualified recipe names, copy/customization and recipe locks after
+project initialization. Registry recipes use the existing validation and
+acceptance contracts. No extra, registry command or recipe pack is published or
+implemented by this design update; hosted registry search is a later option.
+
+The [source recipe design](source-recipes.md#design-references-from-nycdb-and-nyc-planning)
+now references NYCDB dataset contracts and Planning ingest templates alongside
+dlt. Its [direct Socrata connector contract](source-recipes.md#direct-socrata-connector-design)
+and [platform migration stages](source-recipes.md#path-toward-replacing-socrata)
+are proposed scope, not implemented capabilities or completed milestones.
+
+The next connector slice is full capture plus metadata, validation, immutable
+acceptance and offline replay. Reuse #4's recipe foundation; durable scheduled
+refresh depends on #6, remote acquisition on #9, and full-scale acceptance on
+#14. Preserve #18/#20 release and source contracts: a current Socrata dataset
+must not replace a pinned PLUTO input silently. Incremental refresh follows a
+transactional state and deletion contract. Independent publishing and eventual
+Socrata replacement are a subsequent product track, including catalog/search,
+public APIs, publisher workflows and consumer migration.
+
+The existing open issues were reviewed on 2026-10-28; none specifically tracks
+the Socrata connector or replacement program. These additions remain local
+design scope pending dedicated delivery tickets and project prioritization;
+no GitHub issue or project status changed with this documentation update.
 
 The [source recipe design](source-recipes.md) separates Moses acquisition and
-homogenization from the [standalone PLUTO project](../products/pluto/README.md).
+homogenization from the [standalone PLUTO project](../examples/pluto/README.md).
 dlt supplies an optional REST extraction adapter; Moses retains immutable input
 acceptance and geospatial policies. No issue is closed by this local refactor.

@@ -27,6 +27,7 @@ import shapely
 from pyproj import CRS
 
 from .recipes import apply_types, canonical_types, selected_format
+from .column_names import column_name_map
 
 
 _GEO_METADATA_KEY = b"geo"
@@ -373,6 +374,7 @@ def read_vector(
     infer_types: bool = False,
     types: dict[str, str] | None = None,
     format: str | None = None,
+    column_names: str = "preserve",
 ) -> tuple[pa.Table, dict[str, Any]]:
     """Read a local source into Arrow, with canonical WKB for spatial data.
 
@@ -381,13 +383,57 @@ def read_vector(
     ``infer_types`` opts into conservative full-column inference.
     """
     source = Path(path)
-    if not source.is_file():
+    if column_names not in {"preserve", "snake_case"}:
+        raise ValueError("column_names must be 'preserve' or 'snake_case'")
+    if not source.exists():
         raise FileNotFoundError(source)
     types = canonical_types(types)
     _, ext = selected_format(source, format)
     warnings: list[str] = []
     declared_geometry_types: list[str] | None = None
-    if ext in {".csv", ".tsv"}:
+    if ext in {".gdb", ".gdb.zip"}:
+        from .filegdb import directory_files, reader_directory
+        if x is not None or y is not None:
+            raise ValueError("x and y are only supported for CSV/TSV sources")
+        with reader_directory(source) as reader_source:
+            layers = _source_layers(reader_source)
+            if layer is None:
+                if len(layers) != 1:
+                    raise ValueError(f"source has {len(layers)} layers; specify layer explicitly; available layers: {layers}")
+                selected = layers[0]
+            elif layer not in layers:
+                raise ValueError(f"layer {layer!r} not found; available layers: {layers}")
+            else:
+                selected = layer
+            try:
+                info = pyogrio.read_info(reader_source, layer=selected)
+                if info.get("driver") not in {"OpenFileGDB", "FileGDB"}:
+                    raise ValueError("source is not a File Geodatabase")
+                metadata, table = pyogrio.read_arrow(reader_source, layer=selected)
+            except Exception as exc:
+                raise ValueError(f"could not read FileGDB layer {selected!r}: {exc}") from exc
+        geom_name = metadata.get("geometry_name") or None
+        if info.get("geometry_type") is not None:
+            if geom_name not in table.column_names:
+                attributes = set(metadata.get("fields", []))
+                candidates = [field.name for field in table.schema
+                              if field.name not in attributes and pa.types.is_binary(field.type)]
+                if len(candidates) != 1:
+                    raise ValueError("source must contain exactly one supported geometry column")
+                geom_name = candidates[0]
+            kind = info.get("geometry_type")
+            if kind and kind != "Unknown":
+                declared_geometry_types = [kind.replace(" ZM", " M").replace("25D", " Z")]
+                if kind.endswith((" M", " ZM")):
+                    raise ValueError("measured (M) geometries are unsupported")
+        else:
+            geom_name = None
+        src_crs = metadata.get("crs") if geom_name is not None else None
+        fmt = "FileGDB"
+        warnings.append("FileGDB conversion preserves selected-layer features and field types; domains, relationships, attachments, and other geodatabase behavior are not reproduced.")
+        files = ([str(member.resolve()) for member in directory_files(source)]
+                 if source.is_dir() else [str(source.resolve())])
+    elif ext in {".csv", ".tsv"}:
         if layer is not None:
             raise ValueError("layer is not applicable to CSV/TSV sources")
         if (x is None or y is None) and crs is not None:
@@ -470,7 +516,7 @@ def read_vector(
             layers = _source_layers(reader_source)
             if layer is None:
                 if len(layers) != 1:
-                    raise ValueError(f"source has {len(layers)} layers; specify layer explicitly")
+                    raise ValueError(f"source has {len(layers)} layers; specify layer explicitly; available layers: {layers}")
                 selected = layers[0]
             else:
                 if layer not in layers:
@@ -510,6 +556,8 @@ def read_vector(
             fmt, files = "GeoJSON", [str(source.resolve())]
         else:
             fmt, files = (source.suffix.lstrip(".").upper() or "Vector"), [str(source.resolve())]
+    source_columns = [name for name in table.column_names if name != "geometry"] if ext in {".csv", ".tsv"} and geom_name == "geometry" else table.column_names[:]
+    source_geometry = geom_name
     if geom_name is not None and geom_name in types:
         raise ValueError("geometry cannot receive a primitive type override")
     if ext not in {".csv", ".tsv"}:
@@ -536,8 +584,15 @@ def read_vector(
             table,
             geom_name,
             src_crs,
-            declared_geometry_types if ext in {".parquet", ".geoparquet"} and geom_name is not None else None,
+            declared_geometry_types,
         )
+    if column_names == "snake_case":
+        # The generated/canonical geometry participates in collision checks.
+        names = column_name_map(table.column_names, column_names)
+        metadata = table.schema.metadata
+        table = table.rename_columns([names[name] for name in table.column_names]).replace_schema_metadata(metadata)
+        source_map = {name: ("geometry" if name == source_geometry else names[name])
+                      for name in source_columns}
     provenance = {
         "format": fmt,
         "layer": layer if layer is not None else (selected if ext not in {".csv", ".tsv", ".parquet", ".geoparquet"} else None),
@@ -547,4 +602,6 @@ def read_vector(
         "geometry_column": "geometry" if geom_name is not None else None,
         "source_files": files,
     }
+    if column_names == "snake_case":
+        provenance["column_name_map"] = source_map
     return table, provenance

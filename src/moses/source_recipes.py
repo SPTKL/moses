@@ -32,7 +32,10 @@ import shapely
 
 from .catalog import Catalog
 from .ingest import _shapefile_sources, _with_canonical_geometry, read_vector
+from .column_names import column_name_map, snake_case
+from .config import resolve_column_names
 from .recipes import apply_types, canonical_types
+from .filegdb import bundle_digest, copy_directory, directory_files, reject_symlink_path
 
 
 class SourceRecipeError(ValueError):
@@ -221,9 +224,11 @@ def validate_recipe(recipe):
         _checksum(source['sha256'], 'source.sha256')
     if 'archive_member' in source:
         _safe_member(source['archive_member'])
-    options = _mapping(value.get('import', {}), ('format', 'layer', 'types', 'rename', 'null_policy'), where='import')
+    options = _mapping(value.get('import', {}), ('format', 'layer', 'types', 'rename', 'null_policy', 'column_names'), where='import')
+    if 'column_names' in options:
+        _choice(options['column_names'], ('preserve', 'snake_case'), 'import.column_names')
     if 'format' in options:
-        _choice(options['format'], ('CSV', 'TSV', 'Parquet', 'GeoJSON', 'GeoPackage', 'Shapefile'), 'import.format')
+        _choice(options['format'], ('CSV', 'TSV', 'Parquet', 'GeoJSON', 'GeoPackage', 'Shapefile', 'FileGDB'), 'import.format')
     if 'layer' in options:
         _text(options['layer'], 'import.layer')
     options['types'] = canonical_types(options.get('types'))
@@ -309,6 +314,8 @@ def load_recipe(path):
 
 
 def _hash(path):
+    if Path(path).is_dir():
+        return bundle_digest(Path(path))
     digest = hashlib.sha256()
     with Path(path).open('rb') as stream:
         for block in iter(lambda: stream.read(1024 * 1024), b''):
@@ -318,7 +325,10 @@ def _hash(path):
 
 def _path(value, base):
     path = Path(value).expanduser()
-    return (path if path.is_absolute() else base / path).resolve(strict=True)
+    path = path if path.is_absolute() else base / path
+    if path.is_dir() or path.name.lower().endswith(('.gdb', '.gdb.zip')):
+        reject_symlink_path(path)
+    return path.resolve(strict=True)
 
 
 def _safe_member(name):
@@ -370,7 +380,7 @@ def _trusted_callable(config):
     return function, identity
 
 
-def _write_extracted(items, output, types):
+def _write_extracted(items, output, types, *, source_name_hints=(), snake_case_types=False):
     """Capture one flat resource without dlt loading/schema normalization."""
     if isinstance(items, pa.RecordBatch):
         items = pa.Table.from_batches([items])
@@ -381,14 +391,15 @@ def _write_extracted(items, output, types):
     try:
         def write(rows):
             nonlocal writer, count
-            keys = sorted(set(types) | {key for row in rows for key in row})
+            keys = sorted((set(source_name_hints) if snake_case_types else set(types)) |
+                          {key for row in rows for key in row})
             # Keep explicitly typed capture fields lexical until the later
             # declared null/type policy runs. This stabilizes all-null first
             # pages without interpreting NA tokens or rounding numeric values.
             columns = {}
             for key in keys:
                 values = [row.get(key) for row in rows]
-                if key in types:
+                if key in types or (snake_case_types and snake_case(key) in types):
                     values = [None if value is None else value if isinstance(value, str) else str(value) for value in values]
                     columns[key] = pa.array(values, type=pa.string())
                 else:
@@ -438,7 +449,7 @@ def _write_extracted(items, output, types):
     return count
 
 
-def _extract_records(source, stage, types):
+def _extract_records(source, stage, types, *, source_name_hints=(), snake_case_types=False):
     if source['kind'] == 'dlt_rest_api':
         try:
             import dlt
@@ -465,7 +476,8 @@ def _extract_records(source, stage, types):
         identity = {'backend': 'trusted_python', **identity, 'parameters': source.get('parameters', {}), 'secrets': source.get('secrets', {})}
     output = stage / 'extracted.parquet'
     try:
-        rows = _write_extracted(items, output, types)
+        rows = _write_extracted(items, output, types, source_name_hints=source_name_hints,
+                                snake_case_types=snake_case_types)
     except SourceRecipeError:
         raise
     except Exception:
@@ -475,38 +487,49 @@ def _extract_records(source, stage, types):
     return output, identity | {'rows': rows, 'capture_format': 'Parquet'}
 
 
-def _acquire(source, catalog, base, stage, types):
+def _acquire(source, catalog, base, stage, types, format=None, *, source_name_hints=(), snake_case_types=False):
     identity = dict(source)
     if source['kind'] in ('dlt_rest_api', 'python'):
-        path, extraction = _extract_records(source, stage, types)
+        path, extraction = _extract_records(source, stage, types, source_name_hints=source_name_hints,
+                                            snake_case_types=snake_case_types)
         identity['extraction'] = extraction
     elif source['kind'] == 'catalog':
         manifest = catalog.get_version(source['name'], source['version'])
         path = Path(manifest['parquet_path']).resolve(strict=True)
         identity['catalog_content_sha256'] = manifest['content_sha256']
     elif source['kind'] == 'local':
+        local_path = Path(source['path']).expanduser()
+        if format == 'FileGDB':
+            reject_symlink_path(local_path if local_path.is_absolute() else base / local_path)
         path = _path(source['path'], base)
     else:
         basename = PurePosixPath(urlparse(source['url']).path).name or 'download'
         path = stage / basename
         with urlopen(source['url'], timeout=60) as response, path.open('wb') as output:
             shutil.copyfileobj(response, output, length=1024 * 1024)
-    if not path.is_file():
-        raise SourceRecipeError('Acquired source must be a regular file')
+    if not path.is_file() and not (source['kind'] == 'local' and path.is_dir() and path.suffix.lower() == '.gdb'):
+        raise SourceRecipeError('Acquired source must be a regular file or local .gdb directory')
     if source['kind'] == 'local':
         # Parse a stable capture, including loose Shapefile sidecars, rather
         # than re-reading a mutable user file after its digest was computed.
         frozen = stage / 'input'
         frozen.mkdir()
-        files = _shapefile_sources(path) if path.suffix.lower() == '.shp' else [str(path)]
-        for filename in files:
-            candidate = Path(filename)
-            shutil.copyfile(candidate, frozen / candidate.name)
+        if path.is_dir():
+            copy_directory(path, frozen / path.name)
+        else:
+            files = _shapefile_sources(path) if path.suffix.lower() == '.shp' else [str(path)]
+            for filename in files:
+                candidate = Path(filename)
+                shutil.copyfile(candidate, frozen / candidate.name)
         path = frozen / path.name
     actual = _hash(path)
     if 'sha256' in source and actual != source['sha256']:
         raise SourceRecipeError('Source SHA256 does not match the recipe')
-    identity.update({'sha256': actual, 'bytes': path.stat().st_size})
+    identity.update({'sha256': actual, 'bytes': sum(item.stat().st_size for item in directory_files(path)) if path.is_dir() else path.stat().st_size})
+    if path.is_dir():
+        identity['checksum_method'] = 'sha256_relative_posix_paths_and_member_sha256'
+        if 'archive_member' in source:
+            raise SourceRecipeError('Directory sources cannot select archive members')
     original = path
     if 'archive_member' in source:
         with zipfile.ZipFile(path) as archive:
@@ -539,7 +562,11 @@ def _retain_capture(path, catalog, stage, expected=None):
             raise SourceRecipeError('Existing immutable source capture is corrupt')
     else:
         copied = stage / 'capture'
-        shutil.copyfile(path, copied)
+        if path.is_dir():
+            copied = stage / ('capture-' + path.name)
+            copy_directory(path, copied)
+        else:
+            shutil.copyfile(path, copied)
         if _hash(copied) != actual:
             raise SourceRecipeError('Source changed during preparation')
         copied.replace(capture)
@@ -547,6 +574,7 @@ def _retain_capture(path, catalog, stage, expected=None):
 
 
 def _normalize(table, options):
+    source_names = table.column_names[:]
     rename = options['rename']
     if missing := set(rename) - set(table.column_names):
         raise SourceRecipeError(f'Rename fields are absent: {sorted(missing)}')
@@ -560,6 +588,12 @@ def _normalize(table, options):
         if rename.get(primary, primary) != primary:
             raise SourceRecipeError('The canonical geometry column cannot be renamed')
     table = table.rename_columns(names).replace_schema_metadata(metadata)
+    if options.get('column_names') == 'snake_case':
+        mapped = column_name_map(table.column_names, 'snake_case')
+        if b'geo' in metadata and mapped[json.loads(metadata[b'geo'])['primary_column']] != 'geometry':
+            raise SourceRecipeError('The canonical geometry column cannot be renamed')
+        table = table.rename_columns([mapped[name] for name in table.column_names]).replace_schema_metadata(metadata)
+        source_map = {source: mapped[target] for source, target in zip(source_names, names)}
     nulls = options['null_policy']
     for index, field in enumerate(table.schema):
         if pa.types.is_string(field.type) or pa.types.is_large_string(field.type):
@@ -571,7 +605,8 @@ def _normalize(table, options):
     for name, choice in options['types'].items():
         if name in table.column_names and choice != 'string' and '' in table[name].to_pylist():
             raise SourceRecipeError(f'Empty values in typed field {name!r}; explicitly include an empty null token')
-    return apply_types(table, options['types'], first_row=1)
+    table = apply_types(table, options['types'], first_row=1)
+    return table, source_map if options.get('column_names') == 'snake_case' else None
 
 
 def _geometry(table, config):
@@ -724,7 +759,7 @@ def _geosupport(table, config, base, adapters):
 
 
 def prepare_recipe(recipe_or_path, catalog: Catalog, *, base_directory=None,
-                   extension_directory=None, adapters=None):
+                   extension_directory=None, adapters=None, column_names=None):
     """Prepare and publish one recipe; failures preserve the current version.
 
     ``adapters`` is a Python test/integration injection only, never YAML code.
@@ -740,16 +775,31 @@ def prepare_recipe(recipe_or_path, catalog: Catalog, *, base_directory=None,
     else:
         recipe = validate_recipe(recipe_or_path)
         base = Path(base_directory or '.').resolve(strict=True)
+    naming = resolve_column_names(explicit=column_names, recipe=recipe['import'].get('column_names'))
+    if naming['origin'] != 'built_in' or 'column_names' in recipe['import']:
+        recipe['import']['column_names'] = naming['column_names']
     fingerprint = hashlib.sha256(json.dumps(recipe, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     with tempfile.TemporaryDirectory(prefix='recipe-', dir=catalog.root / '.staging') as temporary:
         stage = Path(temporary)
         options = recipe['import']
         inverse_rename = {new: old for old, new in options['rename'].items()}
-        capture_types = {inverse_rename.get(name, name): dtype for name, dtype in options['types'].items()}
-        path, original, source = _acquire(recipe['source'], catalog, base, stage, capture_types)
+        if options.get('column_names') == 'snake_case':
+            # Capture schemas use source names; recipe type choices use final names.
+            capture_types = {inverse_rename.get(target, target): dtype
+                             for name, dtype in options['types'].items()
+                             for target in [next((new for new in options['rename'].values()
+                                                  if snake_case(new) == name), name)]}
+        else:
+            capture_types = {inverse_rename.get(name, name): dtype for name, dtype in options['types'].items()}
+        source_name_hints = {raw for raw in inverse_rename.values() if raw in capture_types}
+        path, original, source = _acquire(recipe['source'], catalog, base, stage, capture_types, options.get('format'),
+                                          source_name_hints=source_name_hints,
+                                          snake_case_types=options.get('column_names') == 'snake_case')
         table, read_metadata = read_vector(path, layer=options.get('layer'), format=options.get('format'))
-        table = _normalize(table, options)
+        table, column_name_mapping = _normalize(table, options)
         normalization = {'import': options, 'reader': read_metadata}
+        if column_name_mapping is not None:
+            normalization['column_name_map'] = column_name_mapping
         steps = []
         for config in recipe['processing']:
             function, identity = _trusted_callable(config)
@@ -782,6 +832,7 @@ def prepare_recipe(recipe_or_path, catalog: Catalog, *, base_directory=None,
         provenance = {'source_recipe': {'schema_version': 1, 'recipe_sha256': fingerprint, 'recipe': recipe,
                                         'engine': engine,
                                         'source': source, 'normalization': normalization}}
-        manifest = catalog.ingest(prepared, name=recipe['name'], key=recipe.get('key'), provenance=provenance)
+        manifest = catalog.ingest(prepared, name=recipe['name'], key=recipe.get('key'),
+                                  provenance=provenance, column_names='preserve')
     return {'status': 'prepared', 'recipe_sha256': fingerprint, 'engine': engine, 'source': source,
             'normalization': normalization, 'manifest': manifest}

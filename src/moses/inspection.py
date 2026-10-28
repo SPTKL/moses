@@ -14,10 +14,12 @@ from pathlib import Path
 from typing import Any
 
 from .ingest import read_vector
+from .config import resolve_column_names, resolve_default_crs, resolve_warehouse
 
 
 _MAX_PREVIEW_ROWS = 100
-_SUPPORTED_SUFFIXES = [".csv", ".tsv", ".parquet", ".geoparquet", ".geojson", ".json", ".gpkg", ".shp", ".zip"]
+_UNSET_DEFAULT_CRS = object()
+_SUPPORTED_SUFFIXES = [".csv", ".tsv", ".parquet", ".geoparquet", ".geojson", ".json", ".gpkg", ".shp", ".zip", ".gdb", ".gdb.zip"]
 _COORDINATE_PAIRS = (
     ("longitude", "latitude"),
     ("lon", "lat"),
@@ -70,10 +72,11 @@ def inspect_source(
     x: str | None = None,
     y: str | None = None,
     crs: str | None = None,
-    default_crs: str | None = None,
+    default_crs: str | None = _UNSET_DEFAULT_CRS,
     infer_types: bool = False,
     types: dict[str, str] | None = None,
     format: str | None = None,
+    column_names: str | None = None,
     preview_rows: int = 10,
 ) -> dict[str, Any]:
     """Inspect a supported source and return a JSON-safe summary.
@@ -87,6 +90,9 @@ def inspect_source(
     """
     if isinstance(preview_rows, bool) or not isinstance(preview_rows, int) or not 0 <= preview_rows <= _MAX_PREVIEW_ROWS:
         raise ValueError("preview_rows must be an integer from 0 to 100")
+    column_names = resolve_column_names(explicit=column_names)["column_names"]
+    if default_crs is _UNSET_DEFAULT_CRS:
+        default_crs = resolve_default_crs(resolve_warehouse()["warehouse"])
     source = Path(path)
     table, metadata = read_vector(
         source,
@@ -98,6 +104,7 @@ def inspect_source(
         infer_types=infer_types,
         types=types,
         format=format,
+        column_names=column_names,
     )
     schema = [
         {"name": field.name, "type": str(field.type), "nullable": field.nullable}
@@ -115,7 +122,7 @@ def inspect_source(
     if len(candidates) > 1:
         warnings.append("Multiple coordinate field pairs match; select the intended pair explicitly.")
     suffix = source.suffix.lower()
-    return {
+    result = {
         "format": metadata["format"],
         "detection": {
             "method": "explicit_format" if format is not None else "filename_suffix",
@@ -134,3 +141,6 @@ def inspect_source(
         "warnings": warnings,
         "scan": "full_file",
     }
+    if column_names == "snake_case":
+        result["column_name_map"] = metadata["column_name_map"]
+    return result

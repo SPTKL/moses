@@ -4,6 +4,13 @@ This document describes a roadmap for making Moses usable by people who do not w
 
 The UI also includes a planned **Explore** workspace: a lightweight DuckDB-style SQL editor, a results table, and a geospatial map with multiple layers. The [SQL and map exploration feature plan](query-map-workspace.md) defines the experience, technical contracts, implementation slices, and acceptance criteria. Single-version dataset mapping is implemented locally in #23; multilayer exploration belongs with the local loader; interactive SQL and query-result layers follow the service foundation and precede hosted access and MCP.
 
+The [ingestion design](source-recipes.md#design-references-from-nycdb-and-nyc-planning)
+adds NYCDB and Planning template patterns and a proposed direct Socrata adapter.
+The [Socrata migration path](source-recipes.md#path-toward-replacing-socrata)
+extends the long-term direction to an independently served open-data catalog and
+agency publishing. The connector and publishing track remain planned; the
+existing service and security prerequisites still apply.
+
 ## Current baseline
 
 Moses is a local Python CLI and library with an authenticated read-only loopback API. `Catalog` stores immutable raw captures and Parquet/GeoParquet snapshots under a warehouse directory, with SQLite indexing accepted versions. A failed import does not advance the current-version pointer. The code is an early MVP: its dependency set includes DuckDB, PyArrow, Pyogrio, Shapely, and PyProj, and catalog imports are eager. It has a same-origin read-only catalog GUI, but no durable upload/job execution, thin remote client, or MCP integration.
