@@ -6,6 +6,59 @@ As of 2026-10-18. [Roadmap](https://github.com/SPTKL/moses/issues/1) ·
 [Project board](https://github.com/users/SPTKL/projects/1) ·
 [Case-study tracker #17](https://github.com/SPTKL/moses/issues/17).
 
+## Current tracking checkpoint — 2026-10-28
+
+The simplified full-release example is pushed on `main` at `7c5fb46`.
+[PR #24](https://github.com/SPTKL/moses/pull/24) merged the source preparation,
+standalone dbt project and historical evidence;
+[PR #32](https://github.com/SPTKL/moses/pull/32) merged the first DuckDB
+Spatial installation/lifecycle slice. There is no packaged release or accepted
+production PLUTO replacement. The latest [CI run 40795454217](https://github.com/SPTKL/moses/actions/runs/40795454217)
+completed with failure: three Windows Python 3.11–3.13 full-suite jobs failed,
+while six Linux/macOS full-suite jobs, all three base jobs, and the PLUTO job
+passed. The previous main run failed the same Windows jobs.
+[#25](https://github.com/SPTKL/moses/issues/25) is the P0 matrix gate.
+
+The user's selected path is the **full 26v2 release with all required inputs**,
+not a sample: Moses capture and ingestion (38 source inputs and 11 seeds),
+locked preparation (42 source tables), ordinary dbt business models (38),
+then optional export (13 data files). The [Makefile](../Makefile) exposes those
+independent phases and a config template for the pinned upstream checkout and
+installed native runtime. Make target routing and refusal guards were checked
+with stubbed commands; preparation, dbt and export tests used fixtures. No new
+full-city operator run has been recorded. [#17](https://github.com/SPTKL/moses/issues/17)
+retains its bounded case-study evidence and review scope. The separate
+[#34](https://github.com/SPTKL/moses/issues/34) tracks the real operator trial, recovery and
+provenance acceptance. [#18](https://github.com/SPTKL/moses/issues/18) and
+[#20](https://github.com/SPTKL/moses/issues/20) retain exact release, missing
+input, native, CRS and axis contracts; [#19](https://github.com/SPTKL/moses/issues/19)
+retains official reference parity. The first Spatial slice does not complete
+reopened [#28](https://github.com/SPTKL/moses/issues/28)'s migration and capacity gates.
+
+The [full-build guide](pluto-full-build.md) remains the historical candidate
+evidence: 38 business models and 858,284 parcel keys, with 97 of 99 fields
+matching the published 26v2 reference under its stated tabular comparison
+policy. The version label and three latitude values differ. These numbers
+were not rerun for the new Makefile. Historical normalized-source/native-runtime
+evidence and official spatial reference parity remain unresolved. The generic
+isolated Moses transform worker [#16](https://github.com/SPTKL/moses/issues/16)
+remains separate.
+
+The next acceptance sequence is: (1) repair Windows CI and pass the full main
+matrix; (2) configure and run the pinned full capture/ingestion, rejecting any
+missing required source; (3) publish a fresh prepared directory and verify its
+lock, source contract and native provenance; (4) complete dbt and verify its
+receipt before exporting into a fresh directory; (5) compare official reference
+outputs under #19's attribute, geometry and tolerance policy, recording any
+unexplained mismatch. A failed or partial run does not satisfy parity or
+release acceptance. DuckLake as a local default, with a DuckDB metadata catalog,
+is tracked separately in [#33](https://github.com/SPTKL/moses/issues/33); the current path uses DuckDB files.
+Generic installed-project onboarding is [#26](https://github.com/SPTKL/moses/issues/26).
+
+The sections below retain earlier session plans and validation history. They
+are not a current assignment roster or execution board; GitHub issues and
+project fields carry live status.
+
 ## Product decision
 
 The current separation uses [Moses source recipes](../../../docs/source-recipes.md) for
@@ -30,13 +83,13 @@ A source planner covers 38 inputs and 11 seeds. Six normalized artifacts and
 completed with 1,163,616 geocode rows and 817,321 building-count rows using the
 explicitly selected 26B bundle. Historical normalized-input, native-runtime and
 spatial reference parity remain outstanding. Remote service/isolation
-prerequisites remain in force for remotely exposed execution. This is local work,
-not a merged or released PLUTO replacement.
+prerequisites remain in force for remotely exposed execution. This earlier work is merged, but it is not a released or accepted PLUTO replacement.
 
 Use a PLUTO analyst's source-to-reproducible-output task to guide the next Moses
-releases. The current CLI is usable for bounded developer-led imports and exact
-input snapshots. It is not yet a self-service analyst application or a replacement
-for the PLUTO build. The full reference pipeline needs 38 recipe inputs, 11 local
+releases. The current CLI and Makefile provide a developer-led full-release path, but
+that operator path has not been validated with all required inputs. They are
+not yet a self-service analyst application or an accepted replacement for the
+PLUTO build. The full reference pipeline needs 38 recipe inputs, 11 local
 seeds, PostgreSQL/PostGIS, dbt, shell stages, geocoding and correction logic.
 
 The first useful outcome is a reviewed source manifest plus one validated,
