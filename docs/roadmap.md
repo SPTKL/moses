@@ -91,11 +91,13 @@ compression, additional writers, recipe discovery and persistent DuckDB storage
 remain planned. Source CRS defaults only describe otherwise unknown coordinates.
 
 [DuckDB Spatial](source-recipes.md#duckdb-spatial-as-the-geospatial-engine) is the
-target vector calculation engine. Add explicit extension provisioning/loading,
-calculation CRS and units, and a shared execution layer before migrating current
-Python geometry operations. Verify reader/writer and geometry-policy parity
-before removing Shapely, PyProj or Pyogrio. Basic local Spatial capability was
-checked; the backend migration and capacity/performance validation remain planned.
+target vector calculation engine. The first local migration slice moves
+Shapely, PyProj and Pyogrio into an optional `spatial` extra and adds explicit
+extension provisioning/status and a shared loading lifecycle. Base tabular work
+does not require that extra. Current spatial operations still use the Python
+adapters. Calculation CRS/units, operation migration, reader/writer and
+geometry-policy parity, and capacity/performance validation remain required
+before removing the adapters entirely. This slice is unmerged and unreleased.
 
 The [conversion and type-preservation contract](source-recipes.md#format-conversion-and-source-type-preservation)
 requires metadata-based CRS discovery, preserved source schema, conservative

@@ -13,7 +13,7 @@ existing service and security prerequisites still apply.
 
 ## Current baseline
 
-Moses is a local Python CLI and library with an authenticated read-only loopback API. `Catalog` stores immutable raw captures and Parquet/GeoParquet snapshots under a warehouse directory, with SQLite indexing accepted versions. A failed import does not advance the current-version pointer. The code is an early MVP: its dependency set includes DuckDB, PyArrow, Pyogrio, Shapely, and PyProj, and catalog imports are eager. It has a same-origin read-only catalog GUI, but no durable upload/job execution, thin remote client, or MCP integration.
+Moses is a local Python CLI and library with an authenticated read-only loopback API. `Catalog` stores immutable raw captures and Parquet/GeoParquet snapshots under a warehouse directory, with SQLite indexing accepted versions. A failed import does not advance the current-version pointer. The base package uses DuckDB, PyArrow and PyYAML. Pyogrio, Shapely and PyProj are loaded at spatial feature boundaries through the optional `spatial` extra while the DuckDB Spatial migration proceeds. It has a same-origin read-only catalog GUI, but no durable upload/job execution, thin remote client, or MCP integration.
 
 This turn adds a narrow tabular and inspection path:
 

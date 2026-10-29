@@ -7,7 +7,8 @@ and awaiting review/merge. Populate the warehouse using
 
 ```sh
 export MOSES_TOKEN="$(uv run --locked python -c 'import secrets; print(secrets.token_urlsafe(32))')"
-uv run --locked moses --warehouse my-city serve --port 8765
+uv sync --locked --extra spatial
+uv run --locked --extra spatial moses --warehouse my-city serve --port 8765
 ```
 
 The CLI binds to `127.0.0.1`. All API requests require
@@ -15,6 +16,9 @@ The CLI binds to `127.0.0.1`. All API requests require
 is not printed; `--token-env NAME` selects another environment variable. Keep
 the same variable in the shell used for requests. Stop the server with Ctrl-C.
 Use a freshly generated token for each session when practical.
+
+The `spatial` extra enables map previews through the existing Python adapters.
+Omit that extra for table browsing and Parquet downloads without map rendering.
 
 Open **http://127.0.0.1:8765/** to browse the catalog. Enter the same
 `MOSES_TOKEN` value in the connection form. The token stays in browser memory;

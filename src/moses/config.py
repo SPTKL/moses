@@ -9,15 +9,27 @@ import tomllib
 from pathlib import Path
 from typing import Any
 
-from pyproj import CRS
+from .dependencies import SpatialDependencyError, require_spatial
 
 
 _CONFIG_FILENAME = "config.json"
 
 
-def _validate_crs(value: Any, *, label: str = "CRS") -> str:
+def _validate_crs(value: Any, *, label: str = "CRS", defer_if_unavailable: bool = False) -> str:
+    """Validate CRS shape, deferring semantics only when PyProj is unavailable.
+
+    Reading existing settings must allow base-only tabular work. Spatial readers
+    still require PyProj and validate the deferred string before publication.
+    Explicit configuration writes keep semantic validation mandatory.
+    """
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"{label} must be a non-empty CRS string")
+    try:
+        CRS = require_spatial("pyproj", "CRS validation").CRS
+    except SpatialDependencyError:
+        if defer_if_unavailable:
+            return value.strip()
+        raise
     try:
         return CRS.from_user_input(value).to_string()
     except Exception as exc:
@@ -31,8 +43,9 @@ def _config_path(root: str | Path) -> Path:
 def load_config(root: str | Path) -> dict[str, Any]:
     """Load ``<root>/config.json``; a missing file means empty config.
 
-    Malformed JSON, a non-object root, and an invalid stored default CRS fail
-    clearly instead of silently discarding user configuration.
+    Malformed JSON, a non-object root, and malformed CRS values fail clearly.
+    CRS semantics are checked when PyProj is available; a base-only installation
+    retains a nonempty CRS string until a spatial operation can validate it.
     """
     path = _config_path(root)
     try:
@@ -44,7 +57,7 @@ def load_config(root: str | Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError("Moses config must contain a JSON object")
     if "default_crs" in value and value["default_crs"] is not None:
-        value["default_crs"] = _validate_crs(value["default_crs"], label="stored default CRS")
+        value["default_crs"] = _validate_crs(value["default_crs"], label="stored default CRS", defer_if_unavailable=True)
     return value
 
 
@@ -136,7 +149,7 @@ def _toml_settings(path: Path) -> dict[str, Any] | None:
             raise ValueError(f"Moses TOML config {path}: project.warehouse must be a nonempty path")
         flat["warehouse"] = value
     if "default_crs" in groups["spatial"]:
-        flat["default_crs"] = _validate_crs(groups["spatial"]["default_crs"], label=f"Moses TOML config {path} spatial.default_crs")
+        flat["default_crs"] = _validate_crs(groups["spatial"]["default_crs"], label=f"Moses TOML config {path} spatial.default_crs", defer_if_unavailable=True)
     if "format" in groups["export"]:
         flat["export_format"] = _export_mode(groups["export"]["format"], f"Moses TOML config {path} export.format")
     return flat
@@ -211,13 +224,13 @@ def resolve_warehouse(*, explicit: str | Path | None = None, cwd: str | Path | N
 
 
 def resolve_default_crs(root: str | Path, *, explicit: str | None = None) -> str | None:
-    """Resolve fallback CRS without changing a source's embedded CRS."""
+    """Resolve fallback CRS; defer semantic validation if PyProj is unavailable."""
     file_value, _, _, _, _ = _from_files("default_crs")
     environment = os.environ.get("MOSES_DEFAULT_CRS", "").strip()
     if explicit is not None:
-        return _validate_crs(explicit, label="default CRS")
+        return _validate_crs(explicit, label="default CRS", defer_if_unavailable=True)
     if environment:
-        return _validate_crs(environment, label="MOSES_DEFAULT_CRS")
+        return _validate_crs(environment, label="MOSES_DEFAULT_CRS", defer_if_unavailable=True)
     if file_value is not None:
         return file_value
     return load_config(root).get("default_crs")
@@ -237,7 +250,7 @@ def show_config(*, warehouse: str | Path | None = None) -> dict[str, Any]:
     file_crs, file_origin, _, _, _ = _from_files("default_crs")
     environment = os.environ.get("MOSES_DEFAULT_CRS", "").strip()
     if environment:
-        spatial_value, spatial_origin = _validate_crs(environment, label="MOSES_DEFAULT_CRS"), "environment"
+        spatial_value, spatial_origin = _validate_crs(environment, label="MOSES_DEFAULT_CRS", defer_if_unavailable=True), "environment"
     elif file_crs is not None:
         spatial_value, spatial_origin = file_crs, file_origin
     else:

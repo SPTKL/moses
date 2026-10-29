@@ -47,6 +47,17 @@ def parser():
     config = sub.add_parser("config", help="Inspect effective Moses configuration")
     config_sub = config.add_subparsers(dest="config_command", required=True)
     config_sub.add_parser("show", help="Show effective settings, origins, and config paths")
+    spatial = sub.add_parser("spatial", help="Manage the optional DuckDB Spatial extension")
+    spatial_sub = spatial.add_subparsers(dest="spatial_command", required=True)
+    for action in ("status", "install"):
+        command = spatial_sub.add_parser(
+            action,
+            help="Inspect the local Spatial installation" if action == "status" else "Explicitly download and install Spatial",
+        )
+        command.add_argument("--extension-directory", help="Custom DuckDB extension cache directory")
+        command.add_argument("--expected-version", help="Require this exact Spatial extension version")
+        if action == "install":
+            command.add_argument("--force", action="store_true", help="Replace an existing cached Spatial extension")
     prepare = sub.add_parser("prepare", help="Acquire and homogenize a declarative source recipe")
     prepare.add_argument("recipe", help="Versioned YAML source recipe")
     prepare.add_argument("--extension-directory", default=".extensions")
@@ -126,6 +137,16 @@ def resolve_version(catalog, name, version=None):
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "spatial":
+            from .spatial import install_spatial, spatial_status
+            if args.spatial_command == "status":
+                result = spatial_status(extension_directory=args.extension_directory,
+                                        expected_version=args.expected_version)
+            else:
+                result = install_spatial(extension_directory=args.extension_directory,
+                                         expected_version=args.expected_version, force=args.force)
+            print(json.dumps(result, indent=2))
+            return 0 if result["state"] == "ready" else 1
         from .config import resolve_warehouse
         warehouse_option = args.warehouse
         args.warehouse = resolve_warehouse(explicit=args.warehouse)["warehouse"]

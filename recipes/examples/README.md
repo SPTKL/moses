@@ -1,6 +1,7 @@
 # Generic source recipes
 
-From the repository root, run `uv run --locked moses prepare recipes/examples/points.yml` for
+From the repository root, run `uv sync --locked --extra spatial`, then
+`uv run --locked --extra spatial moses prepare recipes/examples/points.yml` for
 local XY construction. `catalog-normalize.yml` requires an existing exact
 catalog version. `address-points.yml` requires the explicit installed native
 extension digest, bundle ID and runtime paths; its placeholder values do not
