@@ -1,79 +1,104 @@
-# PLUTO
+# Build PLUTO with Moses and dbt
 
-This standalone PLUTO example lives at `examples/pluto` in the Moses repository and remains a separately installable Python package. It includes an ordinary DuckDB dbt project and transforms prepared inputs into PLUTO
-attributes, mapped geometries, correction audits and QA outputs through 38 business
-process models. The dbt models do not acquire data or run native geocoding.
+This is a full-release example of using Moses to bring source data into a
+project, dbt to turn it into PLUTO, and a small export script to deliver the
+results. Start with the recipe and SQL; you do not need to understand the
+Python implementation to run the workflow.
 
-From the Moses repository root, change to `examples/pluto` and sync the shared workspace lock. The PLUTO member uses the local `moses-geo` workspace package and the locked dbt dependencies. Install [uv](https://docs.astral.sh/uv/getting-started/installation/) first.
+| Step | What happens | Command |
+| --- | --- | --- |
+| Ingest and prepare | Moses and the PLUTO source adapters capture release inputs, record their versions, and prepare typed tables. | `make ingest`, then `make prepare` |
+| Transform | dbt builds PLUTO attributes, geometries, corrections, and QA reports. | `make build` |
+| Export | The export script reads the completed build and writes delivery files. | `make export` |
+
+These are the full 26v2 inputs and the 38-model PLUTO build, not a sample.
+The result is a reconstructed candidate; remaining historical-input and
+production-parity limits are documented in the [full-build guide](docs/pluto-full-build.md).
+
+## Set up once
+
+You need:
+
+- **uv and make** to install the locked dependencies and run the commands.
+- **A NYCPlanning/data-engineering checkout** containing release commit
+  `32bc98f632f15e7182933a17fb61ecf74e853518`, used read-only for the release seeds.
+- **Source access** for the release inputs, or an existing complete capture cache
+  for offline ingestion. The workflow records unavailable sources and stops on
+  ingestion errors.
+- **Installed native dependencies:** DuckDB Spatial compatible with the locked
+  DuckDB version, plus the Geosupport extension and bundle required for native
+  preparation. Supply the release, runtime, and paths explicitly; the build
+  does not download or choose a native runtime for you.
+
+From this folder:
 
 ```sh
-cd examples/pluto
 uv sync --locked
+cp config.mk.example config.mk
 ```
 
-Provide an installed DuckDB Spatial extension compatible with that DuckDB version. Builds do not install packages or download extensions.
+Edit `config.mk` with your source checkout and native dependency paths.
+The default locations are `.moses/captures/26v2`, `.moses/warehouse`,
+`.moses/prepared/26v2`, `.moses/build/pluto.duckdb`, and `.moses/exports/26v2`.
+The template lets you override these paths. It is local configuration and is ignored by Git. Use
+absolute paths when reusing an existing warehouse or capture cache.
 
-Prepare the locked release from this root using your captured source warehouse and lock:
+If you need to install Spatial in the default extension directory, run:
 
 ```sh
-uv run --locked pluto-example --warehouse /absolute/path/to/warehouse \
-  prepare recipes/26v2.yml \
-  --lock /absolute/path/to/inputs.lock.json \
-  --output-dir /absolute/path/to/prepared \
-  --extension-directory /absolute/path/to/installed/extensions
+uv run --locked moses spatial install --extension-directory .extensions
 ```
 
-Native geocoding needs the release and Geosupport options described in the [full-build guide](docs/pluto-full-build.md). Existing Moses `.moses/` warehouses and `.extensions/` installations stay in place during migration: pass their absolute paths to `--warehouse`, `--lock`, and `--extension-directory`. Historical manifests keep their recorded source paths and provenance; copying those directories is not part of this example.
+Geosupport is a separate prerequisite; select an already installed bundle and
+its matching native extension in `config.mk`.
+
+## Run the full workflow
 
 ```sh
-export PLUTO_INPUT_DATABASE=/absolute/path/to/prepared/prepared.duckdb
-export PLUTO_OUTPUT_DATABASE=/absolute/path/to/pluto-output.duckdb
-export PLUTO_SPATIAL_DIRECTORY=/absolute/path/to/installed/extensions
-
-uv run --locked dbt build --project-dir dbt --profiles-dir dbt
+make ingest
+make prepare
+make build
+make export
 ```
 
-The prepared database is attached read-only as `prepared`. Results are written to
-the separate output database. The first hook validates all 42 source tables and
-650 column names, types and positions against
-[contract.yml](dbt/models/contract.yml). It rejects a writable input attachment,
-missing tables and incompatible schemas before business models execute.
-The input also contains one `preparation.identity` row with an immutable
-`input_id` and `descriptor_sha256`. PLUTO example preparation writes this receipt; another preparation tool can
-provide the same contract without installing Moses.
+`make ingest` captures the release's 38 sources and 11 seeds and imports them
+through Moses. It writes the exact input lock to `CACHE/production-ingestion.json`.
+`make prepare` applies [the recipe](recipes/26v2.yml), including native geocoding,
+and publishes the 42 tables consumed by dbt.
 
-Preparation owns physical source cleaning, seed typing, native geocoding and
-input locks. The dbt project retains PLUTO staging projections and business rules.
-Once the prepared database exists, dbt needs no Moses catalog, upstream checkout, or network service.
+`make build` runs ordinary dbt against those prepared tables. It attaches the
+input database read-only, checks its schema, and builds the PLUTO outputs.
+The candidate and previous-release labels are explicit settings in `config.mk`;
+changing labels does not select different source data from the lock.
 
-Set `pluto_version` and `previous_pluto_version` explicitly when building a release:
+`make export` writes tabular CSV/Parquet, correction and QA CSVs, and clipped and
+unclipped GeoParquet in EPSG:2263: 13 data files plus an export manifest. It checks
+that the full dbt build succeeded and that the prepared input identity matches.
 
-```sh
-uv run --locked dbt build --project-dir dbt --profiles-dir dbt \
-  --vars '{pluto_version: 26v2m4, previous_pluto_version: 26v1}'
-```
+Each command is independent. Running `make build` again does not fetch inputs
+or rerun geocoding. For a complete existing capture cache, use
+`make ingest OFFLINE=1`. If you already have a prepared database, configure its
+`PREPARED_DIR` and start at `make build`. Preparation requires a new output
+directory; export refuses existing files. Choose new output paths for a new run.
 
-`export_pluto` contains the typed tabular result; `mappluto` and
-`mappluto_unclipped` contain geometry outputs. Applied/rejected corrections,
-removed records and six `qaqc_*` relations remain available in the output database.
-See [the process guide](dbt/README.md) for the business DAG and model descriptions.
+`make help` lists the steps. The [Makefile](Makefile) contains the underlying
+`uv run` commands, so you can run each tool directly or adapt the workflow.
+The [full-build guide](docs/pluto-full-build.md) also covers migration from a
+verified legacy source cache and detailed validation evidence.
 
-CAMA matches and the ZIP fallback use documented canonical identity/payload
-ordering. Other upstream unordered choices remain a replay limitation. Numeric
-and spatial compatibility policies are recorded in [provenance.json](dbt/provenance.json).
+## What to change
 
-Optional file exports read the completed output database without running models. Build a distributable example package from this directory with `uv build --package pluto-example`:
+- **Inputs and physical cleanup:** [recipes/26v2.yml](recipes/26v2.yml).
+- **PLUTO business rules:** [dbt/models](dbt/models), with shared SQL in
+  [dbt/macros](dbt/macros). See the [model guide](dbt/README.md).
+- **Delivery formats:** [export.py](export.py).
 
-```sh
-uv run --locked python export.py --output-dir /absolute/path/to/exports
-```
+`src/pluto_example` contains the existing source adapters and compatibility
+code. `scripts`, `tests`, and `docs` retain diagnostics, regression checks, and
+build evidence. The embedded dbt projects under `src` support historical
+workflows; `make build` uses only the top-level `dbt/` project.
 
-This writes tabular CSV/Parquet, correction and QA CSVs, and two GeoParquet files
-with explicit EPSG:2263 metadata. Existing files require `--overwrite`.
-Exports require a successful full 38-model invocation and the same prepared
-publication identity recorded by that invocation. A partial `--select` build
-does not certify a complete export. Identity prevents accidental warehouse
-mix-ups; the preparation manifest's database SHA256 is the separate content
-integrity check for copies or externally modified files.
-
-The [full-build guide](docs/pluto-full-build.md) records the current split workflow. The other [evidence documents](docs/) describe earlier Moses-based runs; their recorded paths and commands are historical. [Case-study scripts](scripts/README.md) are optional diagnostics.
+Input locks, preparation receipts, and [model provenance](dbt/provenance.json)
+keep the data and transformations traceable. The current build still uses
+DuckDB files. DuckLake with a DuckDB metadata catalog is the intended default,
+but that storage migration has not been implemented here.

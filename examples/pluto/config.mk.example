@@ -1,0 +1,26 @@
+# Copy to config.mk. Set the upstream checkout and your installed native runtime.
+# Paths with spaces or apostrophes are accepted. Do not add shell quotes here.
+SOURCE_REPO :=
+GEOSUPPORT_RELEASE :=
+GEOSUPPORT_EXTENSION :=
+GEOSUPPORT_HOME :=
+# Use local or docker.
+GEOSUPPORT_RUNTIME :=
+
+# Optional path overrides. Defaults are local to examples/pluto/.moses.
+# WAREHOUSE := /absolute/path/to/warehouse
+# CACHE := /absolute/path/to/captures/26v2
+# INPUT_LOCK := $(CACHE)/production-ingestion.json
+# PREPARED_DIR := /absolute/path/to/new/prepared
+# OUTPUT_DATABASE := /absolute/path/to/pluto.duckdb
+# EXPORT_DIR := /absolute/path/to/new/exports
+# EXTENSION_DIRECTORY := /absolute/path/to/installed/extensions
+
+# Pinned source release. Candidate and previous are dbt labels; changing them
+# does not select different locked source data.
+RELEASE := 26v2
+CANDIDATE_VERSION := 26v2m4
+PREVIOUS_RELEASE := 26v1
+
+# Set to 1 for ingestion from previously captured sources without network access.
+OFFLINE := 0
