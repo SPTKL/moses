@@ -2,13 +2,13 @@
 
 **Local-first, versioned geospatial ELT.** Turn vector files and NYC Open Data into queryable tables, keep their history, and publish accepted versions when you need shared infrastructure.
 
-Moses starts with an ordinary directory. No Docker, database server, cloud account, or DuckDB extension download is needed for local ingestion, history, SQL, or export. Python dependencies include native wheels; installing those dependencies requires internet access or a prepared wheelhouse.
+Moses starts with an ordinary directory. No Docker, database server, cloud account, or DuckDB extension download is needed for local tabular ingestion, history, SQL, or Parquet export. The base install uses DuckDB, PyArrow and PyYAML; it does not require Shapely, Pyogrio or PyProj. Installing Python dependencies requires internet access or a prepared wheelhouse.
 
-DuckDB currently runs queries over accepted snapshots. Vector file I/O still uses
-Pyogrio, geometry construction and validation use Shapely, and CRS metadata and
-map-preview reprojection use PyProj. Moving these operations to DuckDB Spatial is
-[planned backend work](docs/source-recipes.md#duckdb-spatial-as-the-geospatial-engine);
-these dependencies remain required until that migration is implemented and validated.
+DuckDB currently runs queries over accepted snapshots. Spatial ingestion, CRS
+validation, FileGDB export and map previews use the optional `spatial` Python
+extra, which retains Pyogrio, Shapely and PyProj during the migration. The new
+DuckDB Spatial setup commands prepare the replacement engine; they do not yet
+replace those adapters. See the [migration stages](docs/source-recipes.md#duckdb-spatial-as-the-geospatial-engine).
 
 This is an early, working MVP. The distribution is provisionally named `moses-geo`, with Python import and CLI name `moses`. It has **not been published to PyPI**, and name availability has not been reserved.
 
@@ -26,22 +26,54 @@ For this checkout, install [uv](https://docs.astral.sh/uv/getting-started/instal
 ```sh
 uv sync --locked
 uv run --locked moses init
-uv run --locked moses demo
-uv run --locked moses query 'SELECT id, name FROM places'
-uv run --locked moses history places
-uv run --locked moses export places places.parquet
+uv run --locked moses load recipes/examples/points.csv --name records --key record_id
+uv run --locked moses query 'SELECT * FROM records'
+uv run --locked moses history records
+uv run --locked moses export records records.parquet
 ```
 
-The bundled demo contains two **synthetic** NYC points. It runs offline after installation. The default warehouse is `.moses/` in the current directory. To choose another directory, put `--warehouse path` before the command.
+This loads the bundled CSV as an ordinary table, retaining coordinates as
+attributes. The default warehouse is `.moses/` in the current directory. To
+choose another directory, put `--warehouse path` before the command.
+
+For spatial operations, including the two-point **synthetic** map demo, enable
+the optional adapter stack. Keep the same extra on subsequent `uv run` commands
+that need geometry or CRS support:
 
 ```sh
-uv run --locked moses --warehouse my-city load boroughs.geojson --name boroughs --key borocode
-uv run --locked moses --warehouse my-city load buildings.gpkg --layer footprints --name buildings --key bin
-uv run --locked moses --warehouse my-city load points.csv --name trees --key tree_id --x longitude --y latitude
+uv sync --locked --extra spatial
+uv run --locked --extra spatial moses demo
+```
+
+```sh
+uv run --locked --extra spatial moses --warehouse my-city load boroughs.geojson --name boroughs --key borocode
+uv run --locked --extra spatial moses --warehouse my-city load buildings.gpkg --layer footprints --name buildings --key bin
+uv run --locked --extra spatial moses --warehouse my-city load points.csv --name trees --key tree_id --x longitude --y latitude
 uv run --locked moses --warehouse my-city list
 ```
 
 Use an actual unique, non-null identifier in your source. Omit `--key` when none exists; diffs will then count added and removed rows without inferring updates. CSV/TSV attributes remain strings by default to protect identifiers such as `001`.
+
+To prepare DuckDB Spatial for the upcoming backend migration, use the base
+installation and an explicit cache directory:
+
+```sh
+uv run --locked moses spatial status --extension-directory .extensions
+# Explicit network setup, only when the matching extension is not cached:
+uv run --locked moses spatial install --extension-directory .extensions
+```
+
+Status and normal engine loading never install extensions. An offline machine
+can use a prepopulated cache for its DuckDB version and platform. Installing this
+extension does not yet enable spatial ingestion without the Python `spatial`
+extra. DuckDB and PyArrow remain native wheel dependencies in the base install.
+`MOSES_EXTENSION_DIRECTORY` supplies a cache when no command-line directory is
+given. Use `--expected-version VERSION` to reject a different Spatial extension
+identity; this validates the installed copy rather than downloading that exact
+revision. Explicit `spatial install --force` replaces an incompatible cached copy.
+Existing default-CRS strings can be read by the base install. Without PyProj,
+their semantic validation is deferred until spatial use; setting a new CRS
+through the CLI still requires the Python `spatial` extra.
 
 ## Inspect and load tabular data
 
@@ -129,8 +161,8 @@ to `Catalog.ingest` or `inspect_source`.
 Set a fallback source projection per warehouse or process:
 
 ```sh
-uv run --locked moses --warehouse my-city init --default-crs EPSG:2263
-MOSES_DEFAULT_CRS=EPSG:3857 uv run --locked moses --warehouse my-city inspect points.csv --x x --y y
+uv run --locked --extra spatial moses --warehouse my-city init --default-crs EPSG:2263
+MOSES_DEFAULT_CRS=EPSG:3857 uv run --locked --extra spatial moses --warehouse my-city inspect points.csv --x x --y y
 ```
 
 `init --default-crs` retains the legacy `<warehouse>/config.json` setting. For
@@ -143,7 +175,7 @@ table. CSV/TSV coordinates retain the legacy EPSG:4326 fallback when no CRS is
 supplied; inspection and new manifests label that assumption with a warning.
 Coordinate ranges cannot reliably identify a projected CRS.
 
-The [local service](docs/local-service.md) provides a browser catalog GUI and authenticated read-only API with opaque resource IDs. Run `uv run --locked moses --warehouse my-city serve --port 8765` with `MOSES_TOKEN` set, open `http://127.0.0.1:8765/`, and enter the token to browse datasets, history, schemas, bounded table/map previews, feature details, comparisons, and Parquet downloads. The [service architecture and rollout](docs/service-architecture.md) describes the remaining guided loader, durable upload jobs, lightweight client, container deployment, and MCP bridge. The [Explore feature plan](docs/query-map-workspace.md) adds a lightweight SQL editor, results table, and geospatial map with multiple layers, saved queries, and version-pinned previews. Single-version dataset mapping is implemented locally; the full query workspace follows the service foundation and precedes hosted access/MCP.
+The [local service](docs/local-service.md) provides a browser catalog GUI and authenticated read-only API with opaque resource IDs. Run `uv run --locked --extra spatial moses --warehouse my-city serve --port 8765` with `MOSES_TOKEN` set, open `http://127.0.0.1:8765/`, and enter the token to browse datasets, history, schemas, bounded table/map previews, feature details, comparisons, and Parquet downloads. The [service architecture and rollout](docs/service-architecture.md) describes the remaining guided loader, durable upload jobs, lightweight client, container deployment, and MCP bridge. The [Explore feature plan](docs/query-map-workspace.md) adds a lightweight SQL editor, results table, and geospatial map with multiple layers, saved queries, and version-pinned previews. Single-version dataset mapping is implemented locally; the full query workspace follows the service foundation and precedes hosted access/MCP.
 
 Track delivery in the [Moses GitHub project](https://github.com/users/SPTKL/projects/1), the [pinned roadmap issue](https://github.com/SPTKL/moses/issues/1), and the [milestone index](docs/roadmap.md). Implementation tickets include acceptance criteria and prerequisite links; GitHub carries the current delivery status.
 
@@ -156,9 +188,9 @@ directory. Select a layer explicitly when the source contains multiple layers;
 an ambiguous selection reports the available names.
 
 ```sh
-uv run --locked moses inspect city.gdb --layer parcels
-uv run --locked moses load city.gdb --layer parcels --name parcels --key parcel_id
-uv run --locked moses load city.gdb.zip --layer parcels --name parcels --key parcel_id
+uv run --locked --extra spatial moses inspect city.gdb --layer parcels
+uv run --locked --extra spatial moses load city.gdb --layer parcels --name parcels --key parcel_id
+uv run --locked --extra spatial moses load city.gdb.zip --layer parcels --name parcels --key parcel_id
 ```
 
 Imports preserve the selected layer's reader-provided attribute types and CRS.
@@ -176,7 +208,7 @@ Export one exact accepted version to a new directory, using the version ID
 reported by `load` or `history`:
 
 ```sh
-uv run --locked moses export parcels delivery.gdb --format FileGDB --layer parcels --version VERSION_ID
+uv run --locked --extra spatial moses export parcels delivery.gdb --format FileGDB --layer parcels --version VERSION_ID
 ```
 
 Export targets ArcGIS Pro 3.2 or later, preserves source CRS, and refuses to
@@ -189,7 +221,7 @@ personal `.mdb`, raster geodatabases and ZIP export are not supported.
 ## Real NYC Open Data
 
 ```sh
-uv run --locked moses nyc gthc-hcne --name boroughs --key borocode
+uv run --locked --extra spatial moses nyc gthc-hcne --name boroughs --key borocode
 uv run --locked moses query 'SELECT boroname FROM boroughs ORDER BY boroname'
 ```
 

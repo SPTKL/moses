@@ -9,14 +9,13 @@ import tempfile
 
 import pyarrow as pa
 import pyarrow.parquet as pq
-import pyogrio
-import shapely
-from pyproj import CRS
+from .dependencies import require_spatial
 
 
 def _geometry_structure(value):
     if value is None:
         return None
+    shapely = require_spatial("shapely", "FileGDB geometry verification")
     geom = shapely.from_wkb(value)
     dimensions = (geom.geom_type, geom.has_z, geom.has_m, geom.is_empty)
     if geom.geom_type == 'Polygon':
@@ -31,6 +30,7 @@ def _geometry_structure(value):
 def _verify_filegdb(table, staged, layer, geometry, crs):
     from .ingest import read_vector
 
+    pyogrio = require_spatial("pyogrio", "FileGDB export verification")
     layers = pyogrio.list_layers(staged)
     if [str(item[0]) for item in layers] != [layer]:
         raise ValueError('FileGDB driver changed the requested layer name')
@@ -46,6 +46,7 @@ def _verify_filegdb(table, staged, layer, geometry, crs):
         if not table[field.name].equals(result[field.name]):
             raise ValueError(f'FileGDB export changed values or nulls in field {field.name!r}')
     if geometry:
+        CRS = require_spatial("pyproj", "FileGDB CRS verification").CRS
         if metadata.get('crs') is None or not CRS.from_user_input(crs).equals(CRS.from_user_input(metadata['crs'])):
             raise ValueError('FileGDB export changed the CRS')
         if any(_geometry_structure(before) != _geometry_structure(after)
@@ -68,12 +69,14 @@ def export_filegdb(catalog, name, destination, *, version, layer):
         raise ValueError('FileGDB export destination must end in .gdb')
     if destination.exists() or destination.is_symlink():
         raise ValueError(f'Destination already exists: {destination}')
+    pyogrio = require_spatial("pyogrio", "FileGDB export")
     manifest = catalog.get_version(name, version)
     table = pq.read_table(manifest['parquet_path'])
     geometry = manifest.get('geometry_column')
     geometry_type = None
     crs = None
     if geometry:
+        CRS = require_spatial("pyproj", "FileGDB spatial export").CRS
         geo = json.loads(table.schema.metadata[b'geo'])['columns'][geometry]
         kinds = geo.get('geometry_types', [])
         supported = {'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'}

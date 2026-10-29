@@ -272,15 +272,30 @@ extension_directory = "./.moses/extensions"
 # calculation_crs = "EPSG:2263"
 ```
 
-Spatial is required for the migrated spatial operations, independently of the
-recipe-registry extra. Python package installation alone does not install the
-DuckDB extension binary. Add a proposed `moses init --install-spatial` setup path
-that installs the official extension compatible with the actual DuckDB version
-and platform into the configured cache. Support an existing offline cache too.
-Normal runs load the verified installed extension and report missing/incompatible
-versions clearly, without downloading or silently falling back to another
-geometry engine. Tabular work remains usable without Spatial. DuckDB documents
-separate [installation and loading](https://duckdb.org/docs/1.5/core_extensions/spatial/overview).
+The first migration slice separates installation requirements: the base package
+supports tabular work without Shapely, Pyogrio or PyProj. The optional Python
+`moses-geo[spatial]` extra retains the existing adapters for geometry ingestion,
+CRS validation, map previews and FileGDB output. This extra and the DuckDB Spatial
+extension are separate installations during the transition.
+
+The shared engine lifecycle provides `moses spatial status` and explicit
+`moses spatial install`, both accepting `--extension-directory PATH`. Installation
+uses the official extension compatible with the actual DuckDB version and
+platform. Status and normal loading disable automatic installation/loading and
+report missing or incompatible capability without downloading or falling back.
+An existing offline cache is supported. Python package installation alone does
+not install the DuckDB extension. DuckDB documents separate
+[installation and loading](https://duckdb.org/docs/1.5/core_extensions/spatial/overview).
+Project-level extension settings shown above and geometry execution migration
+remain follow-up work; the setup command does not switch ingestion backends.
+`MOSES_EXTENSION_DIRECTORY` is the fallback cache location; an explicit directory
+wins. `--expected-version VERSION` checks the extension identity before loading,
+and `install --force` explicitly replaces a cached binary. The version check
+does not select a historical extension for download. Without PyProj, stored or
+environment default CRS values receive string/structure checks while semantic
+CRS validation is deferred until spatial use. This keeps existing configured
+projects usable for tabular work. Explicit CRS-setting commands and spatial
+ingestion still require the Python `spatial` extra for full validation.
 
 Migrate the current Shapely/PyProj calculations in stages, then evaluate whether
 Pyogrio can also be replaced for the supported vector formats. Keep existing
@@ -300,8 +315,9 @@ resource limits still apply.
 `04270fe` with DuckDB `1.5.6`, calculated a synthetic square's area as 100, returned
 true for an interior-point intersection, and transformed a longitude/latitude
 point from EPSG:4326 to EPSG:2263. This confirms basic local capability, not engine
-migration, numerical parity or citywide capacity. Moses still uses Shapely,
-PyProj and Pyogrio today; no dependency or execution backend changed here. The
+migration, numerical parity or citywide capacity. The first implementation slice
+now makes Shapely, PyProj and Pyogrio optional and adds the shared engine lifecycle;
+spatial processing still uses those adapters when the extra is installed. The
 references use DuckDB 1.5 to match the package's current `>=1.5,<2` constraint;
 an upgrade requires separate compatibility validation.
 
@@ -446,6 +462,17 @@ types; its date-looking string was inferred as DATE by default and stayed
 VARCHAR with `DATE_AS_STRING=YES`. These checks cover small fixtures, not full
 format fidelity or arbitrary numeric precision. The preservation and conversion
 policies above remain planned Moses backend work.
+
+The first migration slice was also exercised from an installed Moses wheel in
+an unrelated temporary project with only DuckDB 1.5.6, PyArrow and PyYAML:
+Shapely, Pyogrio, PyProj, GeoPandas and NumPy were absent. CSV inspection,
+ingestion, SQL, Parquet export and a tabular source recipe passed. Loading the
+existing Spatial `04270fe` cache required no download. The same environment
+created and reread one-point OpenFileGDB and Shapefile outputs, preserving
+`"001"` and integer `12`; coordinate differences were below `1e-10` degrees.
+This is a local macOS smoke check, not Linux/Windows execution evidence or full
+writer parity. Cross-platform base-install smoke jobs accompany the existing
+full-adapter CI matrix; their results must be checked on the reviewed revision.
 
 ## Community recipe registry
 
@@ -740,10 +767,10 @@ warehouse. Configuration extensions marked planned above remain unimplemented.
 Install the optional REST backend when needed:
 
 ```sh
-uv sync --locked --extra dlt
-uv run --locked moses --warehouse .moses prepare recipes/examples/points.yml
-uv run --locked --extra dlt moses --warehouse .moses prepare recipes/examples/dlt-rest.yml
-PYTHONPATH=recipes/examples uv run --locked moses prepare recipes/examples/trusted-python.yml
+uv sync --locked --extra spatial --extra dlt
+uv run --locked --extra spatial --extra dlt moses --warehouse .moses prepare recipes/examples/points.yml
+uv run --locked --extra spatial --extra dlt moses --warehouse .moses prepare recipes/examples/dlt-rest.yml
+PYTHONPATH=recipes/examples uv run --locked --extra spatial --extra dlt moses prepare recipes/examples/trusted-python.yml
 ```
 
 The REST example contacts a public API; the point and Python examples run

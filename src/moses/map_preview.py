@@ -10,9 +10,7 @@ import math
 from pathlib import Path
 
 import pyarrow.parquet as pq
-from pyproj import CRS, Transformer
-from shapely import from_wkb, get_num_coordinates, transform
-from shapely.geometry import mapping
+from .dependencies import SpatialDependencyError, require_spatial
 
 
 MAX_FEATURES = 1000
@@ -104,13 +102,15 @@ def _paths(coordinates: object):
             yield from _paths(item)
 
 
-def _display_geometry(geom, transformer: Transformer) -> tuple[dict | None, str | None, bool]:
+def _display_geometry(geom, transformer) -> tuple[dict | None, str | None, bool]:
     if geom.is_empty:
         return None, "empty", False
     if geom.geom_type not in _SUPPORTED:
         return None, "unsupported", False
     if not geom.is_valid:
         return None, "invalid", False
+    transform = require_spatial("shapely", "Map preview").transform
+    mapping = require_spatial("shapely.geometry", "Map preview").mapping
     has_z = bool(geom.has_z)
     try:
         # Drop Z on the display copy. The accepted WKB is never rewritten.
@@ -156,8 +156,13 @@ def build_map_preview(path: Path, manifest: dict, *, limit: int = 500) -> dict:
     if not isinstance(crs_text, str) or not crs_text.strip():
         raise MapPreviewError(422, "unknown_crs", "A source CRS is required to display geometry")
     try:
-        source_crs = CRS.from_user_input(crs_text)
-        transformer = Transformer.from_crs(source_crs, CRS.from_epsg(4326), always_xy=True)
+        pyproj = require_spatial("pyproj", "Map preview")
+        shapely = require_spatial("shapely", "Map preview")
+    except SpatialDependencyError as exc:
+        raise MapPreviewError(422, "spatial_dependencies_required", str(exc)) from exc
+    try:
+        source_crs = pyproj.CRS.from_user_input(crs_text)
+        transformer = pyproj.Transformer.from_crs(source_crs, pyproj.CRS.from_epsg(4326), always_xy=True)
     except Exception as exc:
         raise MapPreviewError(422, "invalid_crs", "The source CRS cannot be transformed to EPSG:4326") from exc
     if not isinstance(limit, int) or isinstance(limit, bool) or not 1 <= limit <= MAX_FEATURES:
@@ -192,13 +197,13 @@ def build_map_preview(path: Path, manifest: dict, *, limit: int = 500) -> dict:
                 omissions["oversized_geometry"] += 1
                 continue
             try:
-                geom = from_wkb(raw, on_invalid="ignore")
+                geom = shapely.from_wkb(raw, on_invalid="ignore")
             except Exception:
                 geom = None
             if geom is None:
                 omissions["invalid"] += 1
                 continue
-            coordinate_count = get_num_coordinates(geom)
+            coordinate_count = shapely.get_num_coordinates(geom)
             if coordinate_count > MAX_FEATURE_COORDINATES:
                 omissions["oversized_coordinates"] += 1
                 continue

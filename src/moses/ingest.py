@@ -22,9 +22,7 @@ from typing import Any
 import pyarrow as pa
 import pyarrow.csv as pacsv
 import pyarrow.parquet as pq
-import pyogrio
-import shapely
-from pyproj import CRS
+from .dependencies import require_spatial
 
 from .recipes import apply_types, canonical_types, selected_format
 from .column_names import column_name_map
@@ -40,6 +38,7 @@ _GEOPARQUET_GEOMETRY_TYPES = {
 def _json_crs(crs: Any) -> dict[str, Any] | None:
     if crs is None:
         return None
+    CRS = require_spatial("pyproj", "Geometry CRS metadata").CRS
     parsed = CRS.from_user_input(crs)
     return parsed.to_json_dict()
 
@@ -50,6 +49,7 @@ def _geo_metadata(
     crs: Any,
     declared_geometry_types: list[str] | None = None,
 ) -> dict[str, str]:
+    shapely = require_spatial("shapely", "Geometry metadata")
     # GeoParquet 1.1 requires CRS to be explicit; null means unknown CRS.
     geom_types: set[str] = set()
     values = table[geom_name].to_pylist()
@@ -88,6 +88,7 @@ def _with_canonical_geometry(
     crs: Any,
     declared_geometry_types: list[str] | None = None,
 ) -> pa.Table:
+    shapely = require_spatial("shapely", "Geometry ingestion")
     names = table.column_names
     geom_fields = [name for name in names if name == source_geometry]
     if len(geom_fields) != 1:
@@ -160,6 +161,7 @@ def _read_csv(
         raise ValueError(f"coordinate columns {x!r} and {y!r} must exist")
     if "geometry" in table.column_names:
         raise ValueError("CSV already has a geometry column")
+    shapely = require_spatial("shapely", "CSV/TSV coordinate ingestion")
     coords: list[bytes | None] = []
     for rowno, (raw_x, raw_y) in enumerate(zip(table[x].to_pylist(), table[y].to_pylist()), 2):
         sx = "" if raw_x is None else str(raw_x).strip()
@@ -246,6 +248,7 @@ def _infer_tabular_types(table: pa.Table, *, exclude: set[str] | None = None) ->
 
 
 def _source_layers(path: Path) -> list[str]:
+    pyogrio = require_spatial("pyogrio", "Vector layer inspection")
     try:
         layers = pyogrio.list_layers(path)
     except Exception as exc:
@@ -392,6 +395,7 @@ def read_vector(
     warnings: list[str] = []
     declared_geometry_types: list[str] | None = None
     if ext in {".gdb", ".gdb.zip"}:
+        pyogrio = require_spatial("pyogrio", "FileGDB ingestion")
         from .filegdb import directory_files, reader_directory
         if x is not None or y is not None:
             raise ValueError("x and y are only supported for CSV/TSV sources")
@@ -457,6 +461,7 @@ def read_vector(
             src_crs = None
             fmt, files = "Parquet", [str(source.resolve())]
         else:
+            CRS = require_spatial("pyproj", "GeoParquet ingestion").CRS
             try:
                 geo = json.loads(raw_geo)
                 columns = geo["columns"]
@@ -487,6 +492,7 @@ def read_vector(
                 raise ValueError("invalid GeoParquet metadata") from exc
             fmt, files = "GeoParquet", [str(source.resolve())]
     else:
+        pyogrio = require_spatial("pyogrio", "Vector ingestion")
         if x is not None or y is not None:
             raise ValueError("x and y are only supported for CSV/TSV sources")
         if ext == ".zip":
@@ -565,6 +571,8 @@ def read_vector(
     if geom_name is None and crs is not None:
         raise ValueError("crs requires a geometry column")
     crs_source: str | None = "source" if src_crs is not None else ("unknown" if geom_name is not None else None)
+    if geom_name is not None:
+        CRS = require_spatial("pyproj", "Geometry ingestion").CRS
     if src_crs is not None and crs is not None:
         if not CRS.from_user_input(src_crs).equals(CRS.from_user_input(crs)):
             raise ValueError("supplied crs conflicts with the source CRS")

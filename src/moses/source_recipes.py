@@ -27,8 +27,7 @@ import zipfile
 import duckdb
 import pyarrow as pa
 import pyarrow.parquet as pq
-from pyproj import CRS
-import shapely
+from .dependencies import require_spatial
 
 from .catalog import Catalog
 from .ingest import _shapefile_sources, _with_canonical_geometry, read_vector
@@ -255,6 +254,7 @@ def validate_recipe(recipe):
     if 'geometry' in value and 'geosupport' in value:
         raise SourceRecipeError('Choose geometry construction or geosupport, not both')
     if 'geometry' in value:
+        CRS = require_spatial('pyproj', 'Source recipe geometry validation').CRS
         geometry = _mapping(value['geometry'], ('x', 'y', 'column', 'crs', 'on_null', 'on_invalid'), ('crs', 'on_null', 'on_invalid'), where='geometry')
         if ('column' in geometry) == ('x' in geometry or 'y' in geometry):
             raise SourceRecipeError('Geometry needs either column (WKB) or both x and y')
@@ -610,6 +610,8 @@ def _normalize(table, options):
 
 
 def _geometry(table, config):
+    CRS = require_spatial('pyproj', 'Source recipe geometry construction').CRS
+    shapely = require_spatial('shapely', 'Source recipe geometry construction')
     columns = [config['column']] if 'column' in config else [config['x'], config['y']]
     if missing := set(columns) - set(table.column_names):
         raise SourceRecipeError(f'Geometry input fields are absent: {sorted(missing)}')
@@ -827,8 +829,14 @@ def prepare_recipe(recipe_or_path, catalog: Catalog, *, base_directory=None,
                                           for item in read_metadata['source_files'] if Path(item) != original]
         prepared = stage / 'prepared.parquet'
         pq.write_table(table, prepared)
+        dependencies = {}
+        for name in ('pyarrow', 'duckdb', 'shapely', 'pyproj', 'pyogrio'):
+            try:
+                dependencies[name] = package_metadata.version(name)
+            except package_metadata.PackageNotFoundError:
+                pass
         engine = {'module': __name__, 'code_sha256': _hash(__file__),
-                  'dependencies': {name: package_metadata.version(name) for name in ('pyarrow', 'duckdb', 'shapely', 'pyproj')}}
+                  'dependencies': dependencies}
         provenance = {'source_recipe': {'schema_version': 1, 'recipe_sha256': fingerprint, 'recipe': recipe,
                                         'engine': engine,
                                         'source': source, 'normalization': normalization}}
