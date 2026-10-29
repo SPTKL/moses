@@ -17,7 +17,12 @@ dependencies = [
 [project.optional-dependencies]
 dlt = ["dlt>=1.31,<1.32"]
 s3 = ["boto3>=1.36,<2"]
-dev = ["pytest>=8,<10", "build>=1.2", "hatchling>=1.27"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10"]
+
+[tool.uv.workspace]
+members = ["examples/pluto"]
 
 [project.scripts]
 moses = "moses.cli:main"

@@ -1,12 +1,12 @@
 # Generic source recipes
 
-From the repository root, run `moses prepare recipes/examples/points.yml` for
+From the repository root, run `uv run --locked moses prepare recipes/examples/points.yml` for
 local XY construction. `catalog-normalize.yml` requires an existing exact
 catalog version. `address-points.yml` requires the explicit installed native
 extension digest, bundle ID and runtime paths; its placeholder values do not
 select or install a runtime automatically.
 
-`dlt-rest.yml` uses the optional `moses-geo[dlt]` extra, tested with dlt 1.31.0.
+`dlt-rest.yml` uses the optional `moses-geo[dlt]` extra (`uv sync --locked --extra dlt`), tested with dlt 1.31.0.
 The `client`, `resource_defaults` and `resources` configuration follows
 [dlt REST resources](https://dlthub.com/docs/dlt-ecosystem/verified-sources/rest_api/basic).
 `source.resource` selects one resource; recipe `name` maps it to a Moses dataset.
@@ -43,7 +43,7 @@ Source data returned by the API remains source data and may itself contain
 sensitive fields. Credential-bearing file URL queries are rejected.
 
 Run the custom example with
-`PYTHONPATH=recipes/examples moses prepare recipes/examples/trusted-python.yml`.
+`PYTHONPATH=recipes/examples uv run --locked moses prepare recipes/examples/trusted-python.yml`.
 A named `module:function` source receives keyword `parameters` and returns
 records or an Arrow table. Processing functions receive the Arrow table first,
 then keyword parameters. They run as trusted Python, with ordinary process

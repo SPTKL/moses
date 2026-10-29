@@ -12,12 +12,12 @@ capabilities built on the same ingestion contracts.
 Target user experience (proposed commands, not all implemented):
 
 ```sh
-pip install moses
 cd my-project
-moses init --recipes ./recipes
-moses prepare boroughs
+uv add moses
+uv run moses init --recipes ./recipes
+uv run moses prepare boroughs
 # An explicit recipe path also works, including outside this repository:
-moses prepare /path/to/shared-recipes/boroughs.yml
+uv run moses prepare /path/to/shared-recipes/boroughs.yml
 ```
 
 `moses init` without options should configure `./recipes` and `.moses/` as the
@@ -74,7 +74,7 @@ recipe-relative source paths. User/project TOML discovery is implemented for
 warehouse location, column naming, fallback CRS and existing export formats.
 Recipe-path configuration, `init --recipes`,
 recipe-name lookup and directory execution are proposed additions. The current
-distribution metadata is `moses-geo`; the desired `pip install moses` command
+distribution metadata is `moses-geo`; the desired `uv add moses` command
 requires resolving the package name and publishing a release. Changing the
 README or package metadata alone does not make that installation available.
 
@@ -451,8 +451,7 @@ policies above remain planned Moses backend work.
 
 **Proposed distribution model; no registry extra or recipe packages are published
 yet.** Keep the Moses engine, community recipes and consumer projects separately
-versioned. The standard install handles local recipes; `pip install
-"moses[registry]"` should additionally install a curated community recipe pack
+versioned. The standard install handles local recipes; `uv add "moses[registry]"` should additionally install a curated community recipe pack
 and any optional registry dependencies. This makes published recipes available
 without copying a source repository or installing a product such as PLUTO.
 
@@ -467,19 +466,19 @@ not claims of availability or ownership.
 Target workflow, after publishing and implementing registry support:
 
 ```sh
-pip install "moses[registry]"
 cd my-project
-moses init
-moses recipes list
-moses prepare community/nyc/boroughs
+uv add "moses[registry]"
+uv run moses init
+uv run moses recipes list
+uv run moses prepare community/nyc/boroughs
 
 # Another independently maintained pack:
-pip install moses-recipes-nycplanning
-moses prepare nycplanning/transit-zones
+uv add moses-recipes-nycplanning
+uv run moses prepare nycplanning/transit-zones
 
 # Make a project-owned editable copy when customization is needed:
-moses recipes copy community/nyc/boroughs --to recipes/boroughs.yml
-moses prepare recipes/boroughs.yml
+uv run moses recipes copy community/nyc/boroughs --to recipes/boroughs.yml
+uv run moses prepare recipes/boroughs.yml
 ```
 
 Start with installed recipe packs and their bundled indexes; a hosted search
@@ -741,10 +740,10 @@ warehouse. Configuration extensions marked planned above remain unimplemented.
 Install the optional REST backend when needed:
 
 ```sh
-python -m pip install -e '.[dlt]'
-moses --warehouse .moses prepare recipes/examples/points.yml
-moses --warehouse .moses prepare recipes/examples/dlt-rest.yml
-PYTHONPATH=recipes/examples moses prepare recipes/examples/trusted-python.yml
+uv sync --locked --extra dlt
+uv run --locked moses --warehouse .moses prepare recipes/examples/points.yml
+uv run --locked --extra dlt moses --warehouse .moses prepare recipes/examples/dlt-rest.yml
+PYTHONPATH=recipes/examples uv run --locked moses prepare recipes/examples/trusted-python.yml
 ```
 
 The REST example contacts a public API; the point and Python examples run

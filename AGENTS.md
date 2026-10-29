@@ -1,5 +1,18 @@
 # Product delivery working agreement
 
+## Python tooling
+
+- Use uv for Python environments, dependencies, commands, tests, and builds.
+- Maintain the shared `uv.lock` for the root package and `examples/pluto`
+  workspace member. Use `uv sync --locked` and `uv run --locked`; pass the same
+  optional extras to both commands. Use `uv build --package` for distributions.
+- Declare development tools in dependency groups and runtime dependencies in
+  package metadata. Update the lockfile with uv when dependencies change.
+- Keep PLUTO separately packaged and out of the default Moses installation.
+- Preserve historical commands in recorded evidence; current instructions must
+  use uv. Python subprocesses should inherit the running environment through
+  `sys.executable` rather than invoke package installation at runtime.
+
 ## Model routing and supervision
 
 The user's standing preference is to minimize token cost while keeping Astra

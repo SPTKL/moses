@@ -12,7 +12,7 @@ This does **not** establish readiness to reproduce the full PLUTO build. Domain 
 
 ## Verification performed
 
-Commands were run from the repository using `.venv/bin/python`:
+Historical verification commands were run from the repository using `.venv/bin/python` before the uv workspace migration. The table records the original review evidence; use the current [workspace instructions](../../../README.md#development-and-limits) for new checks:
 
 | Check | Evidence |
 | --- | --- |

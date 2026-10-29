@@ -2,7 +2,7 @@
 
 Example::
 
-    .venv/bin/python scripts/diagnose_consolidation_audits.py \
+    uv run --locked python scripts/diagnose_consolidation_audits.py \
       --baseline .moses/pluto-build/26v2m2 \
       --candidate .moses/pluto-build/26v2m4 --output /tmp/audit-diagnosis.json
 

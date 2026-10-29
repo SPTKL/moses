@@ -22,7 +22,7 @@ separate because zoning affects the later classification.
 The 38 business process SQL files sit directly in `dbt/models/`.
 Their filenames describe the process, while explicit dbt aliases preserve the
 existing database relation names used by exports and QA. For example, select
-`qa_expected_derived_values` with `dbt build --select qa_expected_derived_values`;
+`qa_expected_derived_values` with `uv run --locked dbt build --select qa_expected_derived_values`;
 its published view remains `qaqc_expected`. The full old-to-new identifier map
 is in the [dbt model README](../dbt/README.md#renamed-model-identifiers).
 
@@ -39,7 +39,7 @@ all three correction-report multisets, retaining duplicate rows and the
 CSV distinction between NULL and quoted empty text:
 
 ```sh
-.venv/bin/python scripts/verify_full_consolidation.py \
+uv run --locked python scripts/verify_full_consolidation.py \
   .moses/pluto-build/26v2m2 .moses/pluto-build/26v2m4 \
   --output .moses/pluto-build/26v2m4/consolidation-review
 ```
@@ -67,7 +67,7 @@ Install dependencies and native extensions beforehand.
 Prepare the 49 locked source inputs and materialize the 42 consumed tables:
 
 ```sh
-pluto-example --warehouse .moses/pluto-production/26v2/warehouse \
+uv run --locked pluto-example --warehouse .moses/pluto-production/26v2/warehouse \
   prepare recipes/26v2.yml \
   --lock .moses/pluto-production/26v2/production-ingestion.json \
   --output-dir .moses/prepared/pluto-26v2-local \
@@ -84,7 +84,7 @@ Then run PLUTO with the already prepared database:
 export PLUTO_INPUT_DATABASE="$PWD/.moses/prepared/pluto-26v2-local/prepared.duckdb"
 export PLUTO_OUTPUT_DATABASE="$PWD/.moses/pluto-build/26v2-local.duckdb"
 export PLUTO_SPATIAL_DIRECTORY="$PWD/.extensions"
-dbt build --project-dir dbt --profiles-dir dbt \
+uv run --locked dbt build --project-dir dbt --profiles-dir dbt \
   --vars '{pluto_version: 26v2-local, previous_pluto_version: 26v1}'
 ```
 

@@ -17,7 +17,7 @@ class S3Publisher:
                 import boto3
                 from botocore.config import Config
             except ImportError as exc:
-                raise ImportError('S3 publishing requires pip install "moses-geo[s3]"') from exc
+                raise ImportError('S3 publishing requires the s3 extra: use uv run --extra s3 in the Moses checkout, or uv add "moses-geo[s3]" in a consumer project') from exc
             client = boto3.client("s3", endpoint_url=endpoint_url, config=Config(s3={"addressing_style": "path"}))
         self.client = client
 

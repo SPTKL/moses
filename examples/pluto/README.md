@@ -4,12 +4,11 @@ This standalone PLUTO example lives at `examples/pluto` in the Moses repository 
 attributes, mapped geometries, correction audits and QA outputs through 38 business
 process models. The dbt models do not acquire data or run native geocoding.
 
-From the Moses repository root, change to `examples/pluto`. Install this package, its Moses dependency, and the pinned dbt versions. Until `moses-geo` is published, supply a built Moses wheel to pip.
+From the Moses repository root, change to `examples/pluto` and sync the shared workspace lock. The PLUTO member uses the local `moses-geo` workspace package and the locked dbt dependencies. Install [uv](https://docs.astral.sh/uv/getting-started/installation/) first.
 
 ```sh
-python -m pip install /absolute/path/to/moses_geo-0.1.0-py3-none-any.whl
-python -m pip install -e .
-python -m pip install -r dbt/requirements.txt
+cd examples/pluto
+uv sync --locked
 ```
 
 Provide an installed DuckDB Spatial extension compatible with that DuckDB version. Builds do not install packages or download extensions.
@@ -17,7 +16,7 @@ Provide an installed DuckDB Spatial extension compatible with that DuckDB versio
 Prepare the locked release from this root using your captured source warehouse and lock:
 
 ```sh
-pluto-example --warehouse /absolute/path/to/warehouse \
+uv run --locked pluto-example --warehouse /absolute/path/to/warehouse \
   prepare recipes/26v2.yml \
   --lock /absolute/path/to/inputs.lock.json \
   --output-dir /absolute/path/to/prepared \
@@ -31,7 +30,7 @@ export PLUTO_INPUT_DATABASE=/absolute/path/to/prepared/prepared.duckdb
 export PLUTO_OUTPUT_DATABASE=/absolute/path/to/pluto-output.duckdb
 export PLUTO_SPATIAL_DIRECTORY=/absolute/path/to/installed/extensions
 
-dbt build --project-dir dbt --profiles-dir dbt
+uv run --locked dbt build --project-dir dbt --profiles-dir dbt
 ```
 
 The prepared database is attached read-only as `prepared`. Results are written to
@@ -50,7 +49,7 @@ Once the prepared database exists, dbt needs no Moses catalog, upstream checkout
 Set `pluto_version` and `previous_pluto_version` explicitly when building a release:
 
 ```sh
-dbt build --project-dir dbt --profiles-dir dbt \
+uv run --locked dbt build --project-dir dbt --profiles-dir dbt \
   --vars '{pluto_version: 26v2m4, previous_pluto_version: 26v1}'
 ```
 
@@ -63,10 +62,10 @@ CAMA matches and the ZIP fallback use documented canonical identity/payload
 ordering. Other upstream unordered choices remain a replay limitation. Numeric
 and spatial compatibility policies are recorded in [provenance.json](dbt/provenance.json).
 
-Optional file exports read the completed output database without running models:
+Optional file exports read the completed output database without running models. Build a distributable example package from this directory with `uv build --package pluto-example`:
 
 ```sh
-python export.py --output-dir /absolute/path/to/exports
+uv run --locked python export.py --output-dir /absolute/path/to/exports
 ```
 
 This writes tabular CSV/Parquet, correction and QA CSVs, and two GeoParquet files

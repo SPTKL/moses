@@ -1,6 +1,6 @@
 """Bounded integration of real PLUTO-related sources; never runs a PLUTO build.
 
-Run from this PLUTO example root with python scripts/run_case_study.py.
+Run from this PLUTO example root with uv run --locked python scripts/run_case_study.py.
 Network captures and warehouses stay under ignored .moses/, not in the report.
 """
 from __future__ import annotations

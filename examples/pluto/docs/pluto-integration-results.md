@@ -21,12 +21,12 @@ The samples use stable Socrata `:id` ordering, not random or representative samp
 
 ## Repeat the checks
 
-From `examples/pluto` in the Moses checkout, with its dependencies installed and a sibling `data-engineering` checkout beside Moses:
+From `examples/pluto` in the Moses checkout, run `uv sync --locked` and keep a sibling `data-engineering` checkout beside Moses. The recorded October 2026 run used the former `.venv/bin/python` path; these are the current replay commands:
 
 ```sh
-../../.venv/bin/python scripts/run_case_study.py
-../../.venv/bin/python scripts/run_case_study.py --seed-only --output .moses/pluto-case-study/seed-only-results.json
-PYTHONPATH=src ../../.venv/bin/python -m pytest tests/test_pluto_case_study.py -q
+uv run --locked python scripts/run_case_study.py
+uv run --locked python scripts/run_case_study.py --seed-only --output .moses/pluto-case-study/seed-only-results.json
+uv run --locked pytest tests/test_pluto_case_study.py -q
 ```
 
 The first command uses public network access and defaults to 100 records per remote dataset. `--limit` accepts 1–1000. No credentials are used. The seed-only command performs the entire lifecycle and locked seed aggregation without network access. The regression test passed and also verifies that tampering with a cached capture fails its provenance hash check; it skips explicitly when the real adjacent NYCPlanning seed is absent.
@@ -36,7 +36,7 @@ Every run creates a new directory under ignored `.moses/pluto-case-study/`. Its 
 To repeat a specific capture without another network request, replace the example run directory with `work_directory` from the report:
 
 ```sh
-../../.venv/bin/python scripts/run_case_study.py --offline-from .moses/pluto-case-study/run-EXAMPLE/captures --output .moses/pluto-case-study/offline-results.json
+uv run --locked python scripts/run_case_study.py --offline-from .moses/pluto-case-study/run-EXAMPLE/captures --output .moses/pluto-case-study/offline-results.json
 ```
 
 Offline capture replay was also run successfully across all four inputs. A future live run can yield different content or fail because publisher schemas or endpoints changed; the runner preserves per-input failures and exits nonzero rather than calling a partial run successful.

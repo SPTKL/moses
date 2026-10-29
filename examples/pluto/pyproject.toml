@@ -11,11 +11,14 @@ requires-python = ">=3.11"
 license = "MIT"
 dependencies = [
   "moses-geo>=0.1.0,<0.2",
-  "dbt-duckdb>=1.11,<1.12", "dbt-core>=1.12,<1.13", "sqlglot>=30.23,<31",
+  "dbt-duckdb==1.11.0", "dbt-core==1.12.6", "duckdb==1.5.6", "sqlglot>=30.23,<31",
 ]
 
-[project.optional-dependencies]
-dev = ["pytest>=8,<10", "build>=1.2", "hatchling>=1.27"]
+[dependency-groups]
+dev = ["pytest>=8,<10"]
+
+[tool.uv.sources]
+moses-geo = { workspace = true }
 
 [project.scripts]
 pluto-example = "pluto_example.cli:main"

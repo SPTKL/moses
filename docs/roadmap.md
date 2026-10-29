@@ -74,7 +74,7 @@ This local implementation does not
 close or update the GitHub issue.
 
 The primary entry point is [installing Moses in any repository](source-recipes.md#install-and-use-moses-in-any-repository):
-`pip install moses`, project initialization, and user-owned recipe paths. Project
+`uv add moses`, project initialization, and user-owned recipe paths. Project
 initialization, recipe discovery and a published package are delivery gaps;
 the current local package is provisionally named `moses-geo`. Package/project
 onboarding belongs with the local foundation and recipes (#2/#4), independently

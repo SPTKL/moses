@@ -42,11 +42,11 @@ to `landuse`.
 hashes. It is a migration inventory, not an executable dependency graph. Inline
 shell SQL, dynamic QA calls, setup and delivery exports also need migration.
 
-## Run locally
+## Historical local commands (retired)
 
-From the Moses checkout:
+The following commands document the earlier Moses-integrated runner. They are retained as historical evidence and are not instructions for the current standalone PLUTO project. Use [the current example guide](../README.md) for runnable commands. These examples assumed the former Moses checkout:
 
-```sh
+```text
 .venv/bin/python -m pip install -e '.[pluto]'
 .venv/bin/python -m moses pluto --help
 .venv/bin/python scripts/run_dbt_validation.py
@@ -60,7 +60,7 @@ always uses DuckDB.
 
 For an existing exact stage input:
 
-```sh
+```text
 moses --warehouse pluto-26v2 load /absolute/path/pluto_pts.parquet --name pluto_pts
 moses --warehouse pluto-26v2 lock pts-inputs.json
 moses --warehouse pluto-26v2 pluto run --stage create_pts \
@@ -87,7 +87,7 @@ artifacts, discovers prebuild raw snapshots through the public archive, and read
 seeds at the release commit. It requires no 1Password account. It never chooses
 current source data as an implicit substitute for the release.
 
-```sh
+```text
 moses --warehouse .moses/pluto-production/26v2/warehouse pluto fetch-production \
   --release 26v2 --source-repo ../data-engineering \
   --cache .moses/pluto-production/26v2 --extension-directory .extensions
@@ -121,7 +121,7 @@ The earlier planner remains available for supplied manifests. The following
 `release-26v2.json` is an intentionally unresolved planning fixture, not the
 production acquisition entrypoint:
 
-```sh
+```text
 moses pluto plan --inventory scripts/inventory.json \
   --config scripts/release-26v2.json --report plan-26v2.json
 ```
@@ -168,7 +168,7 @@ sidecars are not pinned; use a ZIP containing the required sidecars. Optional
 Seeds use `seeds[name] = {"path": "/absolute/path/seed.csv", "sha256": "..."}`,
 with optional import options. CSV identifiers remain text by default.
 
-```sh
+```text
 moses --warehouse pluto-26v2 pluto acquire --plan plan-26v2.json \
   --report acquired-26v2.json
 ```
@@ -183,7 +183,7 @@ report and transform-run artifacts for replay.
 
 ## Comparison and numeric policy
 
-```sh
+```text
 moses pluto compare candidate.parquet reference.parquet --report comparison.json
 ```
 

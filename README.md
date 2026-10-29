@@ -4,37 +4,41 @@
 
 Moses starts with an ordinary directory. No Docker, database server, cloud account, or DuckDB extension download is needed for local ingestion, history, SQL, or export. Python dependencies include native wheels; installing those dependencies requires internet access or a prepared wheelhouse.
 
+DuckDB currently runs queries over accepted snapshots. Vector file I/O still uses
+Pyogrio, geometry construction and validation use Shapely, and CRS metadata and
+map-preview reprojection use PyProj. Moving these operations to DuckDB Spatial is
+[planned backend work](docs/source-recipes.md#duckdb-spatial-as-the-geospatial-engine);
+these dependencies remain required until that migration is implemented and validated.
+
 This is an early, working MVP. The distribution is provisionally named `moses-geo`, with Python import and CLI name `moses`. It has **not been published to PyPI**, and name availability has not been reserved.
 
 The intended workflow is **install Moses, initialize any project, and point it at
 your own recipes**. Recipes belong to the consuming repository and can also live
 at an external path; using Moses does not require keeping this source checkout.
 The [project initialization design](docs/source-recipes.md#install-and-use-moses-in-any-repository)
-defines the target `pip install moses` experience and distinguishes planned
+defines the target `uv add moses` experience and distinguishes planned
 project settings from the existing warehouse initialization and recipe commands.
 
 ## Install and try it
 
-Python 3.11 or newer is required. From this repository:
+For this checkout, install [uv](https://docs.astral.sh/uv/getting-started/installation/) and sync the workspace lock. uv creates the local environment; no activation step is needed. Moses itself supports Python 3.11 or newer and does not require uv for library users:
 
 ```sh
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-python -m pip install .
-moses init
-moses demo
-moses query 'SELECT id, name FROM places'
-moses history places
-moses export places places.parquet
+uv sync --locked
+uv run --locked moses init
+uv run --locked moses demo
+uv run --locked moses query 'SELECT id, name FROM places'
+uv run --locked moses history places
+uv run --locked moses export places places.parquet
 ```
 
 The bundled demo contains two **synthetic** NYC points. It runs offline after installation. The default warehouse is `.moses/` in the current directory. To choose another directory, put `--warehouse path` before the command.
 
 ```sh
-moses --warehouse my-city load boroughs.geojson --name boroughs --key borocode
-moses --warehouse my-city load buildings.gpkg --layer footprints --name buildings --key bin
-moses --warehouse my-city load points.csv --name trees --key tree_id --x longitude --y latitude
-moses --warehouse my-city list
+uv run --locked moses --warehouse my-city load boroughs.geojson --name boroughs --key borocode
+uv run --locked moses --warehouse my-city load buildings.gpkg --layer footprints --name buildings --key bin
+uv run --locked moses --warehouse my-city load points.csv --name trees --key tree_id --x longitude --y latitude
+uv run --locked moses --warehouse my-city list
 ```
 
 Use an actual unique, non-null identifier in your source. Omit `--key` when none exists; diffs will then count added and removed rows without inferring updates. CSV/TSV attributes remain strings by default to protect identifiers such as `001`.
@@ -44,12 +48,12 @@ Use an actual unique, non-null identifier in your source. Omit `--key` when none
 CSV, TSV, and ordinary Parquet work without geometry. Parquet retains its native types; a column named `geometry` alone does not make it spatial. Inspect a file before accepting a version:
 
 ```sh
-moses inspect records.csv --infer-types --preview-rows 10
-moses load records.csv --name records --key id --infer-types
-moses load records.tsv --name other_records
-moses load records.parquet --name typed_records
-moses inspect records.csv --type id=string --type count=int64
-moses load records.csv --name reviewed_records --type id=string --type count=int64
+uv run --locked moses inspect records.csv --infer-types --preview-rows 10
+uv run --locked moses load records.csv --name records --key id --infer-types
+uv run --locked moses load records.tsv --name other_records
+uv run --locked moses load records.parquet --name typed_records
+uv run --locked moses inspect records.csv --type id=string --type count=int64
+uv run --locked moses load records.csv --name reviewed_records --type id=string --type count=int64
 ```
 
 `inspect` reports a structured schema, row count, bounded preview, coordinate-column suggestions, CRS origin, and warnings without creating a warehouse or version. **It reads the full source into memory**; `--preview-rows` (0–100) limits output, not memory or parsing time. Format selection checks supported extensions against conservative content signatures before reader validation. Use `--format CSV`, `TSV`, `Parquet`, `GeoJSON`, `GeoPackage`, `Shapefile`, or `FileGDB` to explicitly choose a supported reader; contradictory content still fails. Coordinate suggestions do not create geometry automatically.
@@ -88,7 +92,7 @@ to each project.
 Check the effective categories and where each value came from:
 
 ```sh
-moses config show
+uv run --locked moses config show
 ```
 
 Precedence is explicit CLI/Python option, recipe setting, `MOSES_COLUMN_NAMES`,
@@ -104,8 +108,8 @@ persistent DuckDB database remain planned.
 You can also select a naming rule for one inspection or load:
 
 ```sh
-moses inspect records.csv --column-names snake_case
-moses load records.csv --name records --key "Parcel ID" --column-names snake_case
+uv run --locked moses inspect records.csv --column-names snake_case
+uv run --locked moses load records.csv --name records --key "Parcel ID" --column-names snake_case
 ```
 
 For example, `Parcel ID` becomes `parcel_id`, `OwnerName` becomes `owner_name`,
@@ -125,8 +129,8 @@ to `Catalog.ingest` or `inspect_source`.
 Set a fallback source projection per warehouse or process:
 
 ```sh
-moses --warehouse my-city init --default-crs EPSG:2263
-MOSES_DEFAULT_CRS=EPSG:3857 moses --warehouse my-city inspect points.csv --x x --y y
+uv run --locked moses --warehouse my-city init --default-crs EPSG:2263
+MOSES_DEFAULT_CRS=EPSG:3857 uv run --locked moses --warehouse my-city inspect points.csv --x x --y y
 ```
 
 `init --default-crs` retains the legacy `<warehouse>/config.json` setting. For
@@ -139,7 +143,7 @@ table. CSV/TSV coordinates retain the legacy EPSG:4326 fallback when no CRS is
 supplied; inspection and new manifests label that assumption with a warning.
 Coordinate ranges cannot reliably identify a projected CRS.
 
-The [local service](docs/local-service.md) provides a browser catalog GUI and authenticated read-only API with opaque resource IDs. Run `moses --warehouse my-city serve --port 8765` with `MOSES_TOKEN` set, open `http://127.0.0.1:8765/`, and enter the token to browse datasets, history, schemas, bounded table/map previews, feature details, comparisons, and Parquet downloads. The [service architecture and rollout](docs/service-architecture.md) describes the remaining guided loader, durable upload jobs, lightweight client, container deployment, and MCP bridge. The [Explore feature plan](docs/query-map-workspace.md) adds a lightweight SQL editor, results table, and geospatial map with multiple layers, saved queries, and version-pinned previews. Single-version dataset mapping is implemented locally; the full query workspace follows the service foundation and precedes hosted access/MCP.
+The [local service](docs/local-service.md) provides a browser catalog GUI and authenticated read-only API with opaque resource IDs. Run `uv run --locked moses --warehouse my-city serve --port 8765` with `MOSES_TOKEN` set, open `http://127.0.0.1:8765/`, and enter the token to browse datasets, history, schemas, bounded table/map previews, feature details, comparisons, and Parquet downloads. The [service architecture and rollout](docs/service-architecture.md) describes the remaining guided loader, durable upload jobs, lightweight client, container deployment, and MCP bridge. The [Explore feature plan](docs/query-map-workspace.md) adds a lightweight SQL editor, results table, and geospatial map with multiple layers, saved queries, and version-pinned previews. Single-version dataset mapping is implemented locally; the full query workspace follows the service foundation and precedes hosted access/MCP.
 
 Track delivery in the [Moses GitHub project](https://github.com/users/SPTKL/projects/1), the [pinned roadmap issue](https://github.com/SPTKL/moses/issues/1), and the [milestone index](docs/roadmap.md). Implementation tickets include acceptance criteria and prerequisite links; GitHub carries the current delivery status.
 
@@ -152,9 +156,9 @@ directory. Select a layer explicitly when the source contains multiple layers;
 an ambiguous selection reports the available names.
 
 ```sh
-moses inspect city.gdb --layer parcels
-moses load city.gdb --layer parcels --name parcels --key parcel_id
-moses load city.gdb.zip --layer parcels --name parcels --key parcel_id
+uv run --locked moses inspect city.gdb --layer parcels
+uv run --locked moses load city.gdb --layer parcels --name parcels --key parcel_id
+uv run --locked moses load city.gdb.zip --layer parcels --name parcels --key parcel_id
 ```
 
 Imports preserve the selected layer's reader-provided attribute types and CRS.
@@ -172,7 +176,7 @@ Export one exact accepted version to a new directory, using the version ID
 reported by `load` or `history`:
 
 ```sh
-moses export parcels delivery.gdb --format FileGDB --layer parcels --version VERSION_ID
+uv run --locked moses export parcels delivery.gdb --format FileGDB --layer parcels --version VERSION_ID
 ```
 
 Export targets ArcGIS Pro 3.2 or later, preserves source CRS, and refuses to
@@ -185,8 +189,8 @@ personal `.mdb`, raster geodatabases and ZIP export are not supported.
 ## Real NYC Open Data
 
 ```sh
-moses nyc gthc-hcne --name boroughs --key borocode
-moses query 'SELECT boroname FROM boroughs ORDER BY boroname'
+uv run --locked moses nyc gthc-hcne --name boroughs --key borocode
+uv run --locked moses query 'SELECT boroname FROM boroughs ORDER BY boroname'
 ```
 
 This command fetches the [Borough Boundaries dataset](https://data.cityofnewyork.us/City-Government/Borough-Boundaries/gthc-hcne) through Socrata's GeoJSON endpoint. Network access is required. `--limit 100` explicitly creates a sample; without a limit, the downloader follows pages. Use the underlying dataset ID, not a derived map ID: some map endpoints return geometry without attributes. Dataset availability and field names are controlled by NYC Open Data. Tabular datasets without a geometry field are better imported as CSV.
@@ -212,7 +216,7 @@ reproduced = warehouse.query("SELECT boroname FROM boroughs", versions=inputs)
 
 Each accepted version records raw captures, schema, CRS, parsing options, hashes, runtime versions, and source provenance. A failed import keeps the previous accepted version. Reimporting unchanged content records another observation without creating another release. Dataset keys cannot silently change.
 
-Use `moses lock inputs.json` and `moses query 'SELECT * FROM boroughs' --lock inputs.json` to save and reuse exact input versions. A lockfile refers to versions in this warehouse; retain their snapshots and catalog with it. `warehouse.observations("boroughs")` exposes repeated captures, including unchanged checks.
+Use `uv run --locked moses lock inputs.json` and `uv run --locked moses query 'SELECT * FROM boroughs' --lock inputs.json` to save and reuse exact input versions. A lockfile refers to versions in this warehouse; retain their snapshots and catalog with it. `warehouse.observations("boroughs")` exposes repeated captures, including unchanged checks.
 
 ```text
 my-city/
@@ -239,10 +243,10 @@ Move or back up the **entire directory** while no writes are running. Raw captur
 ### S3-compatible object storage
 
 ```sh
-python -m pip install '.[s3]'
-moses publish-s3 boroughs my-bucket --prefix city
+uv sync --locked --extra s3
+uv run --locked --extra s3 moses publish-s3 boroughs my-bucket --prefix city
 # For a local or remote S3-compatible service:
-moses publish-s3 boroughs my-bucket --endpoint-url http://localhost:8333
+uv run --locked --extra s3 moses publish-s3 boroughs my-bucket --endpoint-url http://localhost:8333
 ```
 
 Credentials use the normal Boto3 environment/profile chain. Each version has an immutable prefix containing GeoParquet, raw captures, and a manifest published last. Readers should discover completed versions through manifests. The adapter requires conditional `PutObject` (`If-None-Match: *`); compatibility varies by S3 service. This is a version bundle publisher, not a query server or a distributed transaction. No external S3 account is required by the test suite.
@@ -250,7 +254,7 @@ Credentials use the normal Boto3 environment/profile chain. Each version has an 
 ### DuckLake
 
 ```sh
-moses publish-ducklake boroughs city.ducklake --data-path lake-files --install-extensions
+uv run --locked moses publish-ducklake boroughs city.ducklake --data-path lake-files --install-extensions
 ```
 
 The first explicit `--install-extensions` downloads DuckLake. Later runs can use the cached extension without that flag. Moses publishes a table and its provenance in one DuckLake transaction. The result includes both the Moses version and the native DuckLake snapshot ID. Repeated publications create native snapshots; native snapshot retention is managed by DuckLake.
@@ -275,20 +279,22 @@ To add a destination, implement `publish(catalog, name, version=None) -> dict`. 
 
 ## Development and limits
 
+This repository has one root `uv.lock` for Moses and the PLUTO workspace member, including the example’s dbt dependencies. A sync from the root installs Moses and its default `dev` group for pytest; it does not install PLUTO. Run `uv sync --locked` from `examples/pluto` for that member. The `.python-version` file selects Python 3.12 for local development, while the library supports Python 3.11 or newer. After editing dependency declarations, run `uv lock` from the repository root and commit the updated lock. Use `uv sync --locked --extra dlt` for the optional REST backend.
+
 Repository agent instructions live in [AGENTS.md](AGENTS.md). They require Astra
 supervision and task-based model routing to limit token cost, alongside the
 delivery and product-review rules.
 
 ```sh
-python -m pip install '.[dev,s3]'
-python -m pytest
-python -m build
+uv sync --locked --all-extras
+uv run --locked --all-extras pytest
+uv build --package moses-geo
 ```
 
 Optional DuckLake integration, after explicitly caching its extension:
 
 ```sh
-MOSES_TEST_DUCKLAKE=1 MOSES_EXTENSION_DIRECTORY=/path/to/extensions python -m pytest -m integration
+MOSES_TEST_DUCKLAKE=1 MOSES_EXTENSION_DIRECTORY=/path/to/extensions uv run --locked --all-extras pytest -m integration
 ```
 
 Tables, semantic hashes, diffs, and S3 uploads currently materialize data in memory. Start with bounded datasets; citywide building footprints need a streaming follow-up. The catalog serializes local writers. There is no scheduler, guided upload UI, raster pipeline, transformation DAG, cross-engine SQL portability layer, or multi-user catalog service.

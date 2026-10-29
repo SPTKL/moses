@@ -3,11 +3,11 @@
 The read-only service slice of [#3](https://github.com/SPTKL/moses/issues/3) and
 catalog GUI [#5](https://github.com/SPTKL/moses/issues/5) are implemented locally
 and awaiting review/merge. Populate the warehouse using
-`moses load`, then serve accepted versions:
+`uv run --locked moses load`, then serve accepted versions:
 
 ```sh
-export MOSES_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
-moses --warehouse my-city serve --port 8765
+export MOSES_TOKEN="$(uv run --locked python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+uv run --locked moses --warehouse my-city serve --port 8765
 ```
 
 The CLI binds to `127.0.0.1`. All API requests require

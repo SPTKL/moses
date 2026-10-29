@@ -2,7 +2,7 @@
 
 Complete SELECT-only transformation at pinned upstream `32bc98f632f15e7182933a17fb61ecf74e853518`. The candidate variable defaults to `26v2m4`.
 
-The project has 38 process models, stored directly in `models/` with no category subdirectories. Model filenames describe their business purpose; `alias` retains legacy database relation names for renamed models. For example, select the renamed QA model with `dbt build --select qa_expected_derived_values` instead of `--select qaqc_expected`. PLUTO staging is defined once in [pluto_inputs.sql](macros/pluto_inputs.sql); raw inputs are already prepared and each process calls the remaining staging projections through named local CTEs. There are no separate input or staging models.
+The project has 38 process models, stored directly in `models/` with no category subdirectories. Model filenames describe their business purpose; `alias` retains legacy database relation names for renamed models. For example, select the renamed QA model with `uv run --locked dbt build --select qa_expected_derived_values` instead of `--select qaqc_expected`. PLUTO staging is defined once in [pluto_inputs.sql](macros/pluto_inputs.sql); raw inputs are already prepared and each process calls the remaining staging projections through named local CTEs. There are no separate input or staging models.
 
 ```mermaid
 flowchart LR
@@ -73,7 +73,7 @@ Compatibility macros preserve PostGIS collection repair, SQL NULL union aggregat
 
 CAMA UPDATE matches and the ZIP spatial fallback use a canonical identity/payload order with explicit NULLS LAST. This is a documented operational replay policy, not inferred business precedence. The manifest lists every scoped operation and all remaining unordered UPDATE choices.
 
-Run ordinary `dbt build` using this project and its supplied profile. `provenance.json` records the adopted upstream source hashes, compatibility policies and model/macro hashes. Input cleaning runs before dbt and is contracted in `models/contract.yml`. Historical QA accumulator rows are not imported.
+Run `uv run --locked dbt build` using this project and its supplied profile. `provenance.json` records the adopted upstream source hashes, compatibility policies and model/macro hashes. Input cleaning runs before dbt and is contracted in `models/contract.yml`. Historical QA accumulator rows are not imported.
 
 ## Renamed model identifiers
 

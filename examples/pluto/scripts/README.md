@@ -1,9 +1,9 @@
 # PLUTO source case study
 
-Run from the PLUTO example root after installing its dependencies:
+Run from the PLUTO example root after `uv sync --locked`:
 
 ```sh
-python scripts/run_case_study.py
+uv run --locked python scripts/run_case_study.py
 ```
 
 This captures 100 real rows/features from each of three public NYC Open Data datasets and loads a complete 221-row PLUTO lookup seed from the adjacent `data-engineering` checkout. The live PLUTO CSV sample is an alternate public representation, **not** the previous-release input required by a PLUTO build. LPC is the exact recipe raw GeoJSON endpoint; GreenThumb is its alternate CSV representation. This is not a full build or a test of three connector families.
