@@ -17,7 +17,7 @@ class S3Publisher:
                 import boto3
                 from botocore.config import Config
             except ImportError as exc:
-                raise ImportError('S3 publishing requires pip install "moses-geo[s3]"') from exc
+                raise ImportError('S3 publishing requires the s3 extra: use uv run --extra s3 in the Moses checkout, or uv add "moses-geo[s3]" in a consumer project') from exc
             client = boto3.client("s3", endpoint_url=endpoint_url, config=Config(s3={"addressing_style": "path"}))
         self.client = client
 
@@ -48,7 +48,8 @@ class S3Publisher:
         objects = {"table": self._put_immutable(f"{base}/table.parquet", parquet.read_bytes(), "application/vnd.apache.parquet"), "raw": []}
         for raw in manifest.get("raw_files", []):
             path = Path(raw)
-            objects["raw"].append(self._put_immutable(f"{base}/raw/{path.name}", path.read_bytes(), "application/octet-stream"))
+            relative = path.relative_to(catalog.root / "raw" / manifest["source_sha256"]).as_posix()
+            objects["raw"].append(self._put_immutable(f"{base}/raw/{relative}", path.read_bytes(), "application/octet-stream"))
         portable = {k: v for k, v in manifest.items() if k not in {"parquet_path", "raw_files"}}
         # Retain provenance, but local path fields never define remote locations.
         portable["objects"] = objects

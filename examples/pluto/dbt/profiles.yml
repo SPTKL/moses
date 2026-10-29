@@ -1,0 +1,24 @@
+pluto:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: "{{ env_var('PLUTO_OUTPUT_DATABASE') }}"
+      schema: main
+      threads: 1
+      attach:
+        - path: "{{ env_var('PLUTO_INPUT_DATABASE') }}"
+          alias: prepared
+          read_only: true
+      config_options:
+        extension_directory: "{{ env_var('PLUTO_SPATIAL_DIRECTORY') }}"
+        autoinstall_known_extensions: false
+        autoload_known_extensions: false
+      settings:
+        extension_directory: "{{ env_var('PLUTO_SPATIAL_DIRECTORY') }}"
+        autoinstall_known_extensions: false
+        autoload_known_extensions: false
+        autoinstall_extension_repository: ''
+        memory_limit: "{{ env_var('PLUTO_MEMORY_LIMIT', '4GB') }}"
+        threads: 4
+        preserve_insertion_order: false

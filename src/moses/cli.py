@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -18,14 +19,39 @@ def _json(value):
     return str(value)
 
 
+def _type_overrides(values):
+    from .recipes import canonical_types
+
+    choices = {}
+    for item in values:
+        field, separator, kind = item.partition("=")
+        if not separator or not field or not kind:
+            raise ValueError("--type must use FIELD=TYPE")
+        if field in choices:
+            raise ValueError(f"duplicate --type for field {field!r}")
+        choices[field] = kind
+    return canonical_types(choices)
+
+
 def parser():
     p = argparse.ArgumentParser(prog="moses", description="Local-first, versioned geospatial ELT")
-    p.add_argument("--warehouse", "-w", default=".moses", help="Warehouse directory (default: .moses)")
+    p.add_argument("--warehouse", "-w", help="Warehouse directory (default: configured project warehouse or .moses)")
     p.add_argument("--version", action="version", version="moses 0.1.0")
     sub = p.add_subparsers(dest="command", required=True)
-    sub.add_parser("init", help="Create a local warehouse")
+    init = sub.add_parser("init", help="Create a local warehouse")
+    init.add_argument("--default-crs", help="Fallback CRS for geometry without a source CRS")
+    serve = sub.add_parser("serve", help="Serve the local catalog GUI and authenticated read-only API")
+    serve.add_argument("--port", type=int, default=8765)
+    serve.add_argument("--token-env", default="MOSES_TOKEN", help="Environment variable containing the bearer token")
     sub.add_parser("demo", help="Load a tiny bundled synthetic NYC example, offline")
-    load = sub.add_parser("load", help="Capture a local vector file as a versioned table")
+    config = sub.add_parser("config", help="Inspect effective Moses configuration")
+    config_sub = config.add_subparsers(dest="config_command", required=True)
+    config_sub.add_parser("show", help="Show effective settings, origins, and config paths")
+    prepare = sub.add_parser("prepare", help="Acquire and homogenize a declarative source recipe")
+    prepare.add_argument("recipe", help="Versioned YAML source recipe")
+    prepare.add_argument("--extension-directory", default=".extensions")
+    prepare.add_argument("--column-names", choices=["preserve", "snake_case"])
+    load = sub.add_parser("load", help="Capture a local vector or tabular file as a versioned table")
     load.add_argument("source")
     load.add_argument("--name", required=True)
     load.add_argument("--key")
@@ -33,6 +59,22 @@ def parser():
     load.add_argument("--x")
     load.add_argument("--y")
     load.add_argument("--crs")
+    load.add_argument("--infer-types", action="store_true", help="Conservatively infer CSV/TSV types using all rows")
+    load.add_argument("--type", dest="types", action="append", default=[], metavar="FIELD=TYPE",
+                      help="Override one column with string, bool, int64, or float64; repeatable")
+    load.add_argument("--format", help="Explicit supported reader: CSV, TSV, Parquet, GeoJSON, GeoPackage, Shapefile, FileGDB")
+    load.add_argument("--column-names", choices=["preserve", "snake_case"])
+    inspect = sub.add_parser("inspect", help="Inspect a local file without publishing a version (full-file read)")
+    inspect.add_argument("source")
+    inspect.add_argument("--layer")
+    inspect.add_argument("--x")
+    inspect.add_argument("--y")
+    inspect.add_argument("--crs")
+    inspect.add_argument("--infer-types", action="store_true")
+    inspect.add_argument("--type", dest="types", action="append", default=[], metavar="FIELD=TYPE")
+    inspect.add_argument("--format")
+    inspect.add_argument("--column-names", choices=["preserve", "snake_case"])
+    inspect.add_argument("--preview-rows", type=int, default=10)
     sub.add_parser("list", help="List current datasets")
     history = sub.add_parser("history", help="List accepted dataset versions")
     history.add_argument("name")
@@ -49,6 +91,8 @@ def parser():
     export.add_argument("name")
     export.add_argument("destination")
     export.add_argument("--version", dest="dataset_version")
+    export.add_argument("--format", choices=["Parquet", "GeoParquet", "FileGDB"])
+    export.add_argument("--layer", help="Required output layer for FileGDB")
     nyc = sub.add_parser("nyc", help="Download a NYC Open Data GeoJSON dataset (network required)")
     nyc.add_argument("dataset_id")
     nyc.add_argument("--name", required=True)
@@ -82,15 +126,60 @@ def resolve_version(catalog, name, version=None):
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        from .config import resolve_warehouse
+        warehouse_option = args.warehouse
+        args.warehouse = resolve_warehouse(explicit=args.warehouse)["warehouse"]
+        if args.command == "serve":
+            from .service import create_server
+
+            token = os.environ.get(args.token_env, "")
+            if not token:
+                raise ValueError("Set the bearer token environment variable before starting the service")
+            with create_server(args.warehouse, token, host="127.0.0.1", port=args.port) as server:
+                print(f"Moses catalog: http://127.0.0.1:{server.server_port}/", flush=True)
+                print(f"Moses read-only API: http://127.0.0.1:{server.server_port}/v1", flush=True)
+                try:
+                    server.serve_forever()
+                except KeyboardInterrupt:
+                    pass
+            return 0
+        if args.command == "config":
+            from .config import show_config
+            print(json.dumps(show_config(warehouse=warehouse_option), indent=2))
+            return 0
+        # Inspection must not create a catalog or warehouse as a side effect.
+        if args.command == "inspect":
+            from .config import resolve_default_crs
+            from .inspection import inspect_source
+            result = inspect_source(
+                args.source, layer=args.layer, x=args.x, y=args.y, crs=args.crs,
+                default_crs=resolve_default_crs(args.warehouse),
+                infer_types=args.infer_types, preview_rows=args.preview_rows,
+                types=_type_overrides(args.types), format=args.format, column_names=args.column_names,
+            )
+            print(json.dumps(result, indent=2, default=_json, allow_nan=False))
+            return 0
+        if args.command == "init" and args.default_crs is not None:
+            from .config import set_default_crs
+            set_default_crs(args.warehouse, args.default_crs)
         catalog = Catalog(args.warehouse)
         match args.command:
+            case "prepare":
+                from .source_recipes import prepare_recipe
+                result = prepare_recipe(
+                    Path(args.recipe).resolve(), catalog,
+                    extension_directory=Path(args.extension_directory).resolve(),
+                    column_names=args.column_names,
+                )
             case "init":
-                result = {"warehouse": str(Path(args.warehouse).resolve())}
+                from .config import resolve_default_crs
+                result = {"warehouse": str(Path(args.warehouse).resolve()),
+                          "default_crs": resolve_default_crs(args.warehouse)}
             case "demo":
                 fixture = files("moses").joinpath("examples/places.geojson")
                 result = catalog.ingest(str(fixture), name="places", key="id", provenance={"description": "Synthetic NYC example; not official city data"})
             case "load":
-                result = catalog.ingest(args.source, name=args.name, key=args.key, layer=args.layer, x=args.x, y=args.y, crs=args.crs)
+                result = catalog.ingest(args.source, name=args.name, key=args.key, layer=args.layer, x=args.x, y=args.y, crs=args.crs, infer_types=args.infer_types, types=_type_overrides(args.types), format=args.format, column_names=args.column_names)
             case "list":
                 result = catalog.datasets()
             case "history":
@@ -107,16 +196,25 @@ def main(argv=None):
                     stream.write("\n")
                 result = {"path": str(Path(args.destination).resolve()), "versions": versions}
             case "export":
-                manifest = resolve_version(catalog, args.name, args.dataset_version)
-                destination = Path(args.destination)
-                if destination.exists():
-                    raise ValueError(f"Destination already exists: {destination}")
-                source = Path(manifest["parquet_path"])
-                destination.parent.mkdir(parents=True, exist_ok=True)
-                # Exclusive creation prevents overwriting another process's export.
-                with source.open("rb") as src, destination.open("xb") as dst:
-                    shutil.copyfileobj(src, dst)
-                result = {"path": str(destination.resolve()), "version": manifest["version"]}
+                from .config import resolve_export_format
+                export_format = resolve_export_format(explicit=args.format)["format"]
+                if export_format == "FileGDB":
+                    from .exports import export_filegdb
+                    result = export_filegdb(catalog, args.name, args.destination,
+                                            version=args.dataset_version, layer=args.layer)
+                else:
+                    if args.layer is not None:
+                        raise ValueError("--layer requires --format FileGDB")
+                    manifest = resolve_version(catalog, args.name, args.dataset_version)
+                    destination = Path(args.destination)
+                    if destination.exists():
+                        raise ValueError(f"Destination already exists: {destination}")
+                    source = Path(manifest["parquet_path"])
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    # Exclusive creation prevents overwriting another process's export.
+                    with source.open("rb") as src, destination.open("xb") as dst:
+                        shutil.copyfileobj(src, dst)
+                    result = {"path": str(destination.resolve()), "version": manifest["version"]}
             case "nyc":
                 from .sources import download_socrata
                 with tempfile.TemporaryDirectory() as directory:

@@ -1,0 +1,8 @@
+version: 2
+sources:
+  - name: pluto_inputs
+    schema: main
+    tables:
+      - name: pluto
+      - name: pluto_input_landuse_bldgclass
+      - name: pluto_pts

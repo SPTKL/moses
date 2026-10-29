@@ -1,0 +1,38 @@
+{
+  "target_release": "26v2",
+  "source_commit": "32bc98f632f15e7182933a17fb61ecf74e853518",
+  "sources_ingested": 38,
+  "seeds_ingested": 11,
+  "locked_versions": 49,
+  "source_kinds": {
+    "raw_candidate": 32,
+    "normalized_archive": 6,
+    "seed": 11
+  },
+  "rows_by_kind": {
+    "raw_candidate": 6123166,
+    "seed": 36717,
+    "normalized_archive": 1175723
+  },
+  "pending_raw_csv_or_recipe_sources": [
+    "dcp_colp",
+    "dcp_developments",
+    "dcp_pluto",
+    "dof_condo",
+    "pluto_input_cama_dof",
+    "pluto_input_geocodes",
+    "pluto_input_numbldgs"
+  ],
+  "build_ready": false,
+  "production_parity": false,
+  "validation": {
+    "pytest_passed": 201,
+    "pytest_skipped": 1,
+    "wheel_smoke": "passed",
+    "full_pts_rows": 1167836,
+    "pts_easement_rows": 4517,
+    "pts_columns": 43
+  },
+  "reference_rows": 858284,
+  "all_version_references_verified": true
+}

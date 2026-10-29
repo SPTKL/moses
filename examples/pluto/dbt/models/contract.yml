@@ -1,0 +1,1434 @@
+version: 2
+sources:
+- name: pluto_inputs
+  database: '{{ var(''input_database'', ''prepared'') }}'
+  schema: sources
+  description: Prepared upstream inputs. All fields/types are validated before model
+    execution; acquisition and source normalization run separately.
+  tables:
+  - name: dcp_cb2010_wi
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: cb2010
+      data_type: VARCHAR
+    - name: borocode
+      data_type: VARCHAR
+    - name: boroname
+      data_type: VARCHAR
+    - name: ct2010
+      data_type: VARCHAR
+    - name: bctcb2010
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_cb2020_wi
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: cb2020
+      data_type: VARCHAR
+    - name: borocode
+      data_type: VARCHAR
+    - name: boroname
+      data_type: VARCHAR
+    - name: ct2020
+      data_type: VARCHAR
+    - name: bctcb2020
+      data_type: VARCHAR
+    - name: geoid
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_cdboundaries_wi
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: borocd
+      data_type: INTEGER
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_colp
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: uid
+      data_type: VARCHAR
+    - name: borough
+      data_type: VARCHAR
+    - name: block
+      data_type: VARCHAR
+    - name: lot
+      data_type: VARCHAR
+    - name: bbl
+      data_type: VARCHAR
+    - name: mapbbl
+      data_type: VARCHAR
+    - name: cd
+      data_type: VARCHAR
+    - name: hnum
+      data_type: VARCHAR
+    - name: sname
+      data_type: VARCHAR
+    - name: address
+      data_type: VARCHAR
+    - name: parcelname
+      data_type: VARCHAR
+    - name: agency
+      data_type: VARCHAR
+    - name: usecode
+      data_type: VARCHAR
+    - name: usetype
+      data_type: VARCHAR
+    - name: ownership
+      data_type: VARCHAR
+    - name: category
+      data_type: VARCHAR
+    - name: expandcat
+      data_type: VARCHAR
+    - name: excatdesc
+      data_type: VARCHAR
+    - name: leased
+      data_type: VARCHAR
+    - name: finalcom
+      data_type: VARCHAR
+    - name: agreement
+      data_type: VARCHAR
+    - name: xcoord
+      data_type: VARCHAR
+    - name: ycoord
+      data_type: VARCHAR
+    - name: latitude
+      data_type: VARCHAR
+    - name: longitude
+      data_type: VARCHAR
+    - name: dcpedited
+      data_type: VARCHAR
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_commercialoverlay
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: overlay
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_councildistricts_wi
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: coundist
+      data_type: INTEGER
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_ct2010_wi
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: ctlabel
+      data_type: VARCHAR
+    - name: borocode
+      data_type: VARCHAR
+    - name: boroname
+      data_type: VARCHAR
+    - name: ct2010
+      data_type: VARCHAR
+    - name: boroct2010
+      data_type: VARCHAR
+    - name: cdeligibil
+      data_type: VARCHAR
+    - name: ntacode
+      data_type: VARCHAR
+    - name: ntaname
+      data_type: VARCHAR
+    - name: puma
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_ct2020_wi
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: ctlabel
+      data_type: VARCHAR
+    - name: borocode
+      data_type: VARCHAR
+    - name: boroname
+      data_type: VARCHAR
+    - name: ct2020
+      data_type: VARCHAR
+    - name: boroct2020
+      data_type: VARCHAR
+    - name: cdeligibil
+      data_type: VARCHAR
+    - name: ntaname
+      data_type: VARCHAR
+    - name: nta2020
+      data_type: VARCHAR
+    - name: cdta2020
+      data_type: VARCHAR
+    - name: cdtaname
+      data_type: VARCHAR
+    - name: geoid
+      data_type: VARCHAR
+    - name: puma
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_edesignation
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: enumber
+      data_type: VARCHAR
+    - name: ceqr_num
+      data_type: VARCHAR
+    - name: ulurp_num
+      data_type: VARCHAR
+    - name: borocode
+      data_type: BIGINT
+    - name: taxblock
+      data_type: BIGINT
+    - name: taxlot
+      data_type: BIGINT
+    - name: zoning_map
+      data_type: VARCHAR
+    - name: descriptio
+      data_type: VARCHAR
+    - name: bbl
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_firecompanies
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: firecotype
+      data_type: VARCHAR
+    - name: fireconum
+      data_type: INTEGER
+    - name: firebn
+      data_type: INTEGER
+    - name: firediv
+      data_type: INTEGER
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_gis_mandatory_inclusionary_housing
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: boro
+      data_type: VARCHAR
+    - name: status
+      data_type: VARCHAR
+    - name: project_name
+      data_type: VARCHAR
+    - name: date_adopted
+      data_type: DATE
+    - name: zr_ulurp_no
+      data_type: VARCHAR
+    - name: zr_map
+      data_type: VARCHAR
+    - name: cd
+      data_type: VARCHAR
+    - name: mih_option
+      data_type: VARCHAR
+    - name: zoning_map
+      data_type: VARCHAR
+    - name: project_id
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_healthareas
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: borocode
+      data_type: INTEGER
+    - name: boroname
+      data_type: VARCHAR
+    - name: healtharea
+      data_type: INTEGER
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_healthcenters
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: borocode
+      data_type: INTEGER
+    - name: boroname
+      data_type: VARCHAR
+    - name: hcentdist
+      data_type: INTEGER
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_limitedheight
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: lhname
+      data_type: VARCHAR
+    - name: lhlbl
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_policeprecincts
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: precinct
+      data_type: INTEGER
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_school_districts
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: schooldist
+      data_type: INTEGER
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_specialpurpose
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: sdname
+      data_type: VARCHAR
+    - name: sdlbl
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_transit_zone_ranks
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: tz_name
+      data_type: VARCHAR
+    - name: tz_rank
+      data_type: DECIMAL(38,12)
+  - name: dcp_transit_zones
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: transit_zone
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: VARCHAR
+    - name: shape_area
+      data_type: VARCHAR
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_zoning_maxfar
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: zonedist
+      data_type: VARCHAR
+    - name: contextual
+      data_type: VARCHAR
+    - name: zoningdistricttype
+      data_type: VARCHAR
+    - name: resdisteq
+      data_type: VARCHAR
+    - name: residfar
+      data_type: DECIMAL(38,12)
+    - name: affresfar
+      data_type: DECIMAL(38,12)
+    - name: facilfar
+      data_type: DECIMAL(38,12)
+    - name: commfar
+      data_type: DECIMAL(38,12)
+    - name: mnffar
+      data_type: DECIMAL(38,12)
+    - name: verified
+      data_type: VARCHAR
+  - name: dcp_zoningdistricts
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: zonedist
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dcp_zoningmapindex
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: INTEGER
+    - name: wkb_geometry
+      data_type: GEOMETRY
+    - name: section
+      data_type: VARCHAR
+    - name: zoning_map
+      data_type: VARCHAR
+    - name: quartersec
+      data_type: VARCHAR
+    - name: westmap
+      data_type: VARCHAR
+    - name: eastmap
+      data_type: VARCHAR
+    - name: northmap
+      data_type: VARCHAR
+    - name: southmap
+      data_type: VARCHAR
+    - name: northwestm
+      data_type: VARCHAR
+    - name: northeastm
+      data_type: VARCHAR
+    - name: southwestm
+      data_type: VARCHAR
+    - name: southeastm
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+  - name: dof_condo
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: condo_base_boro
+      data_type: VARCHAR
+    - name: condo_base_block
+      data_type: VARCHAR
+    - name: condo_base_lot
+      data_type: VARCHAR
+    - name: condo_base_bbl
+      data_type: VARCHAR
+    - name: condo_base_bbl_key
+      data_type: VARCHAR
+    - name: condo_key
+      data_type: VARCHAR
+    - name: condo_number
+      data_type: VARCHAR
+    - name: condo_name
+      data_type: VARCHAR
+    - name: condo_billing_bbl
+      data_type: VARCHAR
+    - name: cinc_parent_flag
+      data_type: VARCHAR
+    - name: cinc_condo_parent
+      data_type: VARCHAR
+    - name: cinc_unit_parent
+      data_type: VARCHAR
+    - name: cinc_gen
+      data_type: VARCHAR
+    - name: created_user
+      data_type: VARCHAR
+    - name: created_date
+      data_type: DATE
+    - name: last_edited_user
+      data_type: VARCHAR
+    - name: last_edited_date
+      data_type: DATE
+  - name: dof_dtm
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: boro
+      data_type: VARCHAR
+    - name: block
+      data_type: INTEGER
+    - name: lot
+      data_type: INTEGER
+    - name: bbl
+      data_type: VARCHAR
+    - name: condo_flag
+      data_type: VARCHAR
+    - name: reuc_flag
+      data_type: VARCHAR
+    - name: air_lot_fl
+      data_type: VARCHAR
+    - name: sub_lot_fl
+      data_type: VARCHAR
+    - name: easement_f
+      data_type: VARCHAR
+    - name: lot_note
+      data_type: VARCHAR
+    - name: effective_
+      data_type: VARCHAR
+    - name: bill_bbl_f
+      data_type: VARCHAR
+    - name: nycmap_bld
+      data_type: VARCHAR
+    - name: conversion
+      data_type: VARCHAR
+    - name: value_refl
+      data_type: VARCHAR
+    - name: created_us
+      data_type: VARCHAR
+    - name: created_da
+      data_type: DATE
+    - name: last_edite
+      data_type: VARCHAR
+    - name: last_edi_1
+      data_type: DATE
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dof_shoreline
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: BIGINT
+    - name: created_by
+      data_type: VARCHAR
+    - name: created_da
+      data_type: DATE
+    - name: last_modif
+      data_type: VARCHAR
+    - name: last_mod_1
+      data_type: DATE
+    - name: shape_leng
+      data_type: DOUBLE
+    - name: shape_area
+      data_type: DOUBLE
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: doitt_zipcodeboundaries
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: INTEGER
+    - name: wkb_geometry
+      data_type: GEOMETRY
+    - name: zipcode
+      data_type: VARCHAR
+    - name: bldgzip
+      data_type: VARCHAR
+    - name: po_name
+      data_type: VARCHAR
+    - name: population
+      data_type: DOUBLE
+    - name: area
+      data_type: DOUBLE
+    - name: state
+      data_type: VARCHAR
+    - name: county
+      data_type: VARCHAR
+    - name: st_fips
+      data_type: VARCHAR
+    - name: cty_fips
+      data_type: VARCHAR
+    - name: url
+      data_type: VARCHAR
+    - name: shape_area
+      data_type: DOUBLE
+    - name: shape_len
+      data_type: DOUBLE
+  - name: dpr_greenthumb
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: OGC_FID
+      data_type: BIGINT
+    - name: nta
+      data_type: VARCHAR
+    - name: zipcode
+      data_type: VARCHAR
+    - name: parksid
+      data_type: VARCHAR
+    - name: coundist
+      data_type: VARCHAR
+    - name: openhrsf
+      data_type: VARCHAR
+    - name: openhrsw
+      data_type: VARCHAR
+    - name: openhrstu
+      data_type: VARCHAR
+    - name: openhrsm
+      data_type: VARCHAR
+    - name: censustract
+      data_type: VARCHAR
+    - name: congressionaldist
+      data_type: VARCHAR
+    - name: openhrsth
+      data_type: VARCHAR
+    - name: statesenatedist
+      data_type: VARCHAR
+    - name: bbl
+      data_type: VARCHAR
+    - name: crossstreets
+      data_type: VARCHAR
+    - name: communityboard
+      data_type: VARCHAR
+    - name: openhrssa
+      data_type: VARCHAR
+    - name: gardenname
+      data_type: VARCHAR
+    - name: status
+      data_type: VARCHAR
+    - name: address
+      data_type: VARCHAR
+    - name: lon
+      data_type: VARCHAR
+    - name: policeprecinct
+      data_type: VARCHAR
+    - name: juris
+      data_type: VARCHAR
+    - name: openhrssu
+      data_type: VARCHAR
+    - name: lat
+      data_type: VARCHAR
+    - name: borough
+      data_type: VARCHAR
+    - name: assemblydist
+      data_type: VARCHAR
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: dsny_frequencies
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: INTEGER
+    - name: wkb_geometry
+      data_type: GEOMETRY
+    - name: district
+      data_type: VARCHAR
+    - name: section
+      data_type: VARCHAR
+    - name: frequency
+      data_type: VARCHAR
+    - name: schedulecode
+      data_type: VARCHAR
+    - name: freq_refuse
+      data_type: VARCHAR
+    - name: freq_recycling
+      data_type: VARCHAR
+    - name: freq_organics
+      data_type: VARCHAR
+    - name: freq_bulk
+      data_type: VARCHAR
+    - name: objectid
+      data_type: VARCHAR
+    - name: shape_area
+      data_type: VARCHAR
+    - name: shape_length
+      data_type: VARCHAR
+    - name: multipolygon
+      data_type: VARCHAR
+    - name: freq_ewaste
+      data_type: VARCHAR
+    - name: freq_resfuseid
+      data_type: VARCHAR
+  - name: fema_firms2007_100yr
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: INTEGER
+    - name: wkb_geometry
+      data_type: GEOMETRY
+    - name: fld_ar_id
+      data_type: VARCHAR
+    - name: fld_zone
+      data_type: VARCHAR
+    - name: floodway
+      data_type: VARCHAR
+    - name: sfha_tf
+      data_type: VARCHAR
+    - name: static_bfe
+      data_type: DOUBLE
+    - name: v_datum
+      data_type: VARCHAR
+    - name: depth
+      data_type: DOUBLE
+    - name: len_unit
+      data_type: VARCHAR
+    - name: velocity
+      data_type: DOUBLE
+    - name: vel_unit
+      data_type: VARCHAR
+    - name: ar_revert
+      data_type: VARCHAR
+    - name: bfe_revert
+      data_type: DOUBLE
+    - name: dep_revert
+      data_type: DOUBLE
+    - name: source_cit
+      data_type: VARCHAR
+    - name: shape_star
+      data_type: DOUBLE
+    - name: shape_stle
+      data_type: DOUBLE
+  - name: fema_pfirms2015_100yr
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: ogc_fid
+      data_type: INTEGER
+    - name: wkb_geometry
+      data_type: GEOMETRY
+    - name: fld_ar_id
+      data_type: VARCHAR
+    - name: fld_zone
+      data_type: VARCHAR
+    - name: floodway
+      data_type: VARCHAR
+    - name: sfha_tf
+      data_type: VARCHAR
+    - name: static_bfe
+      data_type: DOUBLE
+    - name: v_datum
+      data_type: VARCHAR
+    - name: depth
+      data_type: DOUBLE
+    - name: len_unit
+      data_type: VARCHAR
+    - name: velocity
+      data_type: DOUBLE
+    - name: vel_unit
+      data_type: VARCHAR
+    - name: ar_revert
+      data_type: VARCHAR
+    - name: bfe_revert
+      data_type: DOUBLE
+    - name: dep_revert
+      data_type: DOUBLE
+    - name: source_cit
+      data_type: VARCHAR
+    - name: fld_zone_a
+      data_type: VARCHAR
+    - name: area
+      data_type: DOUBLE
+    - name: shape_star
+      data_type: DOUBLE
+    - name: shape_stle
+      data_type: DOUBLE
+  - name: lpc_historic_districts
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: OGC_FID
+      data_type: BIGINT
+    - name: build_type
+      data_type: VARCHAR
+    - name: style_sec
+      data_type: VARCHAR
+    - name: shape_area
+      data_type: VARCHAR
+    - name: build_nme
+      data_type: VARCHAR
+    - name: mat_sec
+      data_type: VARCHAR
+    - name: bbl
+      data_type: VARCHAR
+    - name: alt_arch_1
+      data_type: VARCHAR
+    - name: date_high
+      data_type: VARCHAR
+    - name: use_orig
+      data_type: VARCHAR
+    - name: des_addres
+      data_type: VARCHAR
+    - name: alt_date_1
+      data_type: VARCHAR
+    - name: use_other
+      data_type: VARCHAR
+    - name: shape_leng
+      data_type: VARCHAR
+    - name: mat_prim
+      data_type: VARCHAR
+    - name: alt_arch_2
+      data_type: VARCHAR
+    - name: mat_four
+      data_type: VARCHAR
+    - name: block
+      data_type: VARCHAR
+    - name: mat_third
+      data_type: VARCHAR
+    - name: own_devel
+      data_type: VARCHAR
+    - name: alt_date_2
+      data_type: VARCHAR
+    - name: style_prim
+      data_type: VARCHAR
+    - name: hist_dist
+      data_type: VARCHAR
+    - name: lot
+      data_type: VARCHAR
+    - name: bin
+      data_type: VARCHAR
+    - name: notes
+      data_type: VARCHAR
+    - name: build_oth
+      data_type: VARCHAR
+    - name: circa
+      data_type: VARCHAR
+    - name: altered
+      data_type: VARCHAR
+    - name: style_oth
+      data_type: VARCHAR
+    - name: lm_new
+      data_type: VARCHAR
+    - name: mat_other
+      data_type: VARCHAR
+    - name: lm_orig
+      data_type: VARCHAR
+    - name: date_low
+      data_type: VARCHAR
+    - name: borough
+      data_type: VARCHAR
+    - name: date_combo
+      data_type: VARCHAR
+    - name: arch_build
+      data_type: VARCHAR
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: lpc_landmarks
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: OGC_FID
+      data_type: BIGINT
+    - name: pluto_addr
+      data_type: VARCHAR
+    - name: bct2020
+      data_type: VARCHAR
+    - name: last_actio
+      data_type: VARCHAR
+    - name: latitude
+      data_type: VARCHAR
+    - name: caldate
+      data_type: DATE
+    - name: cd
+      data_type: VARCHAR
+    - name: boundaries
+      data_type: VARCHAR
+    - name: vacant_lot
+      data_type: VARCHAR
+    - name: public_hea
+      data_type: VARCHAR
+    - name: bbl
+      data_type: VARCHAR
+    - name: council
+      data_type: VARCHAR
+    - name: desig_addr
+      data_type: VARCHAR
+    - name: count_bldg
+      data_type: VARCHAR
+    - name: longitude
+      data_type: VARCHAR
+    - name: desdate
+      data_type: DATE
+    - name: bin_number
+      data_type: VARCHAR
+    - name: block
+      data_type: VARCHAR
+    - name: status
+      data_type: VARCHAR
+    - name: lm_type
+      data_type: VARCHAR
+    - name: hist_distr
+      data_type: VARCHAR
+    - name: other_hear
+      data_type: VARCHAR
+    - name: lot
+      data_type: VARCHAR
+    - name: lp_number
+      data_type: VARCHAR
+    - name: nta2020
+      data_type: VARCHAR
+    - name: non_bldg
+      data_type: VARCHAR
+    - name: most_curre
+      data_type: VARCHAR
+    - name: boroughid
+      data_type: VARCHAR
+    - name: lm_name
+      data_type: VARCHAR
+    - name: secnd_bldg
+      data_type: VARCHAR
+    - name: wkb_geometry
+      data_type: GEOMETRY
+  - name: pluto_input_bsmtcode
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: bsmnt_type
+      data_type: VARCHAR
+    - name: bsmntgradient
+      data_type: VARCHAR
+    - name: bsmtcode
+      data_type: VARCHAR
+    - name: bsmnt_typevalue
+      data_type: VARCHAR
+    - name: ' bsmntgradientvalue'
+      data_type: VARCHAR
+    - name: ' bsmtcodevalue'
+      data_type: VARCHAR
+  - name: pluto_input_cama_dof
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: bbl
+      data_type: VARCHAR
+    - name: parcelcard
+      data_type: VARCHAR
+    - name: bldgnum
+      data_type: VARCHAR
+    - name: bldgclass
+      data_type: VARCHAR
+    - name: primaryusecode
+      data_type: VARCHAR
+    - name: developmentname
+      data_type: VARCHAR
+    - name: streettype
+      data_type: VARCHAR
+    - name: lottype
+      data_type: VARCHAR
+    - name: residarea
+      data_type: VARCHAR
+    - name: officearea
+      data_type: VARCHAR
+    - name: retailarea
+      data_type: VARCHAR
+    - name: garagearea
+      data_type: VARCHAR
+    - name: storagearea
+      data_type: VARCHAR
+    - name: factoryarea
+      data_type: VARCHAR
+    - name: otherarea
+      data_type: VARCHAR
+    - name: grossarea
+      data_type: VARCHAR
+    - name: ownerarea
+      data_type: VARCHAR
+    - name: grossvolume
+      data_type: VARCHAR
+    - name: commercialarea
+      data_type: VARCHAR
+    - name: proxcode
+      data_type: VARCHAR
+    - name: bsmnt_type
+      data_type: VARCHAR
+    - name: bsmntgradient
+      data_type: VARCHAR
+    - name: bsmntarea
+      data_type: VARCHAR
+    - name: firstfloorarea
+      data_type: VARCHAR
+    - name: secondfloorarea
+      data_type: VARCHAR
+    - name: upperfloorarea
+      data_type: VARCHAR
+    - name: partresfloorarea
+      data_type: VARCHAR
+    - name: unfinishedfloorarea
+      data_type: VARCHAR
+    - name: finishedfloorarea
+      data_type: VARCHAR
+    - name: nonresidfloorarea
+      data_type: VARCHAR
+    - name: residconstrtype
+      data_type: VARCHAR
+    - name: commercialconstrtype
+      data_type: VARCHAR
+    - name: condomainconstrtype
+      data_type: VARCHAR
+    - name: condounitsconstrtype
+      data_type: VARCHAR
+  - name: pluto_input_condo_bldgclass
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: Code
+      data_type: VARCHAR
+    - name: Description
+      data_type: VARCHAR
+    - name: Type
+      data_type: VARCHAR
+    - name: DCP created
+      data_type: VARCHAR
+    - name: Logic for codes created by DCP
+      data_type: VARCHAR
+  - name: pluto_input_condolot_descriptiveattributes
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: CondNO
+      data_type: VARCHAR
+    - name: Boro
+      data_type: DECIMAL(38,12)
+    - name: PARID
+      data_type: VARCHAR
+    - name: BC
+      data_type: VARCHAR
+    - name: TC
+      data_type: DECIMAL(38,12)
+    - name: LandSize
+      data_type: DECIMAL(38,12)
+    - name: Story
+      data_type: DECIMAL(38,12)
+    - name: YearBuilt
+      data_type: DECIMAL(38,12)
+  - name: pluto_input_geocodes
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: billingbbl
+      data_type: VARCHAR
+    - name: bbl
+      data_type: VARCHAR
+    - name: cd
+      data_type: VARCHAR
+    - name: ct2010
+      data_type: VARCHAR
+    - name: cb2010
+      data_type: VARCHAR
+    - name: ct2020
+      data_type: VARCHAR
+    - name: cb2020
+      data_type: VARCHAR
+    - name: schooldist
+      data_type: VARCHAR
+    - name: council
+      data_type: VARCHAR
+    - name: zipcode
+      data_type: VARCHAR
+    - name: policeprct
+      data_type: VARCHAR
+    - name: healthcenterdistrict
+      data_type: VARCHAR
+    - name: healtharea
+      data_type: VARCHAR
+    - name: sanitdistrict
+      data_type: VARCHAR
+    - name: sanitsub
+      data_type: VARCHAR
+    - name: boepreferredstreetname
+      data_type: VARCHAR
+    - name: taxmap
+      data_type: VARCHAR
+    - name: sanbornmapidentifier
+      data_type: VARCHAR
+    - name: latitude
+      data_type: VARCHAR
+    - name: longitude
+      data_type: VARCHAR
+    - name: grc
+      data_type: VARCHAR
+    - name: grc2
+      data_type: VARCHAR
+    - name: msg
+      data_type: VARCHAR
+    - name: msg2
+      data_type: VARCHAR
+    - name: firecomp
+      data_type: VARCHAR
+    - name: borough
+      data_type: VARCHAR
+    - name: block
+      data_type: VARCHAR
+    - name: lot
+      data_type: VARCHAR
+    - name: easement
+      data_type: VARCHAR
+    - name: input_sname
+      data_type: VARCHAR
+    - name: input_hnum
+      data_type: VARCHAR
+    - name: numberofexistingstructures
+      data_type: VARCHAR
+    - name: geom
+      data_type: GEOMETRY
+  - name: pluto_input_landuse_bldgclass
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: bldgclass
+      data_type: VARCHAR
+    - name: landuse
+      data_type: VARCHAR
+    - name: landusevalue
+      data_type: VARCHAR
+  - name: pluto_input_numbldgs
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: bbl
+      data_type: VARCHAR
+    - name: count
+      data_type: BIGINT
+  - name: pluto_input_research
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: bbl
+      data_type: VARCHAR
+    - name: field
+      data_type: VARCHAR
+    - name: old_value
+      data_type: VARCHAR
+    - name: new_value
+      data_type: VARCHAR
+    - name: Type
+      data_type: DECIMAL(38,12)
+    - name: reason
+      data_type: VARCHAR
+    - name: version
+      data_type: VARCHAR
+  - name: pluto_pts
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: boro
+      data_type: VARCHAR
+    - name: block
+      data_type: VARCHAR
+    - name: lot
+      data_type: VARCHAR
+    - name: street_name
+      data_type: VARCHAR
+    - name: housenum_lo
+      data_type: VARCHAR
+    - name: housenum_hi
+      data_type: VARCHAR
+    - name: aptno
+      data_type: VARCHAR
+    - name: zip_code
+      data_type: VARCHAR
+    - name: bldg_class
+      data_type: VARCHAR
+    - name: ease
+      data_type: VARCHAR
+    - name: av_owner
+      data_type: VARCHAR
+    - name: land_area
+      data_type: VARCHAR
+    - name: gross_sqft
+      data_type: VARCHAR
+    - name: residential_area_gross
+      data_type: VARCHAR
+    - name: office_area_gross
+      data_type: VARCHAR
+    - name: retail_area_gross
+      data_type: VARCHAR
+    - name: garage_area
+      data_type: VARCHAR
+    - name: storage_area_gross
+      data_type: VARCHAR
+    - name: factory_area_gross
+      data_type: VARCHAR
+    - name: other_area_gross
+      data_type: VARCHAR
+    - name: num_bldgs
+      data_type: VARCHAR
+    - name: bld_story
+      data_type: VARCHAR
+    - name: coop_apts
+      data_type: VARCHAR
+    - name: units
+      data_type: VARCHAR
+    - name: lot_frt
+      data_type: VARCHAR
+    - name: lot_dep
+      data_type: VARCHAR
+    - name: bld_frt
+      data_type: VARCHAR
+    - name: bld_dep
+      data_type: VARCHAR
+    - name: bld_ext
+      data_type: VARCHAR
+    - name: lot_irreg
+      data_type: VARCHAR
+    - name: curactland
+      data_type: VARCHAR
+    - name: curacttot
+      data_type: VARCHAR
+    - name: curactextot
+      data_type: VARCHAR
+    - name: yrbuilt
+      data_type: VARCHAR
+    - name: yralt1
+      data_type: VARCHAR
+    - name: yralt2
+      data_type: VARCHAR
+    - name: condo_number
+      data_type: VARCHAR
+    - name: appt_boro
+      data_type: VARCHAR
+    - name: appt_block
+      data_type: VARCHAR
+    - name: appt_lot
+      data_type: VARCHAR
+    - name: appt_ease
+      data_type: VARCHAR
+    - name: appt_date
+      data_type: VARCHAR
+    - name: parid
+      data_type: VARCHAR
+  - name: previous_pluto
+    description: Prepared, read-only upstream input.
+    columns:
+    - name: borough
+      data_type: VARCHAR
+    - name: block
+      data_type: VARCHAR
+    - name: lot
+      data_type: VARCHAR
+    - name: cd
+      data_type: VARCHAR
+    - name: bct2020
+      data_type: VARCHAR
+    - name: bctcb2020
+      data_type: VARCHAR
+    - name: ct2010
+      data_type: VARCHAR
+    - name: cb2010
+      data_type: VARCHAR
+    - name: schooldist
+      data_type: VARCHAR
+    - name: council
+      data_type: VARCHAR
+    - name: zipcode
+      data_type: VARCHAR
+    - name: firecomp
+      data_type: VARCHAR
+    - name: policeprct
+      data_type: VARCHAR
+    - name: healthcenterdistrict
+      data_type: VARCHAR
+    - name: healtharea
+      data_type: VARCHAR
+    - name: sanitboro
+      data_type: VARCHAR
+    - name: sanitdistrict
+      data_type: VARCHAR
+    - name: sanitsub
+      data_type: VARCHAR
+    - name: address
+      data_type: VARCHAR
+    - name: zonedist1
+      data_type: VARCHAR
+    - name: zonedist2
+      data_type: VARCHAR
+    - name: zonedist3
+      data_type: VARCHAR
+    - name: zonedist4
+      data_type: VARCHAR
+    - name: overlay1
+      data_type: VARCHAR
+    - name: overlay2
+      data_type: VARCHAR
+    - name: spdist1
+      data_type: VARCHAR
+    - name: spdist2
+      data_type: VARCHAR
+    - name: spdist3
+      data_type: VARCHAR
+    - name: ltdheight
+      data_type: VARCHAR
+    - name: splitzone
+      data_type: VARCHAR
+    - name: bldgclass
+      data_type: VARCHAR
+    - name: landuse
+      data_type: VARCHAR
+    - name: easements
+      data_type: VARCHAR
+    - name: ownertype
+      data_type: VARCHAR
+    - name: ownername
+      data_type: VARCHAR
+    - name: lotarea
+      data_type: VARCHAR
+    - name: bldgarea
+      data_type: VARCHAR
+    - name: comarea
+      data_type: VARCHAR
+    - name: resarea
+      data_type: VARCHAR
+    - name: officearea
+      data_type: VARCHAR
+    - name: retailarea
+      data_type: VARCHAR
+    - name: garagearea
+      data_type: VARCHAR
+    - name: strgearea
+      data_type: VARCHAR
+    - name: factryarea
+      data_type: VARCHAR
+    - name: otherarea
+      data_type: VARCHAR
+    - name: areasource
+      data_type: VARCHAR
+    - name: numbldgs
+      data_type: VARCHAR
+    - name: numfloors
+      data_type: VARCHAR
+    - name: unitsres
+      data_type: VARCHAR
+    - name: unitstotal
+      data_type: VARCHAR
+    - name: lotfront
+      data_type: VARCHAR
+    - name: lotdepth
+      data_type: VARCHAR
+    - name: bldgfront
+      data_type: VARCHAR
+    - name: bldgdepth
+      data_type: VARCHAR
+    - name: ext
+      data_type: VARCHAR
+    - name: proxcode
+      data_type: VARCHAR
+    - name: irrlotcode
+      data_type: VARCHAR
+    - name: lottype
+      data_type: VARCHAR
+    - name: bsmtcode
+      data_type: VARCHAR
+    - name: assessland
+      data_type: VARCHAR
+    - name: assesstot
+      data_type: VARCHAR
+    - name: exempttot
+      data_type: VARCHAR
+    - name: yearbuilt
+      data_type: VARCHAR
+    - name: yearalter1
+      data_type: VARCHAR
+    - name: yearalter2
+      data_type: VARCHAR
+    - name: histdist
+      data_type: VARCHAR
+    - name: landmark
+      data_type: VARCHAR
+    - name: builtfar
+      data_type: VARCHAR
+    - name: residfar
+      data_type: VARCHAR
+    - name: commfar
+      data_type: VARCHAR
+    - name: facilfar
+      data_type: VARCHAR
+    - name: borocode
+      data_type: VARCHAR
+    - name: bbl
+      data_type: VARCHAR
+    - name: condono
+      data_type: VARCHAR
+    - name: tract2010
+      data_type: VARCHAR
+    - name: xcoord
+      data_type: VARCHAR
+    - name: ycoord
+      data_type: VARCHAR
+    - name: zonemap
+      data_type: VARCHAR
+    - name: zmcode
+      data_type: VARCHAR
+    - name: sanborn
+      data_type: VARCHAR
+    - name: taxmap
+      data_type: VARCHAR
+    - name: edesignum
+      data_type: VARCHAR
+    - name: appbbl
+      data_type: VARCHAR
+    - name: appdate
+      data_type: VARCHAR
+    - name: plutomapid
+      data_type: VARCHAR
+    - name: firm07_flag
+      data_type: VARCHAR
+    - name: pfirm15_flag
+      data_type: VARCHAR
+    - name: version
+      data_type: VARCHAR
+    - name: dcpedited
+      data_type: VARCHAR
+    - name: latitude
+      data_type: VARCHAR
+    - name: longitude
+      data_type: VARCHAR
+    - name: notes
+      data_type: VARCHAR
+    - name: mih_opt1
+      data_type: VARCHAR
+    - name: mih_opt2
+      data_type: VARCHAR
+    - name: mih_opt3
+      data_type: VARCHAR
+    - name: mih_opt4
+      data_type: VARCHAR
+    - name: trnstzone
+      data_type: VARCHAR
+    - name: affresfar
+      data_type: VARCHAR
+    - name: mnffar
+      data_type: VARCHAR
+    - name: wkb_geometry
+      data_type: GEOMETRY

@@ -1,0 +1,26 @@
+# Copy to your project's config.toml, or ~/.config/moses/config.toml for
+# user-wide defaults. Project values override user defaults one setting at a time.
+[moses]
+config_version = 1
+
+# Where this project's catalog, raw captures and accepted snapshots live.
+# Relative paths stay local to the project, even in a user-wide config.
+[moses.project]
+warehouse = "./.moses"
+
+# Consistent field names across imported datasets.
+[moses.normalization]
+column_names = "snake_case" # preserve | snake_case
+
+# Describe missing source CRS only; this does not reproject coordinates.
+# Set this only when you know the CRS of sources without metadata.
+[moses.spatial]
+# default_crs = "EPSG:2263"
+
+# Default delivery writer. FileGDB requires an exact version and layer at export.
+[moses.export]
+format = "parquet" # parquet | geoparquet | filegdb
+
+# Source URLs, layer names, keys, field overrides and dataset-specific geometry
+# belong in recipes. Output CRS, compression, other writers and a persistent
+# DuckDB database are not configurable yet.

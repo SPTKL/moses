@@ -1,0 +1,23 @@
+name: moses_pluto_full
+version: 1.0.0
+config-version: 2
+profile: moses_pluto_full
+model-paths:
+- models
+macro-paths:
+- macros
+vars:
+  pluto_version: 26v2m4
+  previous_pluto_version: 26v1
+on-run-start:
+- '{{ define_st_setsrid() }}'
+- '{{ define_moses_text() }}'
+- '{{ define_moses_subdivide() }}'
+- '{{ define_moses_transform_crs() }}'
+- '{{ define_moses_geometrytype() }}'
+- '{{ define_moses_makevalid() }}'
+- '{{ define_moses_census_tract_numeric_text() }}'
+- '{{ define_moses_union_agg() }}'
+models:
+  moses_pluto_full:
+    +materialized: view

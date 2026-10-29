@@ -1,0 +1,8 @@
+name: moses_pluto
+version: '1.0.0'
+config-version: 2
+profile: moses_pluto
+model-paths: [models]
+models:
+  moses_pluto:
+    +materialized: table

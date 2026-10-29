@@ -1,0 +1,93 @@
+{
+  "evidence": "synthetic",
+  "production_parity": false,
+  "release_reproduced": null,
+  "run_directory": ".moses/pluto-dbt-validation/run-20261017T192415-c8828c63",
+  "reference_engine": "PostgreSQL 16.15 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+  "target_release": "26v2",
+  "stages": {
+    "landuse": {
+      "rows": 12,
+      "input_lock": {
+        "pluto": "20261017T192415819960Z-65d2a24c",
+        "pluto_input_landuse_bldgclass": "20261017T192415828360Z-ea8e4866"
+      },
+      "lock_replay_equal": true,
+      "parity": {
+        "equal": true,
+        "scope": "strict_table",
+        "geometry_comparison": "byte_equality_only",
+        "key": "bbl",
+        "columns": [
+          "bbl",
+          "bldgclass",
+          "landuse",
+          "areasource",
+          "numbldgs",
+          "bldgarea"
+        ],
+        "candidate_rows": 12,
+        "reference_rows": 12,
+        "added_rows": 0,
+        "removed_rows": 0,
+        "changed_rows": 0,
+        "changed_cells": 0,
+        "schema_differences": [],
+        "added_examples": [],
+        "removed_examples": [],
+        "differences": [],
+        "max_examples": 20
+      },
+      "reference_schema_adaptation": null,
+      "upstream_sql_sha256": "0208fdcf15a8b2f6a6ea8c7e1e0dd45608a23da408574e83cbda3adf665916fc",
+      "upstream_path": "../data-engineering/products/pluto/pluto_build/sql/landuse.sql",
+      "checked_output": "20261017T192423535182Z-4e57e317",
+      "limitations": [
+        "synthetic stage fixtures only",
+        "not full PLUTO build parity",
+        "create_pts duplicate BBL grain covered by unit tests separately"
+      ]
+    },
+    "create_pts": {
+      "rows": 3,
+      "input_lock": {
+        "pluto_pts": "20261017T192427135629Z-861324f1"
+      },
+      "lock_replay_equal": true,
+      "parity": {
+        "equal": true,
+        "scope": "strict_row_multiset",
+        "key": null,
+        "geometry_comparison": "byte_equality_only",
+        "candidate_rows": 3,
+        "reference_rows": 3,
+        "schema_equal": true,
+        "candidate_schema": null,
+        "reference_schema": null,
+        "added_rows": 0,
+        "removed_rows": 0,
+        "added_examples": [],
+        "removed_examples": [],
+        "max_examples": 20
+      },
+      "reference_schema_adaptation": "PostgreSQL unconstrained numeric dimensions represented as decimal(38,2) within validated range",
+      "upstream_sql_sha256": "d7370df9faae26319b0fb10dd934f198a0da137159b8e3520a1863e4c47d5bf5",
+      "upstream_path": "../data-engineering/products/pluto/pluto_build/sql/create_pts.sql",
+      "checked_output": "20261017T192434144396Z-1566ec0f",
+      "limitations": [
+        "synthetic stage fixtures only",
+        "not full PLUTO build parity",
+        "create_pts duplicate BBL grain covered by unit tests separately"
+      ]
+    }
+  },
+  "engines": {
+    "duckdb": "1.5.6",
+    "pyarrow": "26.0.0",
+    "dbt-core": "1.12.6",
+    "dbt-duckdb": "1.11.0"
+  },
+  "runner_code_sha256": "ec599e297565a06d0ce41c81a464284e821736d64284271cc5e88aed14365b4b",
+  "scope": "Synthetic reference-stage verification; complete fixtures, manifests and dbt artifacts retained in run_directory. Not production 26v2 parity.",
+  "publication_path_policy": "Absolute workspace paths replaced with Moses repository-relative paths; ../data-engineering identifies the read-only sibling source checkout. Original local evidence is retained outside Git."
+}

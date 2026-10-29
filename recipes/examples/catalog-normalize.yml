@@ -1,0 +1,10 @@
+# Replace version with the exact immutable catalog version to prepare.
+schema_version: 1
+name: example_prepared_records
+source:
+  kind: catalog
+  name: example_raw_records
+  version: REPLACE_WITH_EXACT_VERSION
+import:
+  types: {id: string, amount: float64}
+  null_policy: {tokens: ['', NA], trim: false}

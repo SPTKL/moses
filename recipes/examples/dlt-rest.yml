@@ -1,0 +1,21 @@
+# Requires the optional moses-geo[dlt] extra. dlt owns pagination; Moses
+# captures the selected flat records and publishes an immutable snapshot.
+schema_version: 1
+name: example_pokemon
+key: name
+source:
+  kind: dlt_rest_api
+  resource: pokemon
+  config:
+    client:
+      base_url: https://pokeapi.co/api/v2/
+    resource_defaults:
+      endpoint:
+        data_selector: results
+        paginator: {type: json_link, next_url_path: next}
+    resources:
+      - name: pokemon
+        endpoint: {path: pokemon, params: {limit: 100}}
+import:
+  types: {name: string, url: string}
+  null_policy: {tokens: [], trim: false}
